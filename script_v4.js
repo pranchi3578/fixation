@@ -112,18 +112,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     stagger: 0.2,
                     ease: "power2.inOut",
                     onComplete: function() {
-                      gsap.to('#artText', { 
-                        opacity: 1, 
-                        duration: 1,
-                        onComplete: function() {
-                          setTimeout(function() {
-                            var scrollPrompt = document.getElementById('scrollPrompt');
-                            if (scrollPrompt && !window.scrolledAlready) {
-                              scrollPrompt.classList.remove('hidden');
-                            }
-                          }, 800); // Pause for 0.8s so user can read the text before being nudged
+                      setTimeout(function() {
+                        var scrollPrompt = document.getElementById('scrollPrompt');
+                        if (scrollPrompt && !window.scrolledAlready) {
+                          scrollPrompt.classList.remove('hidden');
                         }
-                      });
+                      }, 1000); // 1s pause after drawing completes
                     }
                   });
                 }
