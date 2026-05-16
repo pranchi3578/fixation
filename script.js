@@ -45,10 +45,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var milestones = document.querySelectorAll('.milestone');
 
   var revealObserver = new IntersectionObserver(
-    function (entries) {
+    function (entries, observer) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Stop observing once visible
         }
       });
     },
@@ -105,11 +106,12 @@ document.addEventListener('DOMContentLoaded', function () {
   var particlesCreated = false;
 
   var particleObserver = new IntersectionObserver(
-    function (entries) {
+    function (entries, observer) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting && !particlesCreated) {
           particlesCreated = true;
           createParticles();
+          observer.unobserve(entry.target);
         }
       });
     },
