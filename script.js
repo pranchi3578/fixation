@@ -132,38 +132,102 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // ─── Scene 6: Save to Calendar (.ics) ───
-  var btnCalendar = document.getElementById('btnCalendar');
-  if (btnCalendar) {
-    btnCalendar.addEventListener('click', function () {
-      var icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Joel & Sandra//Nischayam//EN',
-        'BEGIN:VEVENT',
-        'DTSTART:20260523T130000Z',
-        'DTEND:20260523T170000Z',
-        'SUMMARY:Joel & Sandra — Nischayam (Fixation)',
-        'DESCRIPTION:Fixation ceremony of Joel Francis Jose & Sandra Binoy at Tharavad The Farmhouse\\, Kanjirappally.',
-        'LOCATION:Tharavad The Farmhouse\\, Kanjirappally\\, Kottayam\\, Kerala',
-        'BEGIN:VALARM',
-        'TRIGGER:-PT2H',
-        'ACTION:DISPLAY',
-        'DESCRIPTION:Joel & Sandra Nischayam in 2 hours!',
-        'END:VALARM',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
+  // ─── Scene 6: Scratch & Reveal + Countdown ───
+  var canvas = document.getElementById('scratchCanvas');
+  if (canvas) {
+    var ctx = canvas.getContext('2d');
+    var isDrawing = false;
+    var revealed = false;
 
-      var blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-      var link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'Joel_Sandra_Nischayam.ics';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
-    });
+    // Fill canvas with gold color
+    function initCanvas() {
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+      ctx.fillStyle = '#CFA144'; // gold-light
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = 'destination-out';
+    }
+
+    // Call init on load and resize
+    initCanvas();
+    window.addEventListener('resize', initCanvas);
+
+    function getMousePos(e) {
+      var rect = canvas.getBoundingClientRect();
+      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function scratch(e) {
+      if (!isDrawing || revealed) return;
+      e.preventDefault();
+      var pos = getMousePos(e);
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
+      ctx.fill();
+      checkReveal();
+    }
+
+    canvas.addEventListener('mousedown', function (e) { isDrawing = true; scratch(e); });
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('mouseup', function () { isDrawing = false; });
+    canvas.addEventListener('mouseleave', function () { isDrawing = false; });
+
+    canvas.addEventListener('touchstart', function (e) { isDrawing = true; scratch(e); }, { passive: false });
+    canvas.addEventListener('touchmove', scratch, { passive: false });
+    canvas.addEventListener('touchend', function () { isDrawing = false; });
+
+    // Check how much is scratched
+    function checkReveal() {
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var pixels = imageData.data;
+      var transparent = 0;
+      for (var i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] === 0) transparent++;
+      }
+      var percent = (transparent / (pixels.length / 4)) * 100;
+      
+      // If 40% scratched, reveal!
+      if (percent > 40 && !revealed) {
+        revealed = true;
+        document.getElementById('scratchCoverText').style.opacity = '0';
+        canvas.style.opacity = '0';
+        document.getElementById('scratchRevealed').style.opacity = '1';
+        setTimeout(function() {
+          canvas.style.pointerEvents = 'none';
+        }, 500);
+        startCountdown();
+      }
+    }
+
+    // Countdown Logic
+    function startCountdown() {
+      var eventDate = new Date("May 23, 2026 18:30:00").getTime();
+      var countEl = document.getElementById('countdownText');
+      
+      function update() {
+        var now = new Date().getTime();
+        var distance = eventDate - now;
+
+        if (distance < 0) {
+          countEl.innerHTML = "It's Time!";
+          return;
+        }
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countEl.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s left";
+      }
+      update();
+      setInterval(update, 1000);
+    }
   }
 
   // ─── Sound Toggle ───

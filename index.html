@@ -236,10 +236,19 @@
 
       <div class="invite-divider"></div>
 
-      <div class="invite-detail-row">
-        <span class="icon">📅</span>
-        <span><strong>Saturday, 23rd May 2026</strong></span>
+      <!-- Scratch & Reveal Container -->
+      <div class="invite-scratch-container" id="scratchContainer">
+        <canvas id="scratchCanvas"></canvas>
+        <div class="scratch-cover-text" id="scratchCoverText">Scratch to Reveal</div>
+        <div class="scratch-revealed-content" id="scratchRevealed">
+          <div class="invite-detail-row" style="margin: 0; margin-bottom: 6px;">
+            <span class="icon">📅</span>
+            <span><strong>Saturday, 23rd May 2026</strong></span>
+          </div>
+          <div class="countdown-text" id="countdownText"></div>
+        </div>
       </div>
+
       <div class="invite-detail-row">
         <span class="icon">🕡</span>
         <span>6:30 PM</span>
@@ -252,9 +261,10 @@
       <div class="invite-lunch font-display">Followed by Dinner</div>
 
       <div class="invite-buttons">
-        <button class="invite-btn invite-btn--gold" id="btnCalendar">
+        <!-- Direct Google Calendar Link -->
+        <a class="invite-btn invite-btn--gold" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Joel+%26+Sandra+%E2%80%94+Urapeeru+(Fixation)&dates=20260523T130000Z/20260523T170000Z&details=Fixation+ceremony+of+Joel+Francis+Jose+%26+Sandra+Binoy.&location=Tharavad+The+Farmhouse,+Kanjirappally,+Kottayam" target="_blank" rel="noopener">
           📅 Save Date
-        </button>
+        </a>
         <a class="invite-btn invite-btn--outline" href="https://maps.app.goo.gl/P8yKFHrUXcaE3HseA" target="_blank" rel="noopener">
           📍 Directions
         </a>
