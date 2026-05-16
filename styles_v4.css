@@ -1,0 +1,921 @@
+/* ═══ AAMEN Design System ═══ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+Malayalam:wght@400;600;700&display=swap');
+
+:root {
+  --gold: #CFA144;
+  --gold-light: #E8D5A3;
+  --gold-glow: rgba(207, 161, 68, 0.4);
+  --deep-red: #5D1A1A;
+  --wine: #722F37;
+  --wood: #3E2723;
+  --cream: #FDF6E3;
+  --cream-dark: #F5EDD6;
+  --church-white: #FAF8F5;
+  --night: #1A0F0D;
+  --night-soft: #2D1A16;
+  --mist: rgba(255, 255, 255, 0.06);
+  --text: #2C2418;
+  --text-muted: #6B5D4F;
+  --border: rgba(207, 161, 68, 0.3);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ Grain Overlay Removed for Mobile Scroll Performance ═══ */
+
+/* ═══ Typography ═══ */
+.font-display { /* Removed Playfair */ }
+.font-malayalam { font-family: 'Noto Serif Malayalam', serif; }
+.font-handwritten { /* Removed Caveat */ }
+
+/* ═══ Section Base ═══ */
+.scene {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 28px;
+  position: relative;
+  opacity: 0; /* GSAP will control this */
+  will-change: opacity, transform;
+}
+.scene.visible {
+  opacity: 1;
+}
+
+/* ═══ SCENE 1: THE TRADITIONAL SCROLL ═══ */
+.scene-scroll {
+  background: var(--night);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+}
+.scene-scroll::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/dark-wood.png");
+  opacity: 0.1;
+  pointer-events: none;
+}
+.scroll-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  z-index: 2;
+}
+.scroll-top-roller, .scroll-bottom-roller {
+  height: 28px;
+  background-color: #3e2723; /* Dark teak wood */
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%),
+    url("https://www.transparenttextures.com/patterns/dark-wood.png");
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 15px rgba(0,0,0,0.8);
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.8);
+}
+.scroll-top-roller::before, .scroll-top-roller::after,
+.scroll-bottom-roller::before, .scroll-bottom-roller::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 36px;
+  background-color: #2e1a14;
+  background-image: url("https://www.transparenttextures.com/patterns/dark-wood.png");
+  border-radius: 50%;
+  top: -4px;
+  box-shadow: inset 3px 3px 6px rgba(0,0,0,0.8), inset -2px -2px 4px rgba(255,255,255,0.1), 2px 0 5px rgba(0,0,0,0.5);
+}
+.scroll-top-roller::before, .scroll-bottom-roller::before { left: -10px; }
+.scroll-top-roller::after, .scroll-bottom-roller::after { right: -10px; }
+
+.scroll-paper {
+  background-color: #e4d0a6; /* Aged, darker parchment color */
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 8%, rgba(0,0,0,0) 92%, rgba(0,0,0,0.4) 100%),
+    linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 6%, rgba(0,0,0,0) 94%, rgba(0,0,0,0.3) 100%),
+    linear-gradient(to bottom, transparent 25%, rgba(0,0,0,0.06) 26%, rgba(255,255,255,0.4) 27%, transparent 28%),
+    linear-gradient(to bottom, transparent 65%, rgba(0,0,0,0.08) 66%, rgba(255,255,255,0.3) 67%, transparent 68%),
+    url("https://www.transparenttextures.com/patterns/old-map.png");
+  margin: -14px 16px;
+  padding: 60px 24px 40px;
+  box-shadow: inset 0 0 60px rgba(92, 64, 51, 0.8), 0 10px 30px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 4;
+  text-align: center;
+}
+
+.scroll-content {
+  /* Removed Caveat */
+  color: #3e2723; /* Dark old ink */
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.scroll-content .font-malayalam {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+.scroll-names {
+  font-size: 38px;
+  font-weight: 600;
+  color: #2c1a12;
+  line-height: 1.2;
+}
+.scroll-location {
+  font-size: 22px;
+  margin-top: 20px;
+  color: #5c4033;
+}
+
+.scroll-line {
+  margin-bottom: 8px;
+}
+
+.write-span {
+  opacity: 0;
+  display: inline-block;
+  clip-path: inset(0 100% 0 0); /* clipped completely from the right */
+  will-change: opacity, clip-path;
+  white-space: nowrap;
+}
+.special-write {
+  opacity: 0;
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  will-change: opacity, clip-path;
+  white-space: nowrap;
+}
+
+.scroll-art-container {
+  margin-top: 50px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.couple-line-art {
+  opacity: 0;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.draw-line {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+.art-text-en {
+  /* Removed Caveat */
+  font-size: 22px;
+  color: #5c4033;
+}
+
+.golden-burst {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 1.5s, transform 1.5s var(--ease);
+  pointer-events: none;
+  left: 50%;
+  top: 50%;
+  margin-left: -100px;
+  margin-top: -120px;
+}
+.golden-burst.active {
+  opacity: 1;
+  transform: scale(3);
+}
+
+/* ═══ Scene 3: Timeline ═══ */
+.scene-timeline {
+  background: var(--cream);
+  min-height: auto;
+  padding: 80px 0;
+  position: relative;
+}
+.scene-timeline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/old-map.png");
+  opacity: 0.05;
+  pointer-events: none;
+}
+.timeline-header {
+  text-align: center;
+  padding: 0 28px;
+  margin-bottom: 64px;
+}
+.timeline-years {
+  /* Removed Playfair */
+  font-size: 84px;
+  font-weight: 700;
+  color: #5D1A1A; /* Deep Red */
+  line-height: 1;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+}
+.timeline-years-label {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 20px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+.timeline-line {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.timeline-line::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, transparent, var(--gold), #5D1A1A, var(--gold), transparent);
+  transform: translateX(-50%);
+  opacity: 0.4;
+}
+
+/* Milestone */
+.milestone {
+  position: relative;
+  padding: 32px 0;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.milestone.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.milestone-dot {
+  position: absolute;
+  left: 50%;
+  top: 44px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--cream);
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 0 0 4px var(--gold-glow);
+}
+.milestone-content {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin: 0 8px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(44, 36, 24, 0.08);
+}
+.milestone-content::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(207, 161, 68, 0.15);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.milestone-location {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #5D1A1A;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.milestone-text {
+  /* Removed Playfair */
+  font-size: 24px;
+  line-height: 1.6;
+  color: var(--text);
+  font-style: italic;
+}
+.milestone-quote {
+  /* Removed Caveat */
+  font-size: 24px;
+  color: #5D1A1A;
+  margin-top: 16px;
+  line-height: 1.4;
+}
+.milestone-img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 20px rgba(44,36,24,0.1);
+}
+
+/* ═══ Scene 4: The Church ═══ */
+.scene-church {
+  background: var(--cream-dark);
+  padding: 60px 28px;
+}
+.church-img {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  margin-bottom: 36px;
+  filter: sepia(0.2) contrast(1.1);
+  border: 4px solid #fff;
+}
+.church-text {
+  /* Removed Playfair */
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  max-width: 340px;
+  color: #2C2418;
+}
+.church-text em {
+  color: #5D1A1A;
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* ═══ Scene 5: AAMEN Moment ═══ */
+.scene-aamen {
+  background: radial-gradient(circle at center, #ffffff, #F5EDD6); /* Premium white/cream */
+  color: #3E2723;
+  position: relative;
+  overflow: hidden;
+}
+.scene-aamen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/dark-wood.png");
+  opacity: 0.1;
+  pointer-events: none;
+}
+.aamen-text-ml {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: #722F37; /* Deep wine/premium red */
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.8), -1px -1px 0px rgba(0,0,0,0.1); /* Letterpress emboss */
+}
+.aamen-body {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 15px;
+  text-align: center;
+  line-height: 2;
+  color: #3E2723;
+  margin-top: 28px;
+  z-index: 2;
+  position: relative;
+  max-width: 320px;
+}
+.aamen-body-en {
+  /* Removed Playfair */
+  font-style: italic;
+  font-size: 16px;
+  text-align: center;
+  line-height: 2;
+  color: #5D4037;
+  margin-top: 16px;
+  z-index: 2;
+  position: relative;
+  max-width: 320px;
+}
+.aamen-highlight {
+  /* Removed Playfair */
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: #8b6b4a;
+  margin-top: 32px;
+  z-index: 2;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+/* Particles */
+.particle {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  background: #8b6b4a; /* Darker gold/brown for light bg */
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 1;
+  animation: particle-fall linear infinite;
+}
+@keyframes particle-fall {
+  0% { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(100dvh) rotate(360deg); }
+}
+
+/* ═══ Scene 6: Invitation Details ═══ */
+.scene-invite {
+  background: var(--church-white);
+  padding: 60px 20px;
+}
+.invite-card {
+  background: #fff;
+  border: 1px solid #CFA144;
+  border-radius: 4px;
+  padding: 48px 28px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+.invite-card::before {
+  content: '☨';
+  display: block;
+  text-align: center;
+  font-size: 32px;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.invite-title-ml {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 24px;
+  text-align: center;
+  color: #5D1A1A;
+  font-weight: 700;
+}
+.invite-title-en {
+  /* Removed Playfair */
+  font-size: 16px;
+  text-align: center;
+  color: #5D1A1A;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  margin-bottom: 28px;
+  opacity: 0.8;
+}
+.invite-person {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.invite-person-name {
+  /* Removed Playfair */
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+}
+.invite-person-parents {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+.invite-amp {
+  /* Removed Playfair */
+  font-style: italic;
+  font-size: 22px;
+  text-align: center;
+  color: var(--gold);
+  margin: 20px 0;
+}
+.invite-divider {
+  width: 50px;
+  height: 1px;
+  background: var(--gold-light);
+  margin: 28px auto;
+}
+.invite-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--text);
+  margin: 12px 0;
+}
+.invite-detail-row .icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+.invite-detail-row strong {
+  font-weight: 600;
+}
+.invite-lunch {
+  /* Removed Playfair */
+  font-style: italic;
+  font-size: 14px;
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: 20px;
+}
+.invite-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  justify-content: center;
+}
+.invite-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.invite-btn--gold {
+  background: var(--gold);
+  color: #fff;
+}
+.invite-btn--gold:hover, .invite-btn--gold:active {
+  background: #b8943f;
+  transform: translateY(-1px);
+}
+.invite-btn--outline {
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid var(--gold-light);
+}
+.invite-btn--outline:hover, .invite-btn--outline:active {
+  background: var(--wine-soft);
+  border-color: var(--gold);
+}
+
+/* ═══ Scene 7: Closing ═══ */
+.scene-closing {
+  background: var(--cream);
+  min-height: 60dvh;
+}
+.closing-word {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+  opacity: 0;
+  /* GSAP will control transform and opacity */
+}
+.scene-closing.visible .closing-word {
+  opacity: 1;
+  transform: scale(1);
+}
+.closing-en {
+  /* Removed Caveat */
+  font-size: 24px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 12px;
+}
+.closing-sub {
+  /* Removed Playfair */
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* ═══ Sound Toggle ═══ */
+.sound-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(200,164,92,0.2);
+  color: var(--gold-light);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.3s;
+}
+.sound-toggle:active {
+  background: rgba(0,0,0,0.5);
+}
+
+/* ═══ Scroll Prompt ═══ */
+.scroll-prompt {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 1;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  animation: scroll-bounce-prompt 1.2s ease-in-out infinite;
+}
+@keyframes scroll-bounce-prompt {
+  0%,100% { transform: translate(-50%, 0); opacity: 0.4; }
+  50% { transform: translate(-50%, 20px); opacity: 1; }
+}
+.scroll-prompt.hidden { 
+  opacity: 0 !important; 
+  animation: none !important; 
+}
+.scroll-prompt-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffda75;
+  box-shadow: 0 0 10px rgba(255, 218, 117, 0.6);
+}
+.scroll-prompt-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffda75;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* ═══ Responsive ═══ */
+@media (min-width: 600px) {
+  .scene { padding: 80px 40px; }
+  .notice-board, .invite-card { padding: 56px 48px; }
+  .bell-text-ml { font-size: 56px; }
+  .notice-name { font-size: 38px; }
+  .timeline-years { font-size: 80px; }
+  .aamen-text-ml { font-size: 64px; }
+}
+
+/* Scratch & Reveal Styles */
+.invite-scratch-container {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 64px;
+  margin: 20px auto;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--church-white);
+  border: 1px solid rgba(139, 107, 74, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#scratchCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  cursor: pointer;
+  touch-action: none;
+  transition: opacity 0.5s;
+}
+.scratch-cover-text {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  font-size: 11px;
+  color: #3e2723;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+.gold-flake {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #f5edd6, #cfa144, #8b6b4a);
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 5px rgba(207,161,68,0.5);
+}
+.scratch-revealed-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.reveal-date {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--wine);
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+}
+.countdown-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  color: var(--wine);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ═══ ROLLED SEALED SCROLL COVER ═══ */
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+.rolled-scroll-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #1a0f0d;
+  display: flex;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.rolled-ambient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(139, 107, 74, 0.3) 0%, rgba(26, 15, 13, 1) 80%);
+  z-index: 1;
+}
+.rolled-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+.rolled-title-wrap {
+  text-align: center;
+}
+.rolled-title {
+  font-size: 64px;
+  font-weight: 700;
+  color: #ffda75;
+  text-shadow: 0 0 8px rgba(211,84,0,0.7), 0 0 15px rgba(230,126,34,0.5), 0 4px 5px rgba(0,0,0,0.9);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  animation: flicker 3s infinite alternate;
+}
+.rolled-sub {
+  color: #dcd7a0;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+}
+
+.rolled-cylinder-wrap {
+  position: relative;
+  width: 320px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+}
+
+.rolled-cylinder {
+  width: 100%;
+  height: 100%;
+  background-color: #e4d0a6;
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%),
+    linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.4) 100%),
+    url("https://www.transparenttextures.com/patterns/old-map.png");
+  border-radius: 8px; /* Slightly curved at the ends of the roll */
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 30px rgba(92, 64, 51, 0.8);
+}
+
+.cylinder-handle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #3e2723;
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%),
+    url("https://www.transparenttextures.com/patterns/dark-wood.png");
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.6);
+}
+.handle-left { left: -20px; border-right: 10px solid #2e1a14; }
+.handle-right { right: -20px; border-left: 10px solid #2e1a14; }
+
+.ribbon-vertical {
+  position: absolute;
+  width: 24px;
+  height: 100%;
+  background: #731e1e; /* Deep red ribbon */
+  background-image: linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 100%);
+  box-shadow: 2px 0 5px rgba(0,0,0,0.4), -2px 0 5px rgba(0,0,0,0.4);
+  z-index: 4;
+}
+
+.wax-seal {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, #9b2828 0%, #601414 70%, #3a0a0a 100%);
+  border-radius: 50% 45% 55% 48%; /* Irregular wax shape */
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.6), inset 2px 2px 4px rgba(255,255,255,0.2);
+}
+
+.wax-seal-ring {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(0,0,0,0.3);
+  border-radius: 50%;
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.1), 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.wax-seal-emblem {
+  color: #3a0a0a;
+  font-size: 28px;
+  text-shadow: -1px -1px 1px rgba(255,255,255,0.2), 1px 1px 1px rgba(0,0,0,0.6);
+}
+
+.wax-seal-text {
+  color: rgba(232, 213, 163, 0.8);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  animation: pulse-fade 2s infinite;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+@keyframes flicker {
+  0% { text-shadow: 0 0 10px rgba(255,152,0,0.6), 0 0 20px rgba(255,87,34,0.4); }
+  50% { text-shadow: 0 0 15px rgba(255,152,0,0.8), 0 0 25px rgba(255,87,34,0.6), 0 0 40px rgba(255, 87, 34, 0.3); }
+  100% { text-shadow: 0 0 8px rgba(255,152,0,0.5), 0 0 15px rgba(255,87,34,0.3); }
+}
+
+@media (max-width: 600px) {
+  .trad-amen-title { font-size: 60px; }
+  .trad-amen-sub { font-size: 16px; margin-bottom: 40px; }
+  .trad-cross { font-size: 45px; }
+  .trad-brass-handle { width: 12px; height: 70px; }
+  .kuruthola-decoration .leaf { border-left-width: 10px; border-right-width: 10px; border-top-width: 35px; }
+}
+
+.dust-mote {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: #ffda75;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+  filter: blur(1px);
+}
