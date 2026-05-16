@@ -108,11 +108,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     stagger: 0.2,
                     ease: "power2.inOut",
                     onComplete: function() {
-                      gsap.to('#artText', { opacity: 1, duration: 1 });
-                      var scrollPrompt = document.getElementById('scrollPrompt');
-                      if (scrollPrompt && !window.scrolledAlready) {
-                        scrollPrompt.classList.remove('hidden');
-                      }
+                      gsap.to('#artText', { 
+                        opacity: 1, 
+                        duration: 1,
+                        onComplete: function() {
+                          var scrollPrompt = document.getElementById('scrollPrompt');
+                          if (scrollPrompt && !window.scrolledAlready) {
+                            scrollPrompt.classList.remove('hidden');
+                          }
+                        }
+                      });
                     }
                   });
                 }
