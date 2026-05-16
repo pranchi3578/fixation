@@ -1,0 +1,704 @@
+/* ═══ AAMEN Design System ═══ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600&family=Noto+Serif+Malayalam:wght@400;600;700&display=swap');
+
+:root {
+  --gold: #C8A45C;
+  --gold-light: #E8D5A3;
+  --gold-glow: rgba(200,164,92,0.3);
+  --deep-green: #1B4332;
+  --cream: #FDF6E3;
+  --cream-dark: #F5EDD6;
+  --wine: #722F37;
+  --wine-soft: rgba(114,47,55,0.08);
+  --church-white: #FAF8F5;
+  --night: #1A1A2E;
+  --night-soft: #2D2D44;
+  --mist: rgba(255,255,255,0.06);
+  --text: #2C2418;
+  --text-muted: #6B5D4F;
+  --border: rgba(200,164,92,0.25);
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ Grain Overlay ═══ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══ Typography ═══ */
+.font-display { font-family: 'Playfair Display', serif; }
+.font-malayalam { font-family: 'Noto Serif Malayalam', serif; }
+.font-handwritten { font-family: 'Caveat', cursive; }
+
+/* ═══ Section Base ═══ */
+.scene {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 28px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.scene.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══ Scene 1: The Bell ═══ */
+.scene-bell {
+  background: var(--night);
+  color: var(--cream);
+  min-height: 100dvh;
+  overflow: hidden;
+}
+.bell-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bell-icon {
+  font-size: 72px;
+  filter: drop-shadow(0 0 40px var(--gold-glow));
+  animation: bell-idle 3s ease-in-out infinite;
+  transition: transform 0.15s;
+}
+.bell-icon.ringing {
+  animation: bell-ring 0.6s ease-in-out;
+}
+@keyframes bell-idle {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+@keyframes bell-ring {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(18deg); }
+  30% { transform: rotate(-15deg); }
+  45% { transform: rotate(12deg); }
+  60% { transform: rotate(-8deg); }
+  75% { transform: rotate(4deg); }
+  90% { transform: rotate(-2deg); }
+  100% { transform: rotate(0); }
+}
+.bell-text-ml {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+.bell-text-en {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gold-light);
+  opacity: 0.7;
+  text-align: center;
+  line-height: 1.7;
+  max-width: 260px;
+}
+.bell-tap {
+  font-size: 12px;
+  color: rgba(200,164,92,0.4);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 16px;
+  animation: pulse-fade 2s ease-in-out infinite;
+}
+@keyframes pulse-fade {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+.golden-burst {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 1.5s, transform 1.5s var(--ease);
+  pointer-events: none;
+}
+.golden-burst.active {
+  opacity: 1;
+  transform: scale(3);
+}
+
+/* ═══ Scene 2: The Names ═══ */
+.scene-names {
+  background: var(--cream);
+  padding: 40px 20px;
+}
+.notice-board {
+  background: var(--church-white);
+  border: 2px solid var(--gold-light);
+  border-radius: 4px;
+  padding: 48px 32px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(44,36,24,0.08), inset 0 0 80px rgba(200,164,92,0.04);
+  transform: rotate(-0.5deg);
+}
+.notice-board::before {
+  content: '✝';
+  display: block;
+  text-align: center;
+  font-size: 28px;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+.notice-pin {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.notice-pin--tl { top: 12px; left: 12px; }
+.notice-pin--tr { top: 12px; right: 12px; }
+.notice-pin--bl { bottom: 12px; left: 12px; }
+.notice-pin--br { bottom: 12px; right: 12px; }
+.notice-blessing {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+.notice-blessing-en {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.notice-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.notice-ampersand {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 24px;
+  text-align: center;
+  color: var(--gold);
+  margin: 16px 0;
+}
+.notice-label {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 14px;
+  text-align: center;
+  color: var(--wine);
+  margin-top: 32px;
+  letter-spacing: 0.05em;
+}
+.notice-label-en {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  text-align: center;
+  color: var(--wine);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 600;
+}
+.notice-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold-light);
+  margin: 24px auto;
+}
+.notice-details {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 2;
+}
+.notice-details span {
+  display: block;
+}
+
+/* ═══ Scene 3: Timeline ═══ */
+.scene-timeline {
+  background: var(--cream);
+  min-height: auto;
+  padding: 60px 0;
+}
+.timeline-header {
+  text-align: center;
+  padding: 0 28px;
+  margin-bottom: 48px;
+}
+.timeline-years {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.timeline-years-label {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+.timeline-line {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.timeline-line::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+  transform: translateX(-50%);
+}
+
+/* Milestone */
+.milestone {
+  position: relative;
+  padding: 32px 0;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s var(--ease);
+}
+.milestone.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.milestone-dot {
+  position: absolute;
+  left: 50%;
+  top: 44px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--cream);
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 0 0 4px var(--gold-glow);
+}
+.milestone-content {
+  background: var(--church-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin: 0 8px;
+  position: relative;
+}
+.milestone-location {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.milestone-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  font-style: italic;
+}
+.milestone-quote {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--wine);
+  margin-top: 16px;
+  line-height: 1.4;
+}
+.milestone-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 20px rgba(44,36,24,0.1);
+}
+
+/* ═══ Scene 4: The Church ═══ */
+.scene-church {
+  background: var(--cream-dark);
+  padding: 60px 28px;
+}
+.church-img {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 16px;
+  box-shadow: 0 12px 60px rgba(44,36,24,0.12);
+  margin-bottom: 36px;
+}
+.church-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  max-width: 340px;
+  color: var(--text);
+}
+.church-text em {
+  color: var(--wine);
+  font-style: italic;
+}
+
+/* ═══ Scene 5: AAMEN Moment ═══ */
+.scene-aamen {
+  background: linear-gradient(160deg, #2C2418, #1A1A2E 40%, #2C2418);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.scene-aamen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, var(--gold-glow) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 2s;
+}
+.scene-aamen.visible::before {
+  opacity: 1;
+}
+.aamen-text-ml {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  text-shadow: 0 0 60px var(--gold-glow);
+}
+.aamen-body {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 15px;
+  text-align: center;
+  line-height: 2;
+  color: var(--gold-light);
+  margin-top: 28px;
+  z-index: 2;
+  position: relative;
+  max-width: 320px;
+}
+.aamen-body-en {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  text-align: center;
+  line-height: 2;
+  color: rgba(232,213,163,0.7);
+  margin-top: 16px;
+  z-index: 2;
+  position: relative;
+  max-width: 320px;
+}
+.aamen-highlight {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--gold);
+  margin-top: 32px;
+  z-index: 2;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+/* Particles */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 1;
+  animation: particle-fall linear infinite;
+}
+@keyframes particle-fall {
+  0% { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(100dvh) rotate(360deg); }
+}
+
+/* ═══ Scene 6: Invitation Details ═══ */
+.scene-invite {
+  background: var(--church-white);
+  padding: 60px 20px;
+}
+.invite-card {
+  background: var(--cream);
+  border: 2px solid var(--gold-light);
+  border-radius: 4px;
+  padding: 48px 28px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+}
+.invite-card::before {
+  content: '✝';
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.invite-title-ml {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 20px;
+  text-align: center;
+  color: var(--wine);
+  font-weight: 700;
+}
+.invite-title-en {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  text-align: center;
+  color: var(--wine);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  margin-bottom: 28px;
+}
+.invite-person {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.invite-person-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+}
+.invite-person-parents {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+.invite-amp {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  text-align: center;
+  color: var(--gold);
+  margin: 20px 0;
+}
+.invite-divider {
+  width: 50px;
+  height: 1px;
+  background: var(--gold-light);
+  margin: 28px auto;
+}
+.invite-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--text);
+  margin: 12px 0;
+}
+.invite-detail-row .icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+.invite-detail-row strong {
+  font-weight: 600;
+}
+.invite-lunch {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: 20px;
+}
+.invite-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  justify-content: center;
+}
+.invite-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.invite-btn--gold {
+  background: var(--gold);
+  color: #fff;
+}
+.invite-btn--gold:hover, .invite-btn--gold:active {
+  background: #b8943f;
+  transform: translateY(-1px);
+}
+.invite-btn--outline {
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid var(--gold-light);
+}
+.invite-btn--outline:hover, .invite-btn--outline:active {
+  background: var(--wine-soft);
+  border-color: var(--gold);
+}
+
+/* ═══ Scene 7: Closing ═══ */
+.scene-closing {
+  background: var(--cream);
+  min-height: 60dvh;
+}
+.closing-word {
+  font-family: 'Noto Serif Malayalam', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1.5s var(--ease);
+}
+.scene-closing.visible .closing-word {
+  opacity: 1;
+  transform: scale(1);
+}
+.closing-en {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 12px;
+}
+.closing-sub {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* ═══ Sound Toggle ═══ */
+.sound-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200,164,92,0.2);
+  color: var(--gold-light);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.3s;
+}
+.sound-toggle:active {
+  background: rgba(0,0,0,0.5);
+}
+
+/* ═══ Scroll Prompt ═══ */
+.scroll-prompt {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 1;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.scroll-prompt.hidden { opacity: 0; }
+.scroll-prompt-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: scroll-bounce 1.5s ease-in-out infinite;
+}
+@keyframes scroll-bounce {
+  0%,100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+.scroll-prompt-text {
+  font-size: 10px;
+  color: var(--gold-light);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* ═══ Responsive ═══ */
+@media (min-width: 600px) {
+  .scene { padding: 80px 40px; }
+  .notice-board, .invite-card { padding: 56px 48px; }
+  .bell-text-ml { font-size: 56px; }
+  .notice-name { font-size: 38px; }
+  .timeline-years { font-size: 80px; }
+  .aamen-text-ml { font-size: 72px; }
+}
