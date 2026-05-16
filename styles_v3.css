@@ -428,6 +428,7 @@ body {
 /* Particles */
 .particle {
   position: absolute;
+  top: 0;
   width: 4px;
   height: 4px;
   background: #8b6b4a; /* Darker gold/brown for light bg */
@@ -639,7 +640,7 @@ body {
 /* ═══ Scroll Prompt ═══ */
 .scroll-prompt {
   position: fixed;
-  bottom: 24px;
+  bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 90;
@@ -653,22 +654,27 @@ body {
   animation: scroll-bounce-prompt 1.2s ease-in-out infinite;
 }
 @keyframes scroll-bounce-prompt {
-  0%,100% { transform: translate(-50%, 0); opacity: 0.6; }
-  50% { transform: translate(-50%, 15px); opacity: 1; }
+  0%,100% { transform: translate(-50%, 0); opacity: 0.4; }
+  50% { transform: translate(-50%, 20px); opacity: 1; }
 }
-.scroll-prompt.hidden { opacity: 0; }
+.scroll-prompt.hidden { 
+  opacity: 0 !important; 
+  animation: none !important; 
+}
 .scroll-prompt-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--gold);
+  background: #ffda75;
+  box-shadow: 0 0 10px rgba(255, 218, 117, 0.6);
 }
 .scroll-prompt-text {
-  font-size: 10px;
-  color: var(--gold-light);
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffda75;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.9;
 }
 
 /* ═══ Responsive ═══ */
@@ -686,13 +692,12 @@ body {
   position: relative;
   width: 100%;
   max-width: 320px;
-  height: 80px;
-  margin: 12px auto;
-  border-radius: 8px;
+  height: 64px;
+  margin: 20px auto;
+  border-radius: 4px;
   overflow: hidden;
   background: var(--church-white);
-  border: 2px solid #8b6b4a; /* Darker border for gold leaf */
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  border: 1px solid rgba(139, 107, 74, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -712,17 +717,11 @@ body {
   position: absolute;
   z-index: 6;
   pointer-events: none;
-  /* Removed Playfair */
-  font-size: 14px;
-  color: var(--wine);
+  font-size: 11px;
+  color: #3e2723;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-  background: rgba(26, 15, 13, 0.85); /* Dark background to contrast with gold */
-  color: var(--gold-light);
-  padding: 6px 16px;
-  border-radius: 4px;
-  border: 1px solid rgba(207,161,68,0.5);
+  letter-spacing: 0.25em;
+  font-weight: 600;
   transition: opacity 0.3s;
 }
 .gold-flake {

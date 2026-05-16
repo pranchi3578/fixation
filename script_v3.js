@@ -50,8 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // ─── Church Doors Reveal (Amen Theme) ───
   var coverLetter = document.getElementById('coverLetter');
   if (coverLetter && typeof gsap !== 'undefined') {
-    coverLetter.addEventListener('click', function() {
-      // 1. Start music immediately on tap
+    var coverOpened = false;
+    function openCover() {
+      if (coverOpened) return;
+      coverOpened = true;
+
+      // 1. Start music immediately
       startMusic();
 
       // Break seal animation
@@ -112,10 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         opacity: 1, 
                         duration: 1,
                         onComplete: function() {
-                          var scrollPrompt = document.getElementById('scrollPrompt');
-                          if (scrollPrompt && !window.scrolledAlready) {
-                            scrollPrompt.classList.remove('hidden');
-                          }
+                          setTimeout(function() {
+                            var scrollPrompt = document.getElementById('scrollPrompt');
+                            if (scrollPrompt && !window.scrolledAlready) {
+                              scrollPrompt.classList.remove('hidden');
+                            }
+                          }, 800); // Pause for 0.8s so user can read the text before being nudged
                         }
                       });
                     }
@@ -135,7 +141,14 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         }
       });
-    });
+    }
+
+    coverLetter.addEventListener('click', openCover);
+    window.addEventListener('wheel', openCover);
+    window.addEventListener('touchmove', function(e) {
+      // Optional: only trigger if swiping up
+      openCover();
+    }, { passive: true });
   }
 
   // ─── GSAP ScrollTrigger: Reveal on Scroll ───
