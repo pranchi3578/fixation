@@ -496,15 +496,11 @@ footer {
 }
 .slot .sub { grid-column: 2; color: var(--ink-3); font-size: 0.8125rem; line-height: 1.6; }
 
-/* ═══ PAIRED PLATES ═══════════════════════════════════════════ */
-.pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(10px, 2.4vw, 20px);
-  max-width: 46rem;
-  margin-inline: auto;
-}
-.pair .frame { aspect-ratio: 4 / 5; }
+/* ═══ THE LAST PHOTOGRAPH ═════════════════════════════════════ */
+/* One frame, held to the width of the invitation card so it reads as a
+   deliberate closing plate rather than a stray image. */
+.plate-end { max-width: 31rem; margin-inline: auto; }
+.plate-end .frame { aspect-ratio: 4 / 5; }
 
 /* ═══ SIGN-OFF ════════════════════════════════════════════════ */
 .signoff {
@@ -529,24 +525,6 @@ footer {
 }
 
 /* ── dress code ─────────────────────────────────────────────── */
-.dress {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(24px, 5vw, 38px);
-  max-width: 42rem;
-  margin-inline: auto;
-  margin-top: clamp(30px, 7vw, 46px);
-}
-@media (min-width: 620px) { .dress { grid-template-columns: 1fr 1fr; } }
-
-.dress-col { display: flex; flex-direction: column; gap: 8px; }
-.dress-col .h { 
-  font-family: var(--display);
-  font-size: 1.125rem;
-  letter-spacing: 0.06em;
-}
-.dress-col p { color: var(--ink-2); font-size: 0.9375rem; line-height: 1.7; }
-
 .swatches {
   display: flex;
   gap: 8px;
