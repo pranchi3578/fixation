@@ -1,10 +1,6 @@
 # Chungking Express — Design Plan
 ### Joel Francis Jose & Sandra Binoy · Wedding · വിവാഹം
-
-> **Open item.** The ceremony details in this document are carried over from
-> the v4 fixation invite and are placeholders. The wedding date, the church
-> and Nuptial Mass time, and the reception venue all need confirming before
-> P2. Names and parents are correct as written.
+### Saturday 7 November 2026 · Ponkunnam Church, 3:30 PM · Base 11, Pala
 
 ---
 
@@ -24,7 +20,7 @@ invitation **resolve** each one. That resolution is the concept.
 
 | Film | Invitation | |
 |---|---|---|
-| Pineapple cans stamped *expires May 1* | The date carries a rubber-stamp block: `[ DATE ]`, and under it in the same face, `EXPIRES — NEVER` | **ship** |
+| Pineapple cans stamped *expires May 1* | The date carries a rubber-stamp block: `7 November 2026`, and under it in the same face, `EXPIRES — NEVER` | **ship** |
 | "At our closest, we were 0.01 cm apart" | Hero: the two names on one line, the gap closing to a hairline on scroll | **ship** |
 | Faye's hand-drawn boarding pass | Save-the-date and Directions as the two stubs of a drawn pass | **ship** |
 | *California Dreamin'* on loop | The existing Amen track. Muted by default, one tap, loops forever | **ship** |
@@ -272,14 +268,18 @@ New files, so v4 stays live and the two are A/B-able.
 
 | Phase | Deliverable |
 |---|---|
-| **P1** | `styles_ce.css` — tokens, type scale, reset, reduced-motion block |
-| **P2** | `index_ce.html` — full markup and copy, readable with zero JS *(blocked on the ceremony details)* |
-| **P3** | Step-print hero and the 0.01 cm close — CSS only |
-| **P4** | `script_ce.js` — peel canvas, audio gesture, ScrollTrigger |
-| **P5** | Boarding-pass SVG and the ink-in |
-| **P6** | Asset triage, OG card from `bouquet.webp`, 320 / 360 / 414 and iOS Safari pass |
+| **P0** | The grade — `tools/grade.py`, `assets/ce/` · **done** |
+| **P1** | `styles_ce.css` — tokens, type scale, reset, reduced-motion block · **done** |
+| **P2** | `index_ce.html` — full markup and copy, readable with zero JS · **done** |
+| **P3** | Step-print hero and the 0.01 cm close — CSS only · **done** |
+| **P4** | `script_ce.js` — peel canvas, audio gesture, scene reveals · **done** |
+| **P5** | Boarding-pass line and the ink-in · **done** |
+| **P6** | Asset triage, OG card from `bouquet.webp`, real-device iOS Safari pass |
 
-Done: the grade (`tools/grade.py`, `assets/ce/`).
+**GSAP is gone.** The reveals and the 0.01 cm close run on
+`IntersectionObserver`; the ink-in is a `stroke-dashoffset` transition. That
+removes two CDN scripts from the critical path and one more thing that can
+fail offline. The page is fully readable with `script_ce.js` deleted.
 
 ---
 
@@ -290,15 +290,16 @@ Done: the grade (`tools/grade.py`, `assets/ce/`).
 > **Hero** — Joel · Sandra
 > `AT OUR CLOSEST, WE WERE 0.01 CM APART`
 >
-> **Date** — `[ DATE ]` / `EXPIRES — NEVER`
+> **Date** — `7 NOVEMBER 2026` / `EXPIRES — NEVER`
 >
 > **The board** —
 > വിവാഹം · Wedding
 > Joel Francis Jose — son of T.C. Joseph & Tessy Mol Mathew
 > Sandra Binoy — daughter of Binoy Abraham & Ranju Binoy
-> Nuptial Mass — `[ church, date, time ]`
-> Reception — `[ venue, time ]`
+> Nuptial Mass — Ponkunnam Church, 3:30 PM
+> Reception — Base 11, Pala
 >
-> **The pass** — `[ PLACE ] · [ TIME ] · SEAT: YOURS`
+> **The pass** — `PONKUNNAM · 15:30 · SEAT: YOURS`
+> `BASE 11 · PALA · DINNER TO FOLLOW`
 >
 > **Close** — ആമേൻ / *Amen.* / "So be it."

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Joel &amp; Sandra — Wedding</title>
+  <meta name="description" content="The wedding of Joel Francis Jose and Sandra Binoy. Nuptial Mass at Ponkunnam Church, reception at Base 11, Pala.">
+
+  <meta property="og:title" content="Joel &amp; Sandra — Wedding" />
+  <meta property="og:description" content="At our closest, we were 0.01 cm apart." />
+  <meta property="og:image" content="https://pranchi3578.github.io/fixation/assets/ce/bouquet.webp" />
+  <meta property="og:url" content="https://pranchi3578.github.io/fixation/index_ce.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Joel &amp; Sandra — Wedding" />
+  <meta name="twitter:description" content="At our closest, we were 0.01 cm apart." />
+  <meta name="theme-color" content="#0B0F10">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles_ce.css">
+</head>
+
+<body class="is-sealed">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       COVER — their own sign, quoted once
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="cover" id="cover">
+    <p class="cover-neon">Will you marry me?</p>
+    <p class="cover-answer">She said yes</p>
+    <button class="cover-seal" id="seal" aria-label="Open the invitation">&#10022;</button>
+    <p class="label cover-hint">Tap to open</p>
+  </div>
+
+  <button class="sound" id="sound" type="button" aria-pressed="false" aria-label="Play music" hidden>&#9834;</button>
+
+  <main id="invitation">
+
+    <!-- ═══ 01 · 0.01 CM ═══════════════════════════════════════ -->
+    <section class="scene hero reveal" id="scene-hero">
+      <div class="plate">
+        <img src="assets/ce/bouquet-smear.webp"
+             srcset="assets/ce/bouquet-smear-900.webp 900w, assets/ce/bouquet-smear.webp 1500w"
+             sizes="100vw"
+             alt="Joel and Sandra at the proposal, holding a bouquet of red roses beneath a heart of white flowers, sparklers burning at the left of frame."
+             fetchpriority="high" width="1500" height="859">
+      </div>
+      <div class="wrap">
+        <div class="hero-inner">
+          <h1 class="names">
+            <span class="n n-left">Joel</span>
+            <span class="amp">&amp;</span>
+            <span class="n n-right">Sandra</span>
+          </h1>
+          <p class="label hero-sub">At our closest, we were 0.01 cm apart</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 02 · THE DATE, STAMPED ═════════════════════════════ -->
+    <section class="scene date-scene reveal" id="scene-date">
+      <div class="plate">
+        <img src="assets/ce/proposal.webp"
+             srcset="assets/ce/proposal-900.webp 900w, assets/ce/proposal.webp 1079w"
+             sizes="100vw" loading="lazy" width="1079" height="715"
+             alt="Joel on one knee under strung bulbs, sparklers to the left, a neon sign reading Will you marry me glowing inside a heart of white roses.">
+      </div>
+      <div class="wrap">
+        <div class="date-block">
+          <p class="label">The date</p>
+
+          <div class="peel" id="peel">
+            <p class="stamp">
+              <span class="d" id="dateText">To be announced</span>
+              <span class="e">Expires &mdash; never</span>
+            </p>
+            <canvas id="peelCanvas" aria-hidden="true"></canvas>
+            <span class="peel-face" id="peelFace">Scratch to reveal</span>
+          </div>
+
+          <a class="btn" id="calendar" href="#" aria-disabled="true">Save the date</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 03 · THE BOARD ═════════════════════════════════════ -->
+    <section class="scene reveal" id="scene-board">
+      <div class="plate plate--quiet">
+        <img src="assets/ce/bouquet.webp"
+             srcset="assets/ce/bouquet-900.webp 900w, assets/ce/bouquet.webp 1500w"
+             sizes="100vw" loading="lazy" width="1500" height="859" alt="">
+      </div>
+      <div class="wrap">
+        <div class="board">
+          <div class="board-title">
+            <p class="label">With the blessings of both families</p>
+            <p class="ml" lang="ml">വിവാഹം</p>
+          </div>
+
+          <div class="people">
+            <div class="person">
+              <p class="who">Joel Francis Jose</p>
+              <p class="of">son of T.C. Joseph &amp; Tessy Mol Mathew</p>
+            </div>
+            <span class="amp" aria-hidden="true">&amp;</span>
+            <div class="person">
+              <p class="who">Sandra Binoy</p>
+              <p class="of">daughter of Binoy Abraham &amp; Renju Binoy</p>
+            </div>
+          </div>
+
+          <hr class="rule">
+
+          <div class="events">
+            <div class="event">
+              <p class="what">Nuptial Mass</p>
+              <p class="where">Ponkunnam Church</p>
+              <p class="when">3:30 PM</p>
+            </div>
+            <div class="event">
+              <p class="what">Reception</p>
+              <p class="where">Base 11, Pala</p>
+              <p class="when">To follow</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 04 · THE PASS ══════════════════════════════════════ -->
+    <section class="scene reveal" id="scene-pass">
+      <div class="wrap">
+        <div class="pass">
+          <div class="pass-main">
+            <p class="pass-route">Ponkunnam &middot; 15:30 &middot; Seat: yours</p>
+            <svg class="pass-hand" viewBox="0 0 300 44" role="img"
+                 aria-label="A hand-drawn line from the church to the reception.">
+              <path id="inkLine" d="M10 30 C 62 10, 118 36, 172 18 S 250 10, 276 22" />
+              <path d="M266 14 L 278 22 L 265 29" />
+              <circle cx="10" cy="30" r="3.4" fill="#171513" stroke="none" />
+            </svg>
+            <p class="pass-route">Base 11 &middot; Pala &middot; Dinner to follow</p>
+          </div>
+          <div class="pass-stub">
+            <a class="btn btn--filled" href="https://www.google.com/maps/search/?api=1&amp;query=Ponkunnam%20Church%2C%20Kottayam"
+               target="_blank" rel="noopener">Church</a>
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Base%2011%2C%20Pala%2C%20Kottayam"
+               target="_blank" rel="noopener">Reception</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 05 · THE CLOSE ═════════════════════════════════════ -->
+    <section class="scene close reveal" id="scene-close">
+      <div class="plate">
+        <img src="assets/ce/heart.webp"
+             srcset="assets/ce/heart-900.webp 900w, assets/ce/heart.webp 1080w"
+             sizes="100vw" loading="lazy" width="1080" height="735"
+             alt="Joel and Sandra together beside the flower heart and the neon sign after the proposal.">
+      </div>
+      <div class="wrap">
+        <div class="close-inner">
+          <p class="ml" lang="ml">ആമേൻ</p>
+          <p class="en">Amen.</p>
+          <p class="label so">&ldquo;So be it.&rdquo;</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <audio id="track" src="song_trimmed.mp3" loop preload="none"></audio>
+  <script src="script_ce.js" defer></script>
+</body>
+
+</html>

@@ -166,6 +166,8 @@
     gap: 6px;
   }
   .open .label { color: var(--alarm); }
+  .open.shipped { border-color: var(--jade-lit); }
+  .open.shipped .label { color: var(--jade-lit); }
 
   /* ── sections ───────────────────────────────────────────────── */
   section {
@@ -376,13 +378,13 @@
       </div>
     </div>
 
-    <p class="label" style="padding-top:16px;">Design direction · Wedding invitation · Rev 02</p>
+    <p class="label" style="padding-top:16px;">Design direction · Wedding invitation · Rev 03 · built</p>
     <h1>Chungking Express</h1>
     <p class="deck">A film about near-misses that almost become meetings — borrowed for the one document where the near-miss finally lands.</p>
 
-    <div class="open">
-      <p class="label">Open item — blocks P2</p>
-      <p>Rev 01 described a fixation ceremony. This is a <strong>wedding invitation</strong>, so every ceremony detail below is a placeholder: the date, the church and Nuptial Mass time, and the reception venue all need confirming. Names and parents are correct as written.</p>
+    <div class="open shipped">
+      <p class="label">Built</p>
+      <p>The invitation is live in the repo as <code>index_ce.html</code>, <code>styles_ce.css</code> and <code>script_ce.js</code>, on branch <code>claude/chungking-express-invitation-4499fv</code>. v4 is untouched, so the two are A/B-able.</p>
     </div>
 
     <div class="facts">
@@ -396,11 +398,11 @@
       </div>
       <div class="fact">
         <p class="label">Date</p>
-        <p class="v tbc">To confirm</p>
+        <p class="v">Sat 7 Nov 2026</p>
       </div>
       <div class="fact">
         <p class="label">Church &amp; reception</p>
-        <p class="v tbc">To confirm</p>
+        <p class="v">Ponkunnam Church, 3:30 PM<br>Base 11, Pala</p>
       </div>
     </div>
   </header>
@@ -616,7 +618,7 @@
       </div>
       <div class="device">
         <p class="cap">Device 02 — no expiry date</p>
-        <p class="stamp"><span class="d">[ &nbsp;DATE&nbsp; ]</span><span class="e">Expires — never</span></p>
+        <p class="stamp"><span class="d">7 Nov 2026</span><span class="e">Expires — never</span></p>
         <p class="cap mid">Alarm red, appearance 1 of 2</p>
       </div>
       <div class="device">
@@ -698,14 +700,15 @@
       <h2>Build</h2>
     </div>
     <p>New files throughout, so v4 stays live and the two are A/B-able.</p>
+    <p class="note cool"><strong>GSAP is gone.</strong> The scene reveals and the 0.01 cm close run on <code>IntersectionObserver</code>; the ink-in is a <code>stroke-dashoffset</code> transition. That removes two CDN scripts from the critical path and one more thing that can fail offline — and the page stays fully readable with <code>script_ce.js</code> deleted.</p>
     <div class="phases bleed">
       <div class="phase done"><span class="p">P0</span><span class="d">The grade — <code>tools/grade.py</code>, <code>assets/ce/</code> &nbsp;·&nbsp; done</span></div>
-      <div class="phase"><span class="p">P1</span><span class="d"><code>styles_ce.css</code> — tokens, type scale, reset, reduced-motion block</span></div>
-      <div class="phase"><span class="p">P2</span><span class="d"><code>index_ce.html</code> — full markup and copy, readable with zero JS &nbsp;·&nbsp; <span style="color:var(--alarm)">blocked on the ceremony details</span></span></div>
-      <div class="phase"><span class="p">P3</span><span class="d">Step-print headline and the 0.01 cm close — CSS only</span></div>
-      <div class="phase"><span class="p">P4</span><span class="d"><code>script_ce.js</code> — peel canvas, audio gesture, ScrollTrigger</span></div>
-      <div class="phase"><span class="p">P5</span><span class="d">Boarding-pass SVG and the ink-in</span></div>
-      <div class="phase"><span class="p">P6</span><span class="d">Asset triage, OG card from the hero frame, 320 / 360 / 414 and iOS Safari pass</span></div>
+      <div class="phase done"><span class="p">P1</span><span class="d"><code>styles_ce.css</code> — tokens, type scale, reset, reduced-motion block &nbsp;·&nbsp; done</span></div>
+      <div class="phase done"><span class="p">P2</span><span class="d"><code>index_ce.html</code> — full markup and copy, readable with zero JS &nbsp;·&nbsp; done</span></div>
+      <div class="phase done"><span class="p">P3</span><span class="d">Step-print headline and the 0.01 cm close — CSS only &nbsp;·&nbsp; done</span></div>
+      <div class="phase done"><span class="p">P4</span><span class="d"><code>script_ce.js</code> — peel canvas, audio gesture, scene reveals &nbsp;·&nbsp; done</span></div>
+      <div class="phase done"><span class="p">P5</span><span class="d">Boarding-pass line and the ink-in &nbsp;·&nbsp; done</span></div>
+      <div class="phase"><span class="p">P6</span><span class="d">Asset triage, OG card, and a pass on a real iOS device</span></div>
     </div>
   </section>
 
@@ -717,15 +720,15 @@
     <div class="deckcard bleed">
       <div class="row"><span class="k">Cover</span><span class="val mono">Tap to open</span></div>
       <div class="row"><span class="k">Hero</span><span class="val">Joel &nbsp;·&nbsp; Sandra</span><span class="val mono">At our closest, we were 0.01 cm apart</span></div>
-      <div class="row"><span class="k">Date</span><span class="val mono"><span class="tbc">[ date ]</span> &nbsp;/&nbsp; Expires — never</span></div>
-      <div class="row"><span class="k">The board</span><span class="val ml" lang="ml">വിവാഹം</span><span class="val">Wedding<br>Joel Francis Jose — son of T.C. Joseph &amp; Tessy Mol Mathew<br>Sandra Binoy — daughter of Binoy Abraham &amp; Ranju Binoy<br><span class="tbc">Nuptial Mass — [ church, date, time ]</span><br><span class="tbc">Reception — [ venue, time ]</span></span></div>
-      <div class="row"><span class="k">The pass</span><span class="val mono tbc">[ place ] · [ time ] · Seat: yours</span></div>
+      <div class="row"><span class="k">Date</span><span class="val mono">7 November 2026 &nbsp;/&nbsp; Expires — never</span></div>
+      <div class="row"><span class="k">The board</span><span class="val ml" lang="ml">വിവാഹം</span><span class="val">Wedding<br>Joel Francis Jose — son of T.C. Joseph &amp; Tessy Mol Mathew<br>Sandra Binoy — daughter of Binoy Abraham &amp; Ranju Binoy<br>Nuptial Mass — Ponkunnam Church, 3:30 PM<br>Reception — Base 11, Pala</span></div>
+      <div class="row"><span class="k">The pass</span><span class="val mono">Ponkunnam · 15:30 · Seat: yours</span></div>
       <div class="row"><span class="k">Close</span><span class="val ml" lang="ml">ആമേൻ</span><span class="val"><em>Amen.</em> — "So be it."</span></div>
     </div>
   </section>
 
   <footer>
-    <p class="label">Rev 02 · branch claude/chungking-express-invitation-4499fv</p>
+    <p class="label">Rev 03 · built · branch claude/chungking-express-invitation-4499fv</p>
     <p class="label" style="color:var(--jade-lit);">Somehow everything comes with an expiry date. Not this.</p>
   </footer>
 

@@ -1,0 +1,448 @@
+/* ═══════════════════════════════════════════════════════════════
+   Joel & Sandra — wedding invitation
+   Chungking Express direction · see docs/chungking-express-design-plan.md
+
+   Dark-committed by intent: this is an evening object. Every surface is
+   painted explicitly so it holds on any host background.
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400&family=Noto+Serif+Malayalam:wght@400;600&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  /* ── ground: 70% of the page ── */
+  --night:        #0B0F10;
+  --night-2:      #141A1B;
+  --night-3:      #1D2526;
+  --line:         #232C2D;
+
+  /* ── the warm source: 20% ── */
+  --tungsten:     #E8A33D;
+  --tungsten-soft:#F3D9A8;
+
+  /* ── the cool ambient: 8% ── */
+  --jade:         #1F5F52;
+  --rain:         #7E979B;
+
+  /* ── the single alarm: 2%, exactly twice on the page ── */
+  --alarm:        #D8412F;
+
+  /* ── the one paper moment ── */
+  --paper:        #EFE9DD;
+  --paper-ink:    #171513;
+
+  --display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --ml: 'Noto Serif Malayalam', 'Cormorant Garamond', serif;
+
+  --t-display-1: clamp(2.4rem, 11vw, 4.4rem);
+  --t-display-2: clamp(1.5rem, 6.5vw, 2.4rem);
+  --t-body:      clamp(1rem, 4.2vw, 1.125rem);
+  --t-stamp:     0.6875rem;
+
+  --gutter: 20px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--tungsten-soft);
+  font-family: var(--display);
+  font-size: var(--t-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Locked only while the cover is up; JS removes it on open. */
+body.is-sealed { overflow: hidden; height: 100dvh; }
+
+img { max-width: 100%; display: block; }
+
+/* The document default 1em margin fights every flex `gap` below it. */
+p, h1, h2, figure { margin: 0; }
+
+/* ── shared type roles ──────────────────────────────────────── */
+.label {
+  font-family: var(--mono);
+  font-size: var(--t-stamp);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rain);
+  margin: 0;
+}
+.ml { font-family: var(--ml); }
+
+/* ═══ COVER ═══════════════════════════════════════════════════ */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--night);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  padding-inline: var(--gutter);
+  padding-block: 40px;
+  text-align: center;
+  transition: opacity 620ms var(--ease), visibility 620ms;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60ch 40ch at 50% 38%, rgba(232, 163, 61, .10), transparent 70%),
+    radial-gradient(50ch 40ch at 50% 100%, rgba(31, 95, 82, .16), transparent 70%);
+  pointer-events: none;
+}
+.cover.is-open { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* Their own sign, quoted once. */
+.cover-neon {
+  position: relative;
+  font-size: clamp(1.6rem, 8vw, 2.6rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+  color: #FFF3D6;
+  text-shadow:
+    0 0 6px rgba(232, 163, 61, .90),
+    0 0 22px rgba(232, 163, 61, .55),
+    0 0 48px rgba(216, 65, 47, .30);
+  animation: neon-warmup 1000ms steps(1, end) 300ms 1 both;
+}
+@keyframes neon-warmup {
+  0%, 20%  { opacity: .18; text-shadow: none; }
+  21%, 34% { opacity: 1; }
+  35%, 47% { opacity: .28; text-shadow: none; }
+  48%, 100%{ opacity: 1; }
+}
+
+.cover-answer {
+  position: relative;
+  font-family: var(--mono);
+  font-size: var(--t-stamp);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--tungsten);
+  opacity: 0;
+  animation: fade-up 700ms var(--ease) 1500ms both;
+}
+
+/* The seal — appearance 2 of 2 for --alarm. */
+.cover-seal {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 1.5px solid var(--alarm);
+  background: none;
+  color: var(--alarm);
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  animation: fade-up 700ms var(--ease) 2000ms both;
+  transition: transform 320ms var(--ease), box-shadow 320ms var(--ease);
+}
+.cover-seal:hover,
+.cover-seal:focus-visible { transform: scale(1.04); box-shadow: 0 0 34px rgba(216, 65, 47, .35); }
+.cover-seal::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 65, 47, .38);
+}
+
+.cover-hint {
+  position: relative;
+  opacity: 0;
+  animation: fade-up 700ms var(--ease) 2300ms both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ═══ SOUND ═══════════════════════════════════════════════════ */
+.sound {
+  position: fixed;
+  right: var(--gutter);
+  bottom: calc(var(--gutter) + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(11, 15, 16, .82);
+  backdrop-filter: blur(8px);
+  color: var(--rain);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: color 240ms, border-color 240ms;
+}
+.sound[aria-pressed="true"] { color: var(--tungsten); border-color: var(--tungsten); }
+.sound[hidden] { display: none !important; }
+
+/* ═══ SCENE SHELL ═════════════════════════════════════════════ */
+.wrap {
+  padding-inline: var(--gutter);
+  padding-block: 0;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.scene {
+  position: relative;
+  padding-block: clamp(72px, 16vw, 132px);
+}
+.scene + .scene { border-top: 1px solid var(--line); }
+
+/* A photograph behind a scene, always under a night scrim. */
+.plate { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.plate img { width: 100%; height: 100%; object-fit: cover; }
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    var(--night) 0%, rgba(11, 15, 16, .62) 22%,
+    rgba(11, 15, 16, .68) 78%, var(--night) 100%);
+}
+.plate--quiet img { opacity: .12; filter: blur(1.5px); }
+.plate--quiet::after { background: rgba(11, 15, 16, .58); }
+.scene > .wrap { position: relative; z-index: 1; }
+
+/* ═══ 01 · HERO — 0.01 cm ═════════════════════════════════════ */
+.hero { min-height: 82dvh; display: flex; align-items: flex-end; }
+.hero .plate img { object-position: 62% center; }
+
+.hero-inner { display: flex; flex-direction: column; gap: 18px; width: 100%; }
+
+.names {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-size: var(--t-display-1);
+  font-weight: 300;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0;
+}
+.names .n { display: inline-block; }
+.names .amp { color: var(--tungsten); padding-inline: 0.32em; }
+
+/* The gap closes. 24px apart → 0.01 cm apart. */
+.names .n-left  { transform: translateX(-14px); }
+.names .n-right { transform: translateX(14px); }
+.is-close .names .n-left,
+.is-close .names .n-right {
+  transform: translateX(0);
+  transition: transform 700ms var(--ease);
+}
+
+.hero-sub { color: var(--tungsten-soft); }
+
+/* ═══ 02 · THE DATE, STAMPED ══════════════════════════════════ */
+.date-scene { text-align: center; }
+.date-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.peel {
+  position: relative;
+  width: min(100%, 20rem);
+  aspect-ratio: 3 / 2;
+  display: grid;
+  place-items: center;
+  background: var(--night-2);
+  border: 1px solid var(--line);
+}
+.peel canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  transition: opacity 500ms var(--ease);
+}
+.peel.is-open canvas { opacity: 0; pointer-events: none; }
+
+.peel-face {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: var(--t-stamp);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--night);
+  pointer-events: none;
+  transition: opacity 300ms;
+}
+.peel.is-open .peel-face { opacity: 0; }
+
+/* The stamp: appearance 1 of 2 for --alarm. */
+.stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 22px 12px;
+  border: 2px solid var(--alarm);
+  color: var(--alarm);
+  font-family: var(--mono);
+  line-height: 1.25;
+  transform: rotate(-3.2deg);
+}
+.stamp .d {
+  font-size: clamp(1.15rem, 5.5vw, 1.5rem);
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+.stamp .e { font-size: 0.625rem; letter-spacing: 0.22em; }
+
+/* ═══ 03 · THE BOARD ══════════════════════════════════════════ */
+.board { display: flex; flex-direction: column; gap: 30px; }
+
+.board-title { display: flex; flex-direction: column; gap: 4px; }
+.board-title .ml { font-size: var(--t-display-2); line-height: 1.35; color: #fff; }
+
+.people { display: flex; flex-direction: column; gap: 22px; }
+.person { display: flex; flex-direction: column; gap: 2px; }
+.person .who { font-size: clamp(1.5rem, 6.5vw, 2rem); font-weight: 400; line-height: 1.2; color: #fff; }
+.person .of { font-size: 1rem; font-style: italic; color: var(--rain); }
+.people .amp { font-size: 1.4rem; color: var(--tungsten); line-height: 1; }
+
+.rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+.events { display: flex; flex-direction: column; gap: 24px; }
+.event { display: grid; grid-template-columns: 1fr; gap: 3px; }
+.event .what { color: var(--tungsten); font-size: 1.0625rem; }
+.event .where { color: #fff; font-size: clamp(1.25rem, 5.5vw, 1.5rem); line-height: 1.25; }
+.event .when { font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--tungsten-soft); }
+
+/* ═══ 04 · THE PASS ═══════════════════════════════════════════ */
+.pass {
+  background: var(--paper);
+  color: var(--paper-ink);
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+}
+@media (min-width: 480px) { .pass { grid-template-columns: 1.35fr 1fr; } }
+
+.pass-main { padding: 26px 22px; display: flex; flex-direction: column; gap: 16px; }
+.pass-route {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6C635A;
+}
+.pass-hand { width: 100%; height: auto; }
+.pass-hand path { stroke: var(--paper-ink); stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+.pass-stub {
+  border-top: 1px dashed rgba(23, 21, 19, .34);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+@media (min-width: 480px) {
+  .pass-stub { border-top: 0; border-left: 1px dashed rgba(23, 21, 19, .34); }
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  min-height: 46px;
+  font-family: var(--mono);
+  font-size: var(--t-stamp);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--paper-ink);
+  color: var(--paper-ink);
+  transition: background-color 220ms, color 220ms;
+}
+.btn:hover, .btn:focus-visible { background: var(--paper-ink); color: var(--paper); }
+.btn--filled { background: var(--paper-ink); color: var(--paper); }
+.btn--filled:hover, .btn--filled:focus-visible { background: none; color: var(--paper-ink); }
+.btn[aria-disabled="true"] {
+  border-style: dashed;
+  color: #7A7168;
+  border-color: #A79E93;
+  pointer-events: none;
+}
+
+/* ═══ 05 · THE CLOSE ══════════════════════════════════════════ */
+.close { text-align: center; }
+.close-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.close .ml { font-size: clamp(2.2rem, 12vw, 3.4rem); color: #fff; line-height: 1.3; }
+.close .en { font-size: 1.375rem; font-style: italic; color: var(--tungsten); }
+.close .so { color: var(--rain); }
+
+/* ═══ REVEAL ══════════════════════════════════════════════════ */
+/* Default is visible: with JS off, or before the observer runs,
+   every scene is fully readable. JS opts in to the animation. */
+.js .reveal { opacity: 0; transform: translateY(16px); }
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 620ms var(--ease), transform 620ms var(--ease);
+}
+
+/* Step-print: three ghosts resolving onto the sharp headline. */
+.smear { position: relative; display: inline-block; }
+.smear .ghost {
+  position: absolute;
+  inset: 0;
+  color: var(--tungsten);
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+}
+.is-in .smear .g1 { animation: step-print 900ms var(--ease) both; --dx: 7px;  --o: .55; filter: blur(2px); }
+.is-in .smear .g2 { animation: step-print 900ms var(--ease) both; --dx: 15px; --o: .28; filter: blur(5px); }
+.is-in .smear .g3 { animation: step-print 900ms var(--ease) both; --dx: 24px; --o: .14; filter: blur(9px); }
+@keyframes step-print {
+  from { transform: translate3d(var(--dx), 0, 0); opacity: var(--o); }
+  to   { transform: none; opacity: 0; }
+}
+
+:focus-visible { outline: 2px solid var(--tungsten); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 120ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+  .names .n-left, .names .n-right { transform: none; }
+  .smear .ghost { display: none; }
+  .cover-neon, .cover-answer, .cover-seal, .cover-hint { animation: none; opacity: 1; }
+}
