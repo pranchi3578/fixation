@@ -22,9 +22,10 @@
   var WEDDING_DATE = '2026-11-07';
   var MASS_TIME = '15:30';
 
-  // MOCK — placeholder until the reception time is confirmed. Change the
-  // time in index_ce.html alongside this and drop the <span class="mock">.
-  var RECEPTION_TIME = '18:30';
+  // Not yet confirmed. The page reads "To follow" until it is; put the real
+  // time here and in index_ce.html together, and it also lands in the
+  // calendar entry. A guessed time must never ship to guests.
+  var RECEPTION_TIME = null;
   var RECEPTION_END = '21:30';
 
   /* ─────────────────────────────────────────────────────────────
