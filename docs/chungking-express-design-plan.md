@@ -225,18 +225,20 @@ Budget **≤ 400 KB before first paint**, audio excluded. The four graded
 frames total **~348 KB** at 1500px, so they fit — but only the hero is
 eager; the rest are `loading="lazy"`.
 
-What the repo still carries:
+**Triage, done.** `song.mp3` and `Amen - … .mp3` were byte-identical
+(`c0742eb4…`) and **neither was loaded by anything** — every version from v1
+to v4 already pointed at `song_trimmed.mp3`. Both deleted: **29 MB → 9.7 MB.**
 
 | Asset | Size | |
 |---|---|---|
-| `song.mp3` | 10.5 MB | byte-identical duplicate |
-| `Amen - … .mp3` | 10.5 MB | byte-identical duplicate |
-| `song_trimmed.mp3` | 4.0 MB | the one actually in use |
-| `church/hands/hillside/window.png` | ~4.0 MB | superseded by the real photographs |
+| ~~`song.mp3`~~ | ~~10.5 MB~~ | deleted — unreferenced duplicate |
+| ~~`Amen - … .mp3`~~ | ~~10.5 MB~~ | deleted — unreferenced duplicate |
+| `song_trimmed.mp3` | 4.0 MB | the one in use, `preload="none"` |
+| `church/hands/hillside/window.png` | ~4.0 MB | **kept** — still referenced |
 
-Delete the duplicate track, load the trimmed one lazily on the first user
-gesture (it cannot autoplay anyway), and drop the stock PNGs now that there
-are real frames. That takes the repo from ~29 MB to roughly 1 MB.
+The stock PNGs were the other 4 MB, but `index.html`, `index_v2.html` and
+`index_v3.html` all still load them, so deleting them breaks three live
+pages. They go when those versions do — a separate call, not this one.
 
 ---
 
@@ -274,7 +276,15 @@ New files, so v4 stays live and the two are A/B-able.
 | **P3** | Step-print hero and the 0.01 cm close — CSS only · **done** |
 | **P4** | `script_ce.js` — peel canvas, audio gesture, scene reveals · **done** |
 | **P5** | Boarding-pass line and the ink-in · **done** |
-| **P6** | Asset triage, OG card from `bouquet.webp`, real-device iOS Safari pass |
+| **P6** | Asset triage · **done** · OG card `assets/ce/og.jpg` 1200×630 · **done** · real-device iOS Safari pass · outstanding |
+
+**iOS hardening applied without a device:** `-webkit-backdrop-filter` on the
+sound toggle, `touch-action: none` on the cover so a locked body cannot
+rubber-band, `{ passive: false }` on the peel's `pointermove` so its
+`preventDefault` is honoured, and the fonts moved out of a CSS `@import` into
+a `<link>` in the head — an `@import` chains a second round trip behind the
+stylesheet before any text can paint. What still needs a real iPhone is the
+dvh behaviour with the toolbar in motion and the peel under a real finger.
 
 **GSAP is gone.** The reveals and the 0.01 cm close run on
 `IntersectionObserver`; the ink-in is a `stroke-dashoffset` transition. That
@@ -297,7 +307,7 @@ fail offline. The page is fully readable with `script_ce.js` deleted.
 > Joel Francis Jose — son of T.C. Joseph & Tessy Mol Mathew
 > Sandra Binoy — daughter of Binoy Abraham & Ranju Binoy
 > Nuptial Mass — Ponkunnam Church, 3:30 PM
-> Reception — Base 11, Pala
+> Reception — Base 11, Pala, 6:30 PM `[mock]`
 >
 > **The pass** — `PONKUNNAM · 15:30 · SEAT: YOURS`
 > `BASE 11 · PALA · DINNER TO FOLLOW`

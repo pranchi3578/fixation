@@ -378,7 +378,7 @@
       </div>
     </div>
 
-    <p class="label" style="padding-top:16px;">Design direction · Wedding invitation · Rev 03 · built</p>
+    <p class="label" style="padding-top:16px;">Design direction · Wedding invitation · Rev 04 · built</p>
     <h1>Chungking Express</h1>
     <p class="deck">A film about near-misses that almost become meetings — borrowed for the one document where the near-miss finally lands.</p>
 
@@ -658,12 +658,12 @@
     </div>
     <p>Budget: <strong>≤ 400 KB before first paint</strong>, audio excluded. The four graded frames total about <strong>348 KB</strong> at 1500px, so they fit — but only the hero is eager; the rest are <code>loading="lazy"</code>.</p>
     <div class="ratios">
-      <div><b>song.mp3</b><span class="limit">10.5 MB — byte-identical duplicate</span></div>
-      <div><b>Amen — … .mp3</b><span class="limit">10.5 MB — byte-identical duplicate</span></div>
+      <div><b>song.mp3</b><span class="pass">deleted — 10.5 MB</span></div>
+      <div><b>Amen — … .mp3</b><span class="pass">deleted — 10.5 MB</span></div>
       <div><b>song_trimmed.mp3</b><span>4.0 MB — the one in use</span></div>
-      <div><b>church / hands / hillside / window .png</b><span class="limit">≈ 4.0 MB — superseded</span></div>
+      <div><b>church / hands / hillside / window .png</b><span>≈ 4.0 MB — kept, v1–v3 load them</span></div>
     </div>
-    <p>Delete the duplicate track, load the trimmed one lazily on the first user gesture, and drop the stock PNGs now that there are real photographs. That takes the repo from roughly 29 MB to about 1 MB.</p>
+    <p>Both duplicate tracks were byte-identical and <strong>neither was loaded by anything</strong> — every version from v1 to v4 already pointed at <code>song_trimmed.mp3</code>. Deleted: <strong>29 MB → 9.7 MB.</strong> The stock PNGs were the other 4 MB, but <code>index.html</code>, <code>index_v2.html</code> and <code>index_v3.html</code> all still load them, so deleting them breaks three live pages. They go when those versions do — a separate call, not this one.</p>
   </section>
 
   <section>
@@ -708,7 +708,7 @@
       <div class="phase done"><span class="p">P3</span><span class="d">Step-print headline and the 0.01 cm close — CSS only &nbsp;·&nbsp; done</span></div>
       <div class="phase done"><span class="p">P4</span><span class="d"><code>script_ce.js</code> — peel canvas, audio gesture, scene reveals &nbsp;·&nbsp; done</span></div>
       <div class="phase done"><span class="p">P5</span><span class="d">Boarding-pass line and the ink-in &nbsp;·&nbsp; done</span></div>
-      <div class="phase"><span class="p">P6</span><span class="d">Asset triage, OG card, and a pass on a real iOS device</span></div>
+      <div class="phase done"><span class="p">P6</span><span class="d">Asset triage and the OG card &nbsp;·&nbsp; done. A pass on a real iPhone is the one thing outstanding.</span></div>
     </div>
   </section>
 
@@ -721,14 +721,14 @@
       <div class="row"><span class="k">Cover</span><span class="val mono">Tap to open</span></div>
       <div class="row"><span class="k">Hero</span><span class="val">Joel &nbsp;·&nbsp; Sandra</span><span class="val mono">At our closest, we were 0.01 cm apart</span></div>
       <div class="row"><span class="k">Date</span><span class="val mono">7 November 2026 &nbsp;/&nbsp; Expires — never</span></div>
-      <div class="row"><span class="k">The board</span><span class="val ml" lang="ml">വിവാഹം</span><span class="val">Wedding<br>Joel Francis Jose — son of T.C. Joseph &amp; Tessy Mol Mathew<br>Sandra Binoy — daughter of Binoy Abraham &amp; Ranju Binoy<br>Nuptial Mass — Ponkunnam Church, 3:30 PM<br>Reception — Base 11, Pala</span></div>
+      <div class="row"><span class="k">The board</span><span class="val ml" lang="ml">വിവാഹം</span><span class="val">Wedding<br>Joel Francis Jose — son of T.C. Joseph &amp; Tessy Mol Mathew<br>Sandra Binoy — daughter of Binoy Abraham &amp; Ranju Binoy<br>Nuptial Mass — Ponkunnam Church, 3:30 PM<br>Reception — Base 11, Pala, 6:30 PM <span class="tbc">[mock]</span></span></div>
       <div class="row"><span class="k">The pass</span><span class="val mono">Ponkunnam · 15:30 · Seat: yours</span></div>
       <div class="row"><span class="k">Close</span><span class="val ml" lang="ml">ആമേൻ</span><span class="val"><em>Amen.</em> — "So be it."</span></div>
     </div>
   </section>
 
   <footer>
-    <p class="label">Rev 03 · built · branch claude/chungking-express-invitation-4499fv</p>
+    <p class="label">Rev 04 · built &amp; triaged · branch claude/chungking-express-invitation-4499fv</p>
     <p class="label" style="color:var(--jade-lit);">Somehow everything comes with an expiry date. Not this.</p>
   </footer>
 

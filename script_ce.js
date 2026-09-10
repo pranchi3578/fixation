@@ -21,11 +21,15 @@
      ───────────────────────────────────────────────────────────── */
   var WEDDING_DATE = '2026-11-07';
   var MASS_TIME = '15:30';
+
+  // MOCK — placeholder until the reception time is confirmed. Change the
+  // time in index_ce.html alongside this and drop the <span class="mock">.
+  var RECEPTION_TIME = '18:30';
   var RECEPTION_END = '21:30';
 
   var CALENDAR = {
     title: 'Joel & Sandra — Wedding',
-    details: 'Nuptial Mass at Ponkunnam Church, followed by the reception at Base 11, Pala.',
+    details: 'Nuptial Mass at Ponkunnam Church at 3:30 PM, followed by the reception at Base 11, Pala.',
     location: 'Ponkunnam Church, Kottayam, Kerala'
   };
 
@@ -53,6 +57,8 @@
     );
     return new Date(utc).toISOString().replace(/[-:]|\.\d{3}/g, '');
   }
+
+  void RECEPTION_TIME;
 
   if (WEDDING_DATE) {
     var stamp = document.getElementById('dateText');
@@ -193,7 +199,7 @@
       e.preventDefault();
       scratch(pointAt(e));
       if (++checked % 8 === 0 && cleared() > 0.42) openPeel();
-    });
+    }, { passive: false });
 
     function stop(e) {
       if (!drawing) return;

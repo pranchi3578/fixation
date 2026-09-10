@@ -6,7 +6,9 @@
    painted explicitly so it holds on any host background.
    ═══════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400&family=Noto+Serif+Malayalam:wght@400;600&display=swap');
+/* Fonts are linked from the document head, not @import-ed here: an
+   @import chains a second round trip behind this file before any text
+   can paint. */
 
 :root {
   color-scheme: dark;
@@ -62,6 +64,8 @@ body {
 
 /* Locked only while the cover is up; JS removes it on open. */
 body.is-sealed { overflow: hidden; height: 100dvh; }
+/* iOS still rubber-bands a locked body; the cover swallows the gesture. */
+.is-sealed .cover { touch-action: none; overscroll-behavior: none; }
 
 img { max-width: 100%; display: block; }
 
@@ -188,6 +192,7 @@ p, h1, h2, figure { margin: 0; }
   border-radius: 50%;
   border: 1px solid var(--line);
   background: rgba(11, 15, 16, .82);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   color: var(--rain);
   font-family: var(--mono);
@@ -271,7 +276,7 @@ p, h1, h2, figure { margin: 0; }
 .peel {
   position: relative;
   width: min(100%, 20rem);
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 5 / 3;
   display: grid;
   place-items: center;
   background: var(--night-2);
@@ -287,6 +292,12 @@ p, h1, h2, figure { margin: 0; }
   transition: opacity 500ms var(--ease);
 }
 .peel.is-open canvas { opacity: 0; pointer-events: none; }
+/* Once it is scratched the panel gets out of the way and the stamp is
+   left sitting directly on the photograph. */
+.peel {
+  transition: background-color 500ms var(--ease), border-color 500ms var(--ease);
+}
+.peel.is-open { background: transparent; border-color: transparent; }
 
 .peel-face {
   position: absolute;
@@ -321,6 +332,13 @@ p, h1, h2, figure { margin: 0; }
 }
 .stamp .e { font-size: 0.625rem; letter-spacing: 0.22em; }
 
+/* .btn is drawn for the paper card; on the night ground it needs the
+   tungsten pair instead, or it renders near-black on near-black. */
+.date-block .btn { border-color: var(--tungsten); color: var(--tungsten); }
+.date-block .btn:hover,
+.date-block .btn:focus-visible { background: var(--tungsten); color: var(--night); }
+.date-block .btn[aria-disabled="true"] { color: var(--rain); border-color: var(--night-3); }
+
 /* ═══ 03 · THE BOARD ══════════════════════════════════════════ */
 .board { display: flex; flex-direction: column; gap: 30px; }
 
@@ -340,6 +358,19 @@ p, h1, h2, figure { margin: 0; }
 .event .what { color: var(--tungsten); font-size: 1.0625rem; }
 .event .where { color: #fff; font-size: clamp(1.25rem, 5.5vw, 1.5rem); line-height: 1.25; }
 .event .when { font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--tungsten-soft); }
+
+/* Placeholder marker — delete this rule and the span once the reception
+   time is confirmed. */
+.mock {
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--night);
+  background: var(--rain);
+  padding: 1px 6px;
+  margin-left: 6px;
+  vertical-align: 2px;
+}
 
 /* ═══ 04 · THE PASS ═══════════════════════════════════════════ */
 .pass {
