@@ -27,6 +27,23 @@
   var RECEPTION_TIME = '18:30';
   var RECEPTION_END = '21:30';
 
+  /* ─────────────────────────────────────────────────────────────
+     THE MUSIC.
+
+     Drop a file into assets/audio/ and point `src` at it — see the
+     README there for the Chungking Express options and what publishing
+     one of them actually requires. `fallback` plays if `src` is missing,
+     so the invitation is never silent while the track is being sorted
+     out, and the toggle hides itself if neither loads.
+
+     `credit` prints under the close. Set it to '' to print nothing.
+     ───────────────────────────────────────────────────────────── */
+  var TRACK = {
+    src: 'assets/audio/chungking.mp3',
+    fallback: 'song_trimmed.mp3',
+    credit: ''
+  };
+
   var CALENDAR = {
     title: 'Joel & Sandra — Wedding',
     details: 'Nuptial Mass at Ponkunnam Church at 3:30 PM, followed by the reception at Base 11, Pala.',
@@ -233,21 +250,56 @@
   /* Off by default. It cannot autoplay and it should not try. */
 
   var track = document.getElementById('track');
+  var usingFallback = false;
+
+  function setCredit() {
+    var el = document.getElementById('credit');
+    if (!el) return;
+    var text = usingFallback ? '' : TRACK.credit;
+    if (text) { el.textContent = text; el.hidden = false; }
+    else { el.hidden = true; }
+  }
+
+  function play() {
+    track.volume = 0.55;
+    var attempt = track.play();
+    return (attempt && attempt.then) ? attempt : Promise.resolve();
+  }
+
+  function markOn(on) {
+    sound.setAttribute('aria-pressed', on ? 'true' : 'false');
+    sound.setAttribute('aria-label', on ? 'Mute music' : 'Play music');
+  }
 
   if (sound && track) {
+    track.src = TRACK.src;
+    setCredit();
+
     sound.addEventListener('click', function () {
-      var on = sound.getAttribute('aria-pressed') === 'true';
-      if (on) {
+      if (sound.getAttribute('aria-pressed') === 'true') {
         track.pause();
-        sound.setAttribute('aria-pressed', 'false');
-        sound.setAttribute('aria-label', 'Play music');
-      } else {
-        track.volume = 0.55;
-        var played = track.play();
-        if (played && played.catch) played.catch(function () { /* blocked; leave it off */ });
-        sound.setAttribute('aria-pressed', 'true');
-        sound.setAttribute('aria-label', 'Mute music');
+        markOn(false);
+        return;
       }
+
+      markOn(true);
+      play().catch(function () {
+        // The chosen file is missing or unplayable: fall back to the track
+        // that ships with the repo. If that fails too, there is no music to
+        // offer, so take the control away rather than leave a dead button.
+        if (usingFallback || !TRACK.fallback) {
+          markOn(false);
+          sound.hidden = true;
+          return;
+        }
+        usingFallback = true;
+        track.src = TRACK.fallback;
+        setCredit();
+        play().catch(function () {
+          markOn(false);
+          sound.hidden = true;
+        });
+      });
     });
   }
 

@@ -23,13 +23,22 @@ invitation **resolve** each one. That resolution is the concept.
 | Pineapple cans stamped *expires May 1* | The date carries a rubber-stamp block: `7 November 2026`, and under it in the same face, `EXPIRES — NEVER` | **ship** |
 | "At our closest, we were 0.01 cm apart" | Hero: the two names on one line, the gap closing to a hairline on scroll | **ship** |
 | Faye's hand-drawn boarding pass | Save-the-date and Directions as the two stubs of a drawn pass | **ship** |
-| *California Dreamin'* on loop | The existing Amen track. Muted by default, one tap, loops forever | **ship** |
+| *California Dreamin'* on loop | The film's own track. Muted by default, one tap, loops forever | **ship** |
 | Neon read through rain-wet glass | **They already own the neon.** The proposal photographs have a real `WILL YOU MARRY ME?` sign in them — we echo *that* sign's glow, not an invented one | **ship** |
 | Step-printed blur — one still figure in a smeared crowd | The headline resolves out of a three-layer smear; the hero photograph is step-printed for real (§3) | free |
 | The handwritten menu board | Time, venue and dinner as a marker board rather than emoji icon rows | free |
 
 **Restraint clause.** Five devices, not seven, and the last two cost nothing
 because they are technique rather than content.
+
+**The music went literal, deliberately.** Every other device here is a
+*translation* — the expiry stamp is not a pineapple can, the pass is not a
+flight to California. The song is now the only thing quoted rather than
+translated, which is a real cost: literal references date faster and read as
+homage where the rest of the piece reads as authorship. It is also the single
+most recognisable thing in the film, and four bars in, everyone who knows it
+knows exactly what this invitation is. That trade was made on purpose; it is
+worth not making it twice.
 
 The neon line is the one that changed after seeing the photographs. We were
 going to gesture at Wong Kar-wai's neon; instead the invitation uses the sign
@@ -239,6 +248,38 @@ to v4 already pointed at `song_trimmed.mp3`. Both deleted: **29 MB → 9.7 MB.**
 The stock PNGs were the other 4 MB, but `index.html`, `index_v2.html` and
 `index_v3.html` all still load them, so deleting them breaks three live
 pages. They go when those versions do — a separate call, not this one.
+
+---
+
+## 9a. The track
+
+Configured in one place, `TRACK` at the top of `script_ce.js`:
+
+```js
+var TRACK = {
+  src: 'assets/audio/chungking.mp3',   // whatever you drop in
+  fallback: 'song_trimmed.mp3',        // so the page is never silent
+  credit: ''                           // prints under the close
+};
+```
+
+The player tries `src`, falls back if it is missing or unplayable, and hides
+the toggle entirely if neither loads rather than leaving a dead button. The
+credit line is suppressed automatically when the fallback is playing, so it
+can never name a track that is not the one sounding.
+
+Three candidates, with `assets/audio/README.md` carrying the detail:
+*California Dreamin'* (The Mamas & the Papas) is the recognisable one;
+*夢中人* (Faye Wong) is the tender one and the better wedding fit;
+*Things in Life* (Dennis Brown) belongs to the film's other half.
+
+**Rights are the open question.** This page is served publicly from GitHub
+Pages, so the recording has to be one that may be published there. Buying the
+track is not a licence. The clean routes are a micro-sync licence, a cleared
+service, or a royalty-free cover — a piano version of *Dreams* carries the
+reference without the master. Trim to 60–120 seconds and export mono at
+128 kbps: the file loops, so nobody hears the end, and a 4 MB track is 4 MB
+every guest pays for.
 
 ---
 

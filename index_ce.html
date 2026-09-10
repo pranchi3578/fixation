@@ -172,13 +172,15 @@
           <p class="ml" lang="ml">ആമേൻ</p>
           <p class="en">Amen.</p>
           <p class="label so">&ldquo;So be it.&rdquo;</p>
+          <p class="label credit" id="credit" hidden></p>
         </div>
       </div>
     </section>
 
   </main>
 
-  <audio id="track" src="song_trimmed.mp3" loop preload="none"></audio>
+  <!-- src is set from TRACK in script_ce.js, with a fallback. -->
+  <audio id="track" loop preload="none"></audio>
   <script src="script_ce.js" defer></script>
 </body>
 
