@@ -12,10 +12,10 @@
   var WEDDING = {
     date: '2026-11-07',
     massTime: '16:00',
-    receptionTime: null,      // not yet confirmed; the page reads "To follow"
+    receptionTime: '18:00',
     endTime: '21:30',
     title: 'Joel & Sandra — Wedding',
-    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base 11, Pala.',
+    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base 11, Pala, at six.',
     location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 
@@ -34,7 +34,7 @@
      section removes itself rather than sitting there blank.
      ───────────────────────────────────────────────────────────── */
   var CONTACT = {
-    whatsapp: null,
+    whatsapp: '918848058162',   // +91 88480 58162
     email: null,
     rsvpBy: '2026-10-10',
     people: []      // e.g. { name: 'Joel', phone: '+91 98470 00000' }
