@@ -517,10 +517,8 @@ footer {
 
 /* ═══════════════════════════════════════════════════════════════
    GUEST-SIDE
-   RSVP, dress code, travel, FAQ. Form controls are underlines rather
-   than boxes — a boxed input on a stationery page reads as a tax
-   return. Everything keeps the same tracked-label / serif-answer
-   rhythm as the rest of the invitation.
+   Dress code, travel and questions — everything a guest needs to know
+   before the day, in the same tracked-label rhythm as the rest.
    ═══════════════════════════════════════════════════════════════ */
 
 .lede-note {
@@ -529,121 +527,6 @@ footer {
   margin-inline: auto;
   margin-top: 14px;
 }
-
-/* ── form ───────────────────────────────────────────────────── */
-.form {
-  max-width: 30rem;
-  margin-inline: auto;
-  margin-top: clamp(30px, 7vw, 46px);
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(24px, 5vw, 32px);
-}
-
-.field, fieldset.field {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  min-width: 0;      /* fieldsets refuse to shrink without this */
-}
-
-.field > label, .field > legend {
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: 0.625rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  padding: 0;
-}
-
-.input {
-  width: 100%;
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--ink);
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--hair-2);
-  border-radius: 0;
-  padding: 9px 2px;
-  transition: border-color 220ms var(--ease);
-  -webkit-appearance: none;
-  appearance: none;
-}
-.input:focus { outline: none; border-bottom-color: var(--ink); }
-.input::placeholder { color: var(--ink-3); }
-textarea.input { resize: vertical; min-height: 4.75rem; }
-
-select.input {
-  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%),
-                    linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
-  background-position: calc(100% - 11px) 55%, calc(100% - 6px) 55%;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  padding-right: 26px;
-}
-
-.choices { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 2px; }
-.choice {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  cursor: pointer;
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  min-height: 30px;
-}
-/* Native controls are the one thing that reads as a browser form on an
-   otherwise typeset page. Hairline when empty, solid ink when chosen. */
-.choice input {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 15px;
-  height: 15px;
-  flex: none;
-  margin: 0;
-  border: 1px solid var(--hair-2);
-  background: var(--paper);
-  transition: background-color 180ms var(--ease), border-color 180ms var(--ease);
-}
-.choice input[type="radio"] { border-radius: 50%; }
-.choice input:checked { background: var(--ink); border-color: var(--ink); }
-.choice input:focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
-.choice:hover input:not(:checked) { border-color: var(--ink-3); }
-
-.error {
-  font-size: 0.75rem;
-  color: #8C2F22;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-}
-.error[hidden] { display: none; }
-.input[aria-invalid="true"] { border-bottom-color: #8C2F22; }
-
-.form .btn { align-self: stretch; margin-top: 4px; }
-.form-note { font-size: 0.75rem; color: var(--ink-3); line-height: 1.6; }
-
-/* the state after a reply has been sent */
-.sent {
-  border: 1px solid var(--hair-2);
-  padding: clamp(26px, 6vw, 38px) clamp(20px, 5vw, 32px);
-  max-width: 30rem;
-  margin-inline: auto;
-  margin-top: clamp(30px, 7vw, 46px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.sent[hidden] { display: none; }
-.sent .mark { font-family: var(--display); font-size: 1.5rem; line-height: 1; }
 
 /* ── dress code ─────────────────────────────────────────────── */
 .dress {

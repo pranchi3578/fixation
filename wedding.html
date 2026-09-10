@@ -33,7 +33,7 @@
   <header class="top">
     <div class="top-in">
       <a class="brand" href="#top">Joel &amp; Sandra</a>
-      <a class="btn" href="#rsvp">R.S.V.P.</a>
+      <a class="btn" id="calendarTop" href="#">Save the date</a>
     </div>
   </header>
 
@@ -152,79 +152,6 @@
     </section>
 
 
-    <!-- ═══ R.S.V.P. ══════════════════════════════════════════ -->
-    <section class="wrap" id="rsvp">
-      <h2 class="h-section rise">R.S.V.P.</h2>
-      <p class="lede-note rise">
-        Kindly reply by <strong id="rsvpBy">the tenth of October</strong> so that we can
-        keep a seat for you at the table.
-      </p>
-
-      <form class="form rise" id="rsvpForm" novalidate>
-        <div class="field">
-          <label for="gName">Your name</label>
-          <input class="input" id="gName" name="name" type="text" autocomplete="name" required>
-          <p class="error" id="errName" hidden>Please tell us your name.</p>
-        </div>
-
-        <div class="field">
-          <label for="gPhone">Phone or WhatsApp</label>
-          <input class="input" id="gPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel">
-        </div>
-
-        <fieldset class="field">
-          <legend>Will you join us?</legend>
-          <div class="choices">
-            <label class="choice"><input type="radio" name="attending" value="Joyfully accepts"> Joyfully accepts</label>
-            <label class="choice"><input type="radio" name="attending" value="Regretfully declines"> Regretfully declines</label>
-          </div>
-          <p class="error" id="errAttend" hidden>Please let us know either way.</p>
-        </fieldset>
-
-        <div class="field" data-coming>
-          <label for="gParty">How many of you</label>
-          <select class="input" id="gParty" name="party">
-            <option>1</option><option>2</option><option>3</option>
-            <option>4</option><option>5</option><option>6</option>
-            <option>More than six</option>
-          </select>
-        </div>
-
-        <fieldset class="field" data-coming>
-          <legend>Which will you be at</legend>
-          <div class="choices">
-            <label class="choice"><input type="checkbox" name="events" value="the Holy Mass" checked> The Holy Mass</label>
-            <label class="choice"><input type="checkbox" name="events" value="the Reception" checked> The Reception</label>
-          </div>
-        </fieldset>
-
-        <fieldset class="field" data-coming>
-          <legend>At the table</legend>
-          <div class="choices">
-            <label class="choice"><input type="radio" name="meal" value="Vegetarian"> Vegetarian</label>
-            <label class="choice"><input type="radio" name="meal" value="Non-vegetarian"> Non-vegetarian</label>
-            <label class="choice"><input type="radio" name="meal" value="No preference" checked> No preference</label>
-          </div>
-        </fieldset>
-
-        <div class="field">
-          <label for="gNote">A note for us</label>
-          <textarea class="input" id="gNote" name="note" rows="3"
-                    placeholder="A blessing, a song you would like to hear, anything at all"></textarea>
-        </div>
-
-        <button class="btn" type="submit" id="rsvpSend">Send our reply</button>
-        <p class="form-note" id="rsvpNote"></p>
-      </form>
-
-      <div class="sent" id="rsvpSent" hidden>
-        <p class="mark">&#10003;</p>
-        <p class="meta">Thank you</p>
-        <p class="lede-note" id="sentText"></p>
-        <button class="btn btn--ghost" type="button" id="rsvpAgain">Send another reply</button>
-      </div>
-    </section>
-
     <!-- ═══ DRESS CODE ════════════════════════════════════════ -->
     <div class="panel">
       <section class="wrap">
@@ -285,8 +212,8 @@
         </div>
       </div>
       <p class="lede-note rise">
-        If you are travelling in and need a room, tell us in your reply or call
-        the number below &mdash; we will help you find somewhere close by.
+        If you are travelling in and need a room, let us know &mdash; we will help
+        you find somewhere close by.
       </p>
       <div class="rise" style="margin-top:clamp(24px,5vw,36px);display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <a class="btn btn--ghost"
@@ -319,7 +246,7 @@
         </details>
         <details>
           <summary>Are children welcome?</summary>
-          <p class="a">Very. Please count them in the number when you reply so we can
+          <p class="a">Very. Do let us know how many of you are coming so we can
           seat you together.</p>
         </details>
         <details>
@@ -331,7 +258,7 @@
         <details>
           <summary>May I bring someone with me?</summary>
           <p class="a">If your invitation is for more than one, yes. If you are not
-          sure, put the number in your reply and we will make it work.</p>
+          sure, ask us and we will make it work.</p>
         </details>
         <details>
           <summary>What about gifts?</summary>
@@ -340,8 +267,8 @@
         </details>
         <details>
           <summary>My plans have changed. What now?</summary>
-          <p class="a">Send a second reply through the form above, or call us. There
-          is no such thing as too late to tell us.</p>
+          <p class="a">Tell us as soon as you know. There is no such thing as too
+          late to let us know either way.</p>
         </details>
       </div>
     </section>
