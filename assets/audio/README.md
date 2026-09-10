@@ -1,48 +1,54 @@
 # Audio
 
-The page looks for **`assets/audio/wedding.mp3`**. Drop the file in with that
-name and the control appears by itself — no code change needed. Until then the
-button stays hidden and the page is silent.
+`assets/audio/wedding.mp3` — 58 seconds, mono, 128 kbps, 910 KB. It loops,
+and the control on the page only appears once this file is present.
 
-## The recommendation
+## What is playing
 
-**"Turning Page" (Instrumental) — Sleeping At Last.**
+**An original piece, written for this page.** Not a licensed track, and not
+a cover.
 
-Piano and strings, no drums, patient. It matches what this page is doing:
-restrained, unhurried, one thing at a time. The instrumental version matters
-because the track loops — vocals coming round again every ninety seconds get
-noticed, and instrumental doesn't. It is also a very common first-dance and
-ceremony choice, so it will feel familiar without being obvious.
+You asked for *All of Me* instrumental by the route that costs nothing, and
+that route does not exist for that song. Two separate rights sit on it: the
+**master** (a specific recording) and the **composition** (the song itself).
+A cover clears the master but not the composition — putting it on a public
+page still needs a sync licence for the writing. That licence is precisely
+what the paid services sell, which is why the free instrumental covers
+circulating online are, almost without exception, unlicensed.
 
-Two alternatives if that one isn't right:
+So this was written from scratch instead. It owes nothing to anyone: a
+I–vi–IV–V movement in F, which is the common property of most of Western
+music, under a rocking eighth-note arpeggio at 66 bpm. There is deliberately
+no melody over it — a tune competes with reading, an arpeggio sits
+underneath it.
 
-| Track | Why |
-|---|---|
-| *I Get to Love You* — Ruelle | Warmer and more cinematic. Vocal, so trim to an instrumental passage. |
-| *Can't Help Falling in Love* — Kina Grannis | The stripped version. The most familiar option here; safe rather than distinctive. |
+`tools/compose.py` renders it and is worth reading if you want to change it.
+The piano is additive: twelve partials per note, the higher ones decaying
+faster, with a little inharmonicity so the overtones run slightly sharp of
+true. That last imperfection is most of what separates a piano from an
+organ. The room is a convolution reverb built from decaying noise.
 
-## What I could not do
+The loop is seamless because the reverb tail from the final bar is folded
+back over the opening.
 
-I cannot fetch the recording — there's no source I can legitimately pull from,
-and it's a licensed master either way. Getting the file is the one step that
-has to be yours.
+**Nobody has heard it.** It was written and rendered without anyone
+listening — the levels, the harmony and the timing were verified by
+measurement, not by ear. Play it before you keep it.
 
-The page is served publicly, so the recording needs to be one you may publish
-there. Buying the track is not a licence. The cleaner routes are a micro-sync
-licence through the publisher, a clearing service that covers popular music
-online, or a royalty-free cover — for an instrumental piano piece a cover
-carries the whole feeling without touching the master.
+## Changing it
 
-In practice most personal wedding pages simply use the track. That is your
-call to make, not mine.
+```
+python3 tools/compose.py        # re-render after editing
+```
 
-## Trimming
+Tempo, key and the chord sequence are constants at the top. The volume the
+page plays it at is `TRACK.volume` in `wedding.js`, currently 0.45, and it
+ramps up rather than cutting in.
 
-Sixty to ninety seconds, mono, 128 kbps. It loops, so nobody hears the end,
-and a four-megabyte file is four megabytes every guest pays for.
+## Replacing it
 
-Pick a passage that loops without a seam — end it where the phrase resolves,
-not mid-bar. Fade the last second to nothing and the join stops being audible.
+Drop any mp3 in at this path and it takes over — no code change. If you do
+license *All of Me*, trim it to sixty or ninety seconds, mono, 128 kbps:
 
 ```
 ffmpeg -i source.mp3 -ss 00:00:24 -t 00:01:15 \
@@ -50,5 +56,5 @@ ffmpeg -i source.mp3 -ss 00:00:24 -t 00:01:15 \
        -ac 1 -b:a 128k assets/audio/wedding.mp3
 ```
 
-The volume is set in `wedding.js` (`TRACK.volume`, currently 0.45) and ramps
-up rather than cutting in.
+End the excerpt where the phrase resolves rather than mid-bar, or the loop
+join will be audible.
