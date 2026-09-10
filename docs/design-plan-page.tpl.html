@@ -1,0 +1,732 @@
+<title>Chungking Express Wedding</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Noto+Serif+Malayalam:wght@400;600&display=swap">
+<style>
+  /* ─────────────────────────────────────────────────────────────
+     Single-theme by intent: this document is rendered in the exact
+     palette it prescribes, so the grade on the photographs and the
+     type sit on the ground they were designed for.
+     ───────────────────────────────────────────────────────────── */
+  :root {
+    color-scheme: dark;
+
+    --night:   #0B0F10;
+    --night-2: #141A1B;
+    --night-3: #1D2526;
+    --line:    #232C2D;
+
+    --tungsten:      #E8A33D;
+    --tungsten-soft: #F3D9A8;
+    --jade:          #1F5F52;
+    --jade-lit:      #4E9A85;
+    --rain:          #7E979B;
+    --alarm:         #D8412F;
+    --paper:         #EFE9DD;
+    --paper-ink:     #171513;
+
+    --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --ml: "Noto Serif Malayalam", "Cormorant Garamond", serif;
+
+    --stamp: 0.6875rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--night);
+    color: var(--tungsten-soft);
+    font-family: var(--body);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(80ch 50ch at 78% -8%, rgba(232, 163, 61, 0.09), transparent 68%),
+      radial-gradient(70ch 60ch at 8% 108%, rgba(31, 95, 82, 0.15), transparent 70%);
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 78ch;
+    margin: 0 auto;
+    padding-inline: 22px;
+    padding-block: 0 84px;
+  }
+
+  /* ── type roles ─────────────────────────────────────────────── */
+  .label {
+    font-family: var(--mono);
+    font-size: var(--stamp);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rain);
+    margin: 0;
+  }
+
+  h1, h2 { text-wrap: balance; margin: 0; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 11.5vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    color: var(--tungsten-soft);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.55rem, 6.4vw, 2.1rem);
+    line-height: 1.15;
+    color: #fff;
+  }
+
+  p { margin: 0; max-width: 66ch; }
+  strong { color: #fff; font-weight: 500; }
+  a { color: var(--tungsten); }
+  code { font-family: var(--mono); font-size: 0.82em; color: var(--jade-lit); }
+  .ml { font-family: var(--ml); }
+
+  /* ── hero ───────────────────────────────────────────────────── */
+  header { display: flex; flex-direction: column; gap: 20px; padding-block: 40px 30px; }
+
+  .hero-frame {
+    position: relative;
+    margin-inline: -22px;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--night-2);
+  }
+  @media (min-width: 620px) { .hero-frame { aspect-ratio: 16 / 8; } }
+  .hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(11,15,16,.30) 0%, rgba(11,15,16,.55) 55%, var(--night) 100%);
+  }
+  .hero-type {
+    position: absolute;
+    left: 22px; right: 22px; bottom: 18px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .hero-names {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(2rem, 9.5vw, 3.4rem);
+    line-height: 1.05;
+    color: #fff;
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: wrap;
+  }
+  .hero-names .amp { color: var(--tungsten); }
+
+  .deck {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.2rem, 5.2vw, 1.5rem);
+    line-height: 1.45;
+    color: var(--rain);
+    max-width: 46ch;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 18px 24px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding-block: 20px;
+  }
+  .fact { display: flex; flex-direction: column; gap: 3px; }
+  .fact .v { font-family: var(--mono); font-size: 0.8125rem; color: var(--tungsten-soft); line-height: 1.5; }
+  .fact .v.tbc { color: var(--alarm); }
+
+  /* ── open item ──────────────────────────────────────────────── */
+  .open {
+    border: 1px solid var(--alarm);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .open .label { color: var(--alarm); }
+
+  /* ── sections ───────────────────────────────────────────────── */
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-block: 46px;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type { border-bottom: 0; }
+  .head { display: flex; flex-direction: column; gap: 7px; }
+
+  @media (min-width: 880px) {
+    .page { max-width: 92ch; padding-inline: 40px; }
+    .hero-frame { margin-inline: -40px; }
+    .hero-type { left: 40px; right: 40px; bottom: 28px; }
+    section { display: grid; grid-template-columns: 7ch 1fr; column-gap: 40px; row-gap: 18px; }
+    section > * { grid-column: 2; }
+    .head { grid-column: 1 / -1; display: grid; grid-template-columns: 7ch 1fr; column-gap: 40px; }
+    .head .label { grid-column: 1; padding-top: 0.55em; }
+    .head h2 { grid-column: 2; }
+    .bleed { grid-column: 1 / -1; }
+  }
+
+  /* ── table ──────────────────────────────────────────────────── */
+  .scroller { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 32rem; font-size: 0.9375rem; }
+  th, td { text-align: left; vertical-align: top; padding: 13px 16px 13px 0; border-bottom: 1px solid var(--line); }
+  th {
+    font-family: var(--mono); font-size: var(--stamp); letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--rain); font-weight: 400; padding-top: 0;
+  }
+  td:first-child { color: var(--rain); width: 36%; font-family: var(--display); font-size: 1.15rem; line-height: 1.35; }
+  td:last-child { width: 5.5rem; padding-right: 0; }
+  tr.keep td:first-child { color: var(--tungsten); }
+  .tag {
+    font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--rain); white-space: nowrap;
+  }
+  .tag.ship { color: var(--jade-lit); }
+
+  /* ── notes ──────────────────────────────────────────────────── */
+  .note { border-left: 2px solid var(--tungsten); padding: 2px 0 2px 18px; color: var(--tungsten-soft); }
+  .note.cool { border-left-color: var(--jade-lit); }
+
+  /* ── figures ────────────────────────────────────────────────── */
+  figure { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  figure img { width: 100%; height: auto; display: block; background: var(--night-2); }
+  figcaption {
+    font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--rain);
+    display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  }
+  .pair { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 620px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .stills { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 620px) { .stills { grid-template-columns: 1fr 1fr; } }
+
+  /* ── recipe (a real sequence — each step feeds the next) ────── */
+  .recipe { display: flex; flex-direction: column; }
+  .step {
+    display: grid; grid-template-columns: 2.2rem 1fr; gap: 4px 14px;
+    padding-block: 13px; border-bottom: 1px solid var(--line);
+  }
+  .step:first-child { border-top: 1px solid var(--line); }
+  .step .n { font-family: var(--mono); font-size: 0.8125rem; color: var(--jade-lit); font-variant-numeric: tabular-nums; }
+  .step .t { color: #fff; font-weight: 500; font-size: 0.9375rem; }
+  .step p { grid-column: 2; font-size: 0.9375rem; color: var(--rain); }
+
+  /* ── palette ────────────────────────────────────────────────── */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 2px; }
+  .sw {
+    display: flex; flex-direction: column; justify-content: flex-end; gap: 2px;
+    min-height: 116px; padding: 12px 12px 11px;
+    font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.04em;
+  }
+  .sw b { font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.625rem; opacity: .72; }
+  .sw span { font-variant-numeric: tabular-nums; }
+  .sw .ratio { opacity: .6; font-size: 0.625rem; }
+
+  .ratios { display: flex; flex-direction: column; font-family: var(--mono); font-size: 0.8125rem; }
+  .ratios div {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding-block: 9px; border-bottom: 1px solid var(--line);
+    font-variant-numeric: tabular-nums;
+  }
+  .ratios b { font-weight: 400; }
+  .pass { color: var(--jade-lit); }
+  .limit { color: var(--alarm); }
+
+  /* ── type specimens ─────────────────────────────────────────── */
+  .spec { background: var(--night-2); border: 1px solid var(--line); padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .spec + .spec { border-top: 0; }
+  .spec .role {
+    font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--rain);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .sample-display { font-family: var(--display); font-weight: 300; font-size: clamp(2rem, 9vw, 3rem); line-height: 1.05; color: #fff; }
+  .sample-ml { font-family: var(--ml); font-size: clamp(1.6rem, 7vw, 2.2rem); line-height: 1.4; color: var(--tungsten-soft); }
+  .sample-mono { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tungsten); }
+  .sample-body { font-size: 1rem; color: var(--tungsten-soft); max-width: 34ch; }
+
+  /* ── live devices ───────────────────────────────────────────── */
+  .devices { display: grid; gap: 2px; grid-template-columns: 1fr; }
+  @media (min-width: 620px) { .devices { grid-template-columns: 1fr 1fr; } }
+  .device {
+    background: var(--night-2); border: 1px solid var(--line);
+    padding: 26px 22px 18px; display: flex; flex-direction: column; gap: 14px;
+    align-items: center; text-align: center;
+  }
+  .device .cap {
+    font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--rain); align-self: flex-start; text-align: left;
+  }
+  .device .cap.mid { align-self: center; text-align: center; }
+
+  .gap-demo {
+    display: flex; align-items: baseline; justify-content: center;
+    font-family: var(--display); font-weight: 300;
+    font-size: clamp(1.7rem, 8vw, 2.4rem); color: #fff; padding-block: 10px 4px;
+  }
+  .gap-demo span { animation: close 2.6s cubic-bezier(.16,1,.3,1) infinite alternate; }
+  .gap-demo .l { --to: -0.25px; }
+  .gap-demo .r { --to: 0.25px; }
+  @keyframes close {
+    0%, 22%  { transform: translateX(calc(var(--to) * 56)); }
+    72%,100% { transform: translateX(var(--to)); }
+  }
+
+  .stamp {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
+    border: 2px solid var(--alarm); color: var(--alarm);
+    padding: 12px 20px 10px; transform: rotate(-3.2deg);
+    font-family: var(--mono); line-height: 1.25;
+  }
+  .stamp .d { font-size: 1.25rem; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; }
+  .stamp .e { font-size: 0.625rem; letter-spacing: 0.22em; }
+
+  .neon {
+    font-family: var(--display); font-weight: 300;
+    font-size: clamp(1.5rem, 7vw, 2rem); line-height: 1.2;
+    color: #FFF3D6; padding-block: 10px 4px;
+    text-shadow: 0 0 6px rgba(232,163,61,.9), 0 0 22px rgba(232,163,61,.55), 0 0 48px rgba(216,65,47,.30);
+    animation: warmup 900ms steps(1, end) 1 both;
+  }
+  @keyframes warmup {
+    0%, 18%  { opacity: .25; text-shadow: none; }
+    19%, 32% { opacity: 1; }
+    33%, 44% { opacity: .35; text-shadow: none; }
+    45%,100% { opacity: 1; }
+  }
+
+  /* ── scenes ─────────────────────────────────────────────────── */
+  .scenes { display: flex; flex-direction: column; }
+  .scene {
+    display: grid; grid-template-columns: 3.2rem 1fr; gap: 4px 18px;
+    padding-block: 18px; border-bottom: 1px solid var(--line);
+  }
+  .scene:first-child { border-top: 1px solid var(--line); }
+  .scene .n { font-family: var(--mono); font-size: 0.8125rem; color: var(--jade-lit); font-variant-numeric: tabular-nums; padding-top: 0.2em; }
+  .scene .t { font-family: var(--display); font-size: 1.35rem; color: #fff; line-height: 1.2; }
+  .scene p { grid-column: 2; font-size: 0.9375rem; color: var(--rain); }
+
+  /* ── lists ──────────────────────────────────────────────────── */
+  ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  ul li { padding-left: 20px; position: relative; max-width: 66ch; }
+  ul li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 9px; height: 1px; background: var(--tungsten); }
+  ul.cut li::before { background: var(--alarm); }
+  ul.cut li { color: var(--rain); }
+
+  /* ── phases ─────────────────────────────────────────────────── */
+  .phases { display: flex; flex-direction: column; }
+  .phase {
+    display: grid; grid-template-columns: 3.4rem 1fr; gap: 16px;
+    align-items: baseline; padding-block: 12px; border-bottom: 1px solid var(--line);
+  }
+  .phase:first-child { border-top: 1px solid var(--line); }
+  .phase .p { font-family: var(--mono); font-size: var(--stamp); letter-spacing: 0.16em; color: var(--tungsten); }
+  .phase.done .p { color: var(--jade-lit); }
+  .phase .d { font-size: 0.9375rem; }
+
+  /* ── copy deck ──────────────────────────────────────────────── */
+  .deckcard { background: var(--paper); color: var(--paper-ink); padding: 30px 26px; display: flex; flex-direction: column; gap: 22px; }
+  .deckcard .row { display: flex; flex-direction: column; gap: 5px; }
+  .deckcard .k { font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: #6C635A; }
+  .deckcard .val { font-family: var(--display); font-size: 1.25rem; line-height: 1.4; }
+  .deckcard .val.mono { font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0.16em; }
+  .deckcard .val.ml { font-family: var(--ml); }
+  .deckcard .tbc { color: #B33A28; }
+
+  footer { padding-block: 40px 0; display: flex; flex-direction: column; gap: 6px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gap-demo span { animation: none; transform: translateX(var(--to)); }
+    .neon { animation: none; }
+  }
+</style>
+
+<div class="page">
+
+  <header>
+    <div class="hero-frame">
+      <img src="{{HERO}}" alt="Joel and Sandra at the proposal, holding a bouquet of red roses beneath a heart of white flowers, sparklers burning at the left of frame. The photograph is step-printed so the room smears while the couple stays sharp.">
+      <div class="hero-type">
+        <p class="hero-names">Joel <span class="amp">&amp;</span> Sandra</p>
+        <p class="label">At our closest, we were 0.01 cm apart</p>
+      </div>
+    </div>
+
+    <p class="label" style="padding-top:16px;">Design direction · Wedding invitation · Rev 02</p>
+    <h1>Chungking Express</h1>
+    <p class="deck">A film about near-misses that almost become meetings — borrowed for the one document where the near-miss finally lands.</p>
+
+    <div class="open">
+      <p class="label">Open item — blocks P2</p>
+      <p>Rev 01 described a fixation ceremony. This is a <strong>wedding invitation</strong>, so every ceremony detail below is a placeholder: the date, the church and Nuptial Mass time, and the reception venue all need confirming. Names and parents are correct as written.</p>
+    </div>
+
+    <div class="facts">
+      <div class="fact">
+        <p class="label">Occasion</p>
+        <p class="v"><span class="ml" lang="ml">വിവാഹം</span> · Wedding</p>
+      </div>
+      <div class="fact">
+        <p class="label">For</p>
+        <p class="v">Joel Francis Jose<br>Sandra Binoy</p>
+      </div>
+      <div class="fact">
+        <p class="label">Date</p>
+        <p class="v tbc">To confirm</p>
+      </div>
+      <div class="fact">
+        <p class="label">Church &amp; reception</p>
+        <p class="v tbc">To confirm</p>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="head">
+      <p class="label">00</p>
+      <h2>The idea in one line</h2>
+    </div>
+    <p><em>Chungking Express</em> is built out of misses: cans that expire before anyone eats them, two people who pass within 0.01 cm and don't turn around, a boarding pass drawn by hand for a flight that isn't booked.</p>
+    <p>A wedding invitation is the opposite document. So we don't decorate the page with Hong Kong — we take Wong Kar-wai's recurring devices and let the invitation <strong>resolve</strong> each one. That resolution is the concept. Everything below serves it.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">01</p>
+      <h2>Film → invitation</h2>
+    </div>
+    <div class="scroller bleed">
+      <table>
+        <thead>
+          <tr><th scope="col">In the film</th><th scope="col">On the invitation</th><th scope="col">Call</th></tr>
+        </thead>
+        <tbody>
+          <tr class="keep">
+            <td>Pineapple cans stamped <em>expires May 1</em></td>
+            <td>The date carries a rubber-stamp block, and under it in the same face, <code>EXPIRES — NEVER</code>.</td>
+            <td><span class="tag ship">Ship</span></td>
+          </tr>
+          <tr class="keep">
+            <td>"At our closest, we were just 0.01 cm apart"</td>
+            <td>Hero: the two names on one line, with a gap that closes to a hairline as you scroll in.</td>
+            <td><span class="tag ship">Ship</span></td>
+          </tr>
+          <tr class="keep">
+            <td>Faye's hand-drawn boarding pass</td>
+            <td>Save-the-date and Directions as the two stubs of a drawn pass.</td>
+            <td><span class="tag ship">Ship</span></td>
+          </tr>
+          <tr class="keep">
+            <td><em>California Dreamin'</em> on loop at the Midnight Express</td>
+            <td>The existing Amen track. Muted by default, one tap, loops forever.</td>
+            <td><span class="tag ship">Ship</span></td>
+          </tr>
+          <tr class="keep">
+            <td>Neon read through rain-wet glass</td>
+            <td><strong>They already own the neon.</strong> There is a real <code>WILL YOU MARRY ME?</code> sign in the proposal photographs — the page echoes that sign's glow rather than an invented one.</td>
+            <td><span class="tag ship">Ship</span></td>
+          </tr>
+          <tr>
+            <td>Step-printed blur — one still figure in a smeared crowd</td>
+            <td>Applied to the hero photograph itself, and to the headline in CSS.</td>
+            <td><span class="tag">Free</span></td>
+          </tr>
+          <tr>
+            <td>The handwritten menu board</td>
+            <td>Ceremony details as a marker board rather than emoji icon rows.</td>
+            <td><span class="tag">Free</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><strong>The neon line is what changed after seeing the photographs.</strong> We were going to gesture at Wong Kar-wai's neon; instead the invitation uses the sign that was actually standing in their garden. That is the difference between a reference and a fact about them.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">02</p>
+      <h2>Art direction</h2>
+    </div>
+    <p>Not a Hong Kong pastiche. The setting is Kerala — monsoon green, tungsten bulbs strung on a wire, palms against a black sky. The photographs already contain exactly that.</p>
+    <p>What we borrow is not Wong Kar-wai's <em>place</em>, it is his <strong>lighting logic</strong>: one warm practical source against one cool ambient, and nothing else in the frame competing. Both photo sets already obey it — the sparklers and the string lights are the practicals, and everything else is ambient and gets pushed out of the way.</p>
+    <p class="note cool">The invitation is an evening object. It is dark, it is quiet, and it opens once. This document is set in the same palette for that reason.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">03</p>
+      <h2>The grade</h2>
+    </div>
+    <p>Three frames from the proposal, graded to one look. The script is committed as <code>tools/grade.py</code> and reruns from <code>assets/source/</code>, so the look is reproducible rather than hand-retouched.</p>
+
+    <div class="bleed pair">
+      <figure>
+        <img src="{{BEFORE}}" alt="The original photograph before grading: warm, bright, the timber wall and the flowers competing with the red dress.">
+        <figcaption><span>Before</span><span>as shot</span></figcaption>
+      </figure>
+      <figure>
+        <img src="{{BOUQUET}}" alt="The same photograph after grading: exposure pulled down, the timber wall desaturated to near-neutral, the red dress left as the only saturated thing in frame, sparklers blooming.">
+        <figcaption><span>After</span><span>one saturated thing left</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="recipe bleed">
+      <div class="step"><span class="n">1</span><span class="t">Expose down to 0.88</span><p>Wong Kar-wai frames sit dark. Everything after this is easier once the highlights have somewhere to go.</p></div>
+      <div class="step"><span class="n">2</span><span class="t">Filmic S-curve at 0.52</span><p>Separation without clipping the reds — a straight contrast bump would have flattened the dress.</p></div>
+      <div class="step"><span class="n">3</span><span class="t">Split-tone</span><p>Teal into the shadows (+38), tungsten into the highlights (+24 red, −36 blue). The two-source logic, applied as colour.</p></div>
+      <div class="step"><span class="n">4</span><span class="t">Cool the ambient</span><p>A hue-selective desaturation of the 46° band — the timber wall, the amber spill — at 52%, leaving skin and the dress alone. <strong>This is the move that makes it read as the film:</strong> it strips saturation from everything except the one red thing in frame.</p></div>
+      <div class="step"><span class="n">5</span><span class="t">Bloom</span><p>Bright-pass at 204, blurred 30px, screened back at 40%. This is what sells the sparklers and the bulbs.</p></div>
+      <div class="step"><span class="n">6</span><span class="t">Grain and vignette</span><p>σ7 at 42%, then a 56% vignette to keep the corners in the dark.</p></div>
+    </div>
+
+    <p>The black-and-white frames get a <strong>tritone</strong> instead — night <code>#080D0F</code> → jade <code>#22443E</code> → tungsten <code>#FFE9B9</code>, pivoting at 88 so the jade stays in the shadows. The neon sign comes back amber rather than grey, which is the entire point of doing it.</p>
+
+    <div class="bleed stills">
+      <figure>
+        <img src="{{PROPOSAL}}" alt="The proposal, graded to a tritone: Joel on one knee under strung bulbs, sparklers to the left, the neon sign reading WILL YOU MARRY ME glowing amber inside a heart of white roses.">
+        <figcaption><span>Scene 02 — behind the date</span><span>tritone · night → jade → tungsten</span></figcaption>
+      </figure>
+      <figure>
+        <img src="{{HEART}}" alt="Joel and Sandra together beside the flower heart and the neon sign after the proposal, palms and night sky above.">
+        <figcaption><span>Scene 04 — the close</span><span>same tritone</span></figcaption>
+      </figure>
+    </div>
+
+    <p class="note"><strong>The hero is step-printed for real.</strong> Three offset copies (7 / 15 / 26px), blurred proportionally and screened back at 50 / 28 / 15%, then masked away from an elliptical centre so the couple holds sharp while the room around them drags. Wong Kar-wai's signature done to the photograph rather than faked — the CSS version stays for the headline only.</p>
+    <p>Every photograph sits under a <code>--night</code> scrim at 55–70% wherever type runs over it. No text is ever placed on an ungraded, unscrimmed frame.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">04</p>
+      <h2>Colour</h2>
+    </div>
+    <p>Dark-committed — no light mode. Ratio discipline: <strong>70 night · 20 tungsten · 8 jade · 2 alarm.</strong></p>
+    <div class="swatches bleed">
+      <div class="sw" style="background:#0B0F10; color:#F3D9A8; box-shadow: inset 0 0 0 1px #232C2D;"><b>night</b><span>#0B0F10</span><span class="ratio">ground</span></div>
+      <div class="sw" style="background:#141A1B; color:#F3D9A8;"><b>night-2</b><span>#141A1B</span><span class="ratio">raised</span></div>
+      <div class="sw" style="background:#E8A33D; color:#0B0F10;"><b>tungsten</b><span>#E8A33D</span><span class="ratio">the source</span></div>
+      <div class="sw" style="background:#F3D9A8; color:#171513;"><b>tungsten soft</b><span>#F3D9A8</span><span class="ratio">body text</span></div>
+      <div class="sw" style="background:#1F5F52; color:#EFE9DD;"><b>jade</b><span>#1F5F52</span><span class="ratio">ambient</span></div>
+      <div class="sw" style="background:#7E979B; color:#0B0F10;"><b>rain</b><span>#7E979B</span><span class="ratio">secondary</span></div>
+      <div class="sw" style="background:#D8412F; color:#0B0F10;"><b>alarm</b><span>#D8412F</span><span class="ratio">twice only</span></div>
+      <div class="sw" style="background:#EFE9DD; color:#171513;"><b>paper</b><span>#EFE9DD</span><span class="ratio">the pass</span></div>
+    </div>
+    <div class="ratios">
+      <div><b>tungsten-soft on night</b><span class="pass">12.4 : 1 — body</span></div>
+      <div><b>tungsten on night</b><span class="pass">8.6 : 1 — any size</span></div>
+      <div><b>rain on night</b><span class="pass">6.9 : 1 — meta ≥ 14px</span></div>
+      <div><b>alarm on night</b><span class="limit">4.6 : 1 — display ≥ 20px only</span></div>
+    </div>
+    <p class="note"><strong>Alarm red appears exactly twice</strong> on the whole invitation: the expiry stamp and the cover seal. It is also her dress, which is why the palette works with the photographs rather than against them.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">05</p>
+      <h2>Typography</h2>
+    </div>
+    <p>Three faces. Not four. The mono is the strongest reference in the piece — the film's subtitle track and the stamps on the cans both read mechanical.</p>
+    <div class="bleed">
+      <div class="spec">
+        <p class="role"><span>Names, display</span><span>Cormorant Garamond 300 · never bold</span></p>
+        <p class="sample-display">Joel &amp; Sandra</p>
+      </div>
+      <div class="spec">
+        <p class="role"><span>Malayalam</span><span>Noto Serif Malayalam · always lang="ml"</span></p>
+        <p class="sample-ml" lang="ml">വിവാഹം · ആമേൻ</p>
+      </div>
+      <div class="spec">
+        <p class="role"><span>Labels, stamps, subtitles</span><span>IBM Plex Mono 400 · 11px · +0.18em</span></p>
+        <p class="sample-mono">At our closest, we were 0.01 cm apart</p>
+      </div>
+      <div class="spec">
+        <p class="role"><span>Running text</span><span>16px minimum · 1.7 · 34ch on phones</span></p>
+        <p class="sample-body">With the blessings of both families, you are invited to the marriage of their children.</p>
+      </div>
+    </div>
+    <p>Fluid scale: display <code>clamp(2.4rem, 11vw, 4.4rem)</code>, body <code>clamp(1rem, 4.2vw, 1.125rem)</code> — never under 16px. One handwriting moment only, on the boarding pass, and it is a drawn SVG path rather than a script font so it can ink itself in.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">06</p>
+      <h2>Structure</h2>
+    </div>
+    <p>A cover and four scenes, matching the rhythm v4 already has. Do not inflate it.</p>
+    <div class="scenes bleed">
+      <div class="scene">
+        <span class="n">00</span><span class="t">Cover</span>
+        <p>Keep the existing tap-to-open ritual — it works, and it earns the audio gesture. A mono line types in, then the seal. The tap is a shutter.</p>
+      </div>
+      <div class="scene">
+        <span class="n">01</span><span class="t">0.01 cm</span>
+        <p>The step-printed hero frame. The names land sharp over it, the gap between them closing.</p>
+      </div>
+      <div class="scene">
+        <span class="n">02</span><span class="t">The date, stamped</span>
+        <p>Over the proposal frame. The scratch card becomes a peel — same interaction, better story. Under it: the date, and the stamp that says it doesn't expire.</p>
+      </div>
+      <div class="scene">
+        <span class="n">03</span><span class="t">The board</span>
+        <p>Names, parents, Nuptial Mass, reception. This is the scene a grandparent reads at arm's length, so the photograph drops to 12% behind it and nothing else moves.</p>
+      </div>
+      <div class="scene">
+        <span class="n">04</span><span class="t">The pass, then <span class="ml" lang="ml">ആമേൻ</span></span>
+        <p>Save-the-date and Directions as the two stubs. Then the close, over the heart frame.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">07</p>
+      <h2>Motion</h2>
+    </div>
+    <p><code>transform</code> and <code>opacity</code> only — nothing animates layout. Two beats are allowed to be slow; nothing else gets to make someone wait.</p>
+    <div class="devices bleed">
+      <div class="device">
+        <p class="cap">Device 01 — the gap closes</p>
+        <p class="gap-demo"><span class="l">Joel</span><span class="r">Sandra</span></p>
+        <p class="cap mid">700ms · translateX · on scroll entry</p>
+      </div>
+      <div class="device">
+        <p class="cap">Device 02 — no expiry date</p>
+        <p class="stamp"><span class="d">[ &nbsp;DATE&nbsp; ]</span><span class="e">Expires — never</span></p>
+        <p class="cap mid">Alarm red, appearance 1 of 2</p>
+      </div>
+      <div class="device">
+        <p class="cap">Device 03 — their neon, warming up</p>
+        <p class="neon">Will you marry me?</p>
+        <p class="cap mid">Two-frame stutter, 900ms, once on load — never looping</p>
+      </div>
+      <div class="device">
+        <p class="cap">Device 04 — step-print</p>
+        <p class="cap mid" style="margin:0;">Applied to the photograph in <code>tools/grade.py</code>, and to the headline in CSS: three copies at .55 / .28 / .14, offset 7 / 15 / 24px, blurred 2 / 5 / 9px, resolving over 900ms on <code>cubic-bezier(.16,1,.3,1)</code>.</p>
+      </div>
+    </div>
+    <p class="note cool">A looping flicker is a novelty. A single stutter is a light warming up — and it only happens once, on the cover, where their own sign is being quoted.</p>
+    <p>Everything else <strong>≤ 400ms</strong>. Under <code>prefers-reduced-motion</code> every animation collapses to a 120ms fade, and the page stays complete and readable with zero motion.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">08</p>
+      <h2>Mobile</h2>
+    </div>
+    <p>Design width is <strong>360px</strong>; verify at 320.</p>
+    <ul>
+      <li><code>100dvh</code>, never <code>100vh</code> — this repo has already paid for that lesson once, in <code>ebf6ee4 Fix iOS Safari scroll stuck issue</code>.</li>
+      <li>One gutter, declared once on the wrapper: <code>padding-inline: 20px</code>, with vertical space via <code>padding-block</code> — never a <code>padding</code> shorthand that quietly zeroes the sides.</li>
+      <li>Photographs get <code>object-fit: cover</code> with an explicit <code>aspect-ratio</code>, plus an art-directed crop at ≤ 480px so the couple stays centred when the frame goes tall. Ship 900px and 1500px in a <code>srcset</code>.</li>
+      <li>Tap targets ≥ 44×44px. Below 380px the two buttons stack full-width.</li>
+      <li>The peel canvas sizes to <code>devicePixelRatio</code> and uses <strong>Pointer Events only</strong> — the current mouse-plus-touch double binding is exactly where double-fire bugs live. <code>touch-action: none</code> goes on the canvas alone, not an ancestor.</li>
+      <li>No horizontal scroll anywhere. The boarding pass is the one element allowed its own <code>overflow-x</code> container.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">09</p>
+      <h2>Weight</h2>
+    </div>
+    <p>Budget: <strong>≤ 400 KB before first paint</strong>, audio excluded. The four graded frames total about <strong>348 KB</strong> at 1500px, so they fit — but only the hero is eager; the rest are <code>loading="lazy"</code>.</p>
+    <div class="ratios">
+      <div><b>song.mp3</b><span class="limit">10.5 MB — byte-identical duplicate</span></div>
+      <div><b>Amen — … .mp3</b><span class="limit">10.5 MB — byte-identical duplicate</span></div>
+      <div><b>song_trimmed.mp3</b><span>4.0 MB — the one in use</span></div>
+      <div><b>church / hands / hillside / window .png</b><span class="limit">≈ 4.0 MB — superseded</span></div>
+    </div>
+    <p>Delete the duplicate track, load the trimmed one lazily on the first user gesture, and drop the stock PNGs now that there are real photographs. That takes the repo from roughly 29 MB to about 1 MB.</p>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">10</p>
+      <h2>Accessibility</h2>
+    </div>
+    <ul>
+      <li>Audio off by default, one labelled toggle with <code>aria-pressed</code>.</li>
+      <li>The date is never hostage to an interaction: it is in the DOM from the start, and the peel auto-completes after 6 seconds, or is skipped entirely under reduced motion.</li>
+      <li>Every photograph gets real alt text describing the moment, not "image".</li>
+      <li>Every Malayalam run carries <code>lang="ml"</code>; the page is <code>lang="en"</code>.</li>
+      <li>The current <code>🕡</code> and <code>📍</code> rows become real text labels, or are marked <code>aria-hidden</code>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">11</p>
+      <h2>What we are not doing</h2>
+    </div>
+    <ul class="cut">
+      <li>Literal Hong Kong signage, cigarette smoke, a blonde wig, Cantonese text.</li>
+      <li>A film-grain <em>video</em> overlay, or a second script font.</li>
+      <li>A looping neon flicker.</li>
+      <li>A countdown that ticks seconds. A ticking clock is a deadline, and this piece's whole argument is that there is no expiry date.</li>
+      <li>Anything that makes the church address harder to read than it is on paper.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">12</p>
+      <h2>Build</h2>
+    </div>
+    <p>New files throughout, so v4 stays live and the two are A/B-able.</p>
+    <div class="phases bleed">
+      <div class="phase done"><span class="p">P0</span><span class="d">The grade — <code>tools/grade.py</code>, <code>assets/ce/</code> &nbsp;·&nbsp; done</span></div>
+      <div class="phase"><span class="p">P1</span><span class="d"><code>styles_ce.css</code> — tokens, type scale, reset, reduced-motion block</span></div>
+      <div class="phase"><span class="p">P2</span><span class="d"><code>index_ce.html</code> — full markup and copy, readable with zero JS &nbsp;·&nbsp; <span style="color:var(--alarm)">blocked on the ceremony details</span></span></div>
+      <div class="phase"><span class="p">P3</span><span class="d">Step-print headline and the 0.01 cm close — CSS only</span></div>
+      <div class="phase"><span class="p">P4</span><span class="d"><code>script_ce.js</code> — peel canvas, audio gesture, ScrollTrigger</span></div>
+      <div class="phase"><span class="p">P5</span><span class="d">Boarding-pass SVG and the ink-in</span></div>
+      <div class="phase"><span class="p">P6</span><span class="d">Asset triage, OG card from the hero frame, 320 / 360 / 414 and iOS Safari pass</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <p class="label">13</p>
+      <h2>Copy deck</h2>
+    </div>
+    <div class="deckcard bleed">
+      <div class="row"><span class="k">Cover</span><span class="val mono">Tap to open</span></div>
+      <div class="row"><span class="k">Hero</span><span class="val">Joel &nbsp;·&nbsp; Sandra</span><span class="val mono">At our closest, we were 0.01 cm apart</span></div>
+      <div class="row"><span class="k">Date</span><span class="val mono"><span class="tbc">[ date ]</span> &nbsp;/&nbsp; Expires — never</span></div>
+      <div class="row"><span class="k">The board</span><span class="val ml" lang="ml">വിവാഹം</span><span class="val">Wedding<br>Joel Francis Jose — son of T.C. Joseph &amp; Tessy Mol Mathew<br>Sandra Binoy — daughter of Binoy Abraham &amp; Ranju Binoy<br><span class="tbc">Nuptial Mass — [ church, date, time ]</span><br><span class="tbc">Reception — [ venue, time ]</span></span></div>
+      <div class="row"><span class="k">The pass</span><span class="val mono tbc">[ place ] · [ time ] · Seat: yours</span></div>
+      <div class="row"><span class="k">Close</span><span class="val ml" lang="ml">ആമേൻ</span><span class="val"><em>Amen.</em> — "So be it."</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="label">Rev 02 · branch claude/chungking-express-invitation-4499fv</p>
+    <p class="label" style="color:var(--jade-lit);">Somehow everything comes with an expiry date. Not this.</p>
+  </footer>
+
+</div>
