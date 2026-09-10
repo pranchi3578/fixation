@@ -432,7 +432,9 @@ footer {
 }
 .card > * { position: relative; }
 
-.card .greeting { color: var(--ink-2); max-width: 24rem; }
+.card .greeting { color: var(--ink-2); max-width: 24rem; text-wrap: balance; }
+/* Stacked meta lines inside the card sit tighter than the flex gap. */
+.card .meta + .meta { margin-top: -8px; }
 
 .card .date {
   font-family: var(--display);

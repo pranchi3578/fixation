@@ -11,12 +11,12 @@
 
   var WEDDING = {
     date: '2026-11-07',
-    massTime: '15:30',
+    massTime: '16:00',
     receptionTime: null,      // not yet confirmed; the page reads "To follow"
     endTime: '21:30',
     title: 'Joel & Sandra — Wedding',
-    details: 'Holy Mass at Ponkunnam Church at half past three, followed by the reception at Base 11, Pala.',
-    location: 'Ponkunnam Church, Ponkunnam, Kottayam, Kerala'
+    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base 11, Pala.',
+    location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 
   /* ─────────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@
   /* ═══ TIME ═════════════════════════════════════════════════ */
   /* Kerala is IST, UTC+5:30. Building the instant in UTC means the
      countdown is the same number everywhere — a guest in London sees the
-     time left until the Mass, not until half past three where they are. */
+     time left until the Mass, not until four o'clock where they are. */
   function istInstant(iso, hhmm) {
     var t = hhmm.split(':');
     return Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10),
