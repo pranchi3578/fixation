@@ -1,42 +1,39 @@
 /* ═══════════════════════════════════════════════════════════════
    Joel & Sandra — wedding invitation
 
-   Committed to one light look. The page is a sheet of paper, so it
-   paints white explicitly and does not follow the OS into dark, where
-   a stationery design falls apart.
+   Monochrome, committed to one light look: the page is a sheet of paper
+   and does not follow the OS into dark, where stationery falls apart.
 
-   Colour discipline: white, ink, and one claret sampled from the roses
-   in the photographs. The claret appears three times — the ampersand,
-   the date rule, the primary button — and nowhere else.
+   There is no accent colour. The single note of colour in the whole
+   invitation is the centre photograph, which keeps its soft warmth while
+   everything around it — the two flanking frames, the band behind the
+   countdown — is black and white. Spend colour once, on the thing worth
+   looking at.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
   color-scheme: light;
 
-  --paper:       #FFFFFF;
-  --paper-2:     #F7F6F4;   /* the one raised panel */
-  --ink:         #101112;
-  --ink-2:       #5A5B5F;   /* secondary — 7.0:1 on paper */
-  --ink-3:       #8A8B8F;   /* tertiary, never below 14px */
-  --hair:        #E5E3DF;
-  --hair-strong: #C9C6C0;
-
-  --claret:      #7E3E33;   /* 8.1:1 on paper */
-  --claret-soft: #B98D84;
+  --paper:   #FCFBF9;   /* warm white, not cream */
+  --paper-2: #F3F1EC;   /* the greige panel */
+  --ink:     #0E0E0D;
+  --ink-2:   #56544F;   /* 7.4:1 on paper */
+  --ink-3:   #8B8880;   /* 3.9:1 — meta only, never body */
+  --hair:    #E2DFD8;
+  --hair-2:  #C8C4BA;
 
   --display: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, serif;
   --sans: 'Jost', 'Futura', 'Avenir Next', -apple-system, sans-serif;
   --ml: 'Noto Serif Malayalam', Georgia, serif;
 
-  --gutter: 24px;
-  --measure: 33rem;     /* text column */
-  --plate: 42rem;       /* photographs step wider */
+  --gutter: 22px;
+  --measure: 34rem;
+  --wide: 60rem;
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
 
 * { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -44,332 +41,288 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   font-weight: 300;
-  font-size: clamp(1rem, 3.9vw, 1.0625rem);
+  font-size: clamp(0.9375rem, 3.7vw, 1rem);
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-p, h1, h2, figure, blockquote { margin: 0; }
+p, h1, h2, h3, figure, blockquote { margin: 0; }
 img { display: block; max-width: 100%; }
 
-/* ── the column ─────────────────────────────────────────────── */
-.sheet {
-  max-width: calc(var(--plate) + var(--gutter) * 2);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-  padding-block: 0 clamp(72px, 14vw, 128px);
-  text-align: center;
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-.col {
-  max-width: var(--measure);
-  margin-inline: auto;
-}
-
-section { padding-block: clamp(52px, 11vw, 92px); }
-
-/* ── shared type roles ──────────────────────────────────────── */
-.eyebrow {
+/* ── type roles ─────────────────────────────────────────────── */
+/* Tracking adds space after the last letter; the start margin puts a
+   centred line back on its true optical centre. */
+.meta {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 0.6875rem;
-  letter-spacing: 0.34em;
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin-inline-start: 0.34em;   /* optical: tracking pushes it left */
+  margin-inline-start: 0.3em;
+  line-height: 1.9;
 }
+.meta--ink { color: var(--ink-2); }
 
-.lede {
+.h-section {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(1.125rem, 4.6vw, 1.375rem);
-  line-height: 1.6;
-  color: var(--ink-2);
+  font-size: clamp(1.5rem, 6.6vw, 2.5rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin-inline-start: 0.16em;
 }
 
 .ml { font-family: var(--ml); }
 
-/* a hairline with a small diamond, used to separate movements */
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
+/* ── shell ──────────────────────────────────────────────────── */
+.wrap {
+  max-width: calc(var(--wide) + var(--gutter) * 2);
   margin-inline: auto;
-  max-width: 15rem;
-  color: var(--claret-soft);
+  padding-inline: var(--gutter);
 }
-.divider::before,
-.divider::after {
-  content: "";
-  height: 1px;
-  flex: 1;
-  background: var(--hair);
-}
-.divider i {
-  width: 5px;
-  height: 5px;
-  transform: rotate(45deg);
-  background: currentColor;
-  font-style: normal;
-}
+.col { max-width: var(--measure); margin-inline: auto; }
 
-/* ═══ 01 · THE NAMES ══════════════════════════════════════════ */
-.opening { padding-block: clamp(64px, 15vw, 118px) clamp(34px, 8vw, 54px); }
+section { padding-block: clamp(58px, 13vw, 116px); text-align: center; }
 
-.names {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(2.9rem, 15vw, 6rem);
-  line-height: 1.02;
-  letter-spacing: -0.012em;
+/* ═══ HEADER ══════════════════════════════════════════════════ */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(252, 251, 249, .92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--hair);
+}
+.top-in {
+  max-width: calc(var(--wide) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding: 14px var(--gutter);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: clamp(2px, 1vw, 8px);
-  margin-block: 26px 22px;
+  justify-content: space-between;
+  gap: 16px;
 }
-.names .amp {
-  font-style: italic;
-  font-size: 0.52em;
-  color: var(--claret);          /* claret, 1 of 3 */
-  line-height: 1;
-  padding-block: 0.08em;
-}
-
-/* ═══ PHOTOGRAPHS ═════════════════════════════════════════════ */
-figure { display: flex; flex-direction: column; gap: 14px; }
-
-.frame {
-  background: var(--paper-2);
-  overflow: hidden;
-}
-.frame img { width: 100%; height: auto; }
-
-.caption {
+.brand {
   font-family: var(--sans);
   font-weight: 400;
   font-size: 0.625rem;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ink-3);
-  margin-inline-start: 0.28em;
+  color: var(--ink);
+  text-decoration: none;
 }
+.top .btn { padding: 9px 14px; min-height: 0; font-size: 0.5625rem; }
 
-.plates {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(18px, 4vw, 26px);
-}
-@media (min-width: 560px) { .plates { grid-template-columns: 1fr 1fr; } }
+/* ═══ HERO ════════════════════════════════════════════════════ */
+.hero { padding-block: clamp(40px, 9vw, 72px) clamp(48px, 11vw, 88px); }
 
-/* The two night frames are not quite the same ratio, so left to
-   themselves their bottoms sit at different heights. One box, one crop. */
-.plates .frame { aspect-ratio: 4 / 5; }
-.plates .frame img { height: 100%; object-fit: cover; }
-
-/* ═══ 02 · THE DATE ═══════════════════════════════════════════ */
-/* One centred stack at every width. Split into columns the parts pair
-   up wrongly — "half past three" ends up reading against "2026". */
-.date {
-  border-top: 1px solid var(--hair);
-  border-bottom: 1px solid var(--hair);
-  max-width: 24rem;
-  margin-inline: auto;
-  padding-block: clamp(26px, 6vw, 34px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.date .k {
-  font-size: 0.625rem;
-  font-weight: 400;
-  letter-spacing: 0.30em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-inline-start: 0.30em;
-  line-height: 1.6;
-}
-.date .k--last { color: var(--ink-2); padding-top: 4px; }
-
-.date .day {
+.datemark {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(3.4rem, 17vw, 5rem);
-  line-height: 0.98;
+  font-size: clamp(2.4rem, 12.5vw, 6rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  margin-inline-start: 0.04em;
   font-variant-numeric: lining-nums;
+  white-space: nowrap;
 }
-.date .day sup {
-  font-size: 0.26em;
-  vertical-align: super;
-  letter-spacing: 0.06em;
-  color: var(--claret);          /* claret, 2 of 3 */
-}
-
-.date .v {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.0625rem, 4.4vw, 1.25rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  line-height: 1.3;
-  margin-inline-start: 0.14em;
+.datemark .dot {
+  color: var(--ink-3);
+  padding-inline: 0.16em;
+  font-size: 0.62em;
+  vertical-align: 0.14em;
 }
 
-/* ═══ 03 · THE FAMILIES ═══════════════════════════════════════ */
+/* ── the triptych ───────────────────────────────────────────── */
+.triptych {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 2.4vw, 16px);
+  align-items: center;
+  margin-top: clamp(30px, 7vw, 52px);
+}
+.tri figure { margin: 0; }
+.tri-main { grid-column: 1 / -1; }
+.tri-main .frame { aspect-ratio: 4 / 5; }
+.tri-a .frame, .tri-b .frame { aspect-ratio: 3 / 4; }
+
+@media (min-width: 760px) {
+  .triptych {
+    grid-template-columns: 1fr 1.6fr 1fr;
+    gap: clamp(16px, 2.6vw, 30px);
+  }
+  .tri-main { grid-column: 2; grid-row: 1; }
+  .tri-a { grid-column: 1; grid-row: 1; transform: translateY(26px); }
+  .tri-b { grid-column: 3; grid-row: 1; transform: translateY(-26px); }
+}
+
+.frame { background: var(--paper-2); overflow: hidden; }
+.frame img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ═══ FAMILIES ════════════════════════════════════════════════ */
 .families {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(26px, 6vw, 40px);
-  max-width: 34rem;
+  gap: clamp(28px, 6vw, 44px);
+  max-width: 46rem;
   margin-inline: auto;
+  margin-top: clamp(34px, 8vw, 54px);
 }
-@media (min-width: 560px) { .families { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 620px) { .families { grid-template-columns: 1fr auto 1fr; align-items: center; } }
 
-.family { display: flex; flex-direction: column; gap: 7px; }
+.family { display: flex; flex-direction: column; gap: 8px; }
+/* Full tracking breaks these names across lines in a narrow column. */
+.family .meta { letter-spacing: 0.18em; margin-inline-start: 0.18em; }
 .family .who {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(1.375rem, 5.4vw, 1.625rem);
-  line-height: 1.25;
+  font-size: clamp(1.25rem, 5vw, 1.5rem);
+  letter-spacing: 0.05em;
+  line-height: 1.3;
 }
-.family .of {
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--ink-2);
+.families .amp {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--ink-3);
+  line-height: 1;
 }
 
-/* ═══ 04 · THE ORDER OF THE DAY ═══════════════════════════════ */
-.order {
-  display: flex;
-  flex-direction: column;
-  max-width: 30rem;
+/* ═══ LOCATION ════════════════════════════════════════════════ */
+.places {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 42rem;
   margin-inline: auto;
-}
-.event {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding-block: 26px;
+  margin-top: clamp(34px, 8vw, 54px);
   border-top: 1px solid var(--hair);
 }
-.order .event:last-child { border-bottom: 1px solid var(--hair); }
-.event .k {
-  font-size: 0.625rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-inline-start: 0.28em;
-}
-.event .where {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.375rem, 5.6vw, 1.75rem);
-  line-height: 1.25;
-}
-.event .when { font-size: 0.9375rem; color: var(--ink-2); }
+@media (min-width: 620px) { .places { grid-template-columns: 1fr 1fr; } }
 
-/* ═══ ACTIONS ═════════════════════════════════════════════════ */
-.actions {
+.place {
+  padding: clamp(26px, 5vw, 38px) clamp(14px, 3vw, 26px);
+  border-bottom: 1px solid var(--hair);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 20rem;
-  margin-inline: auto;
+  gap: 9px;
+  align-items: center;
 }
-@media (min-width: 460px) {
-  .actions { flex-direction: row; max-width: 34rem; }
-  .actions .btn { flex: 1; }
-}
+@media (min-width: 620px) { .place + .place { border-left: 1px solid var(--hair); } }
 
+.place .name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 5.2vw, 1.5rem);
+  line-height: 1.3;
+}
+.place .btn { margin-top: 8px; }
+
+/* ═══ BUTTONS ═════════════════════════════════════════════════ */
 .btn {
-  display: block;
-  padding: 15px 18px;
-  min-height: 48px;
+  display: inline-block;
+  padding: 13px 22px;
+  min-height: 44px;
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
-  color: var(--ink);
-  border: 1px solid var(--hair-strong);
-  background: var(--paper);
-  transition: border-color 260ms var(--ease), color 260ms var(--ease), background-color 260ms var(--ease);
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  transition: background-color 260ms var(--ease), color 260ms var(--ease);
 }
-.btn:hover, .btn:focus-visible { border-color: var(--ink); }
+.btn:hover, .btn:focus-visible { background: var(--paper); color: var(--ink); }
 
-.btn--primary {                  /* claret, 3 of 3 */
-  background: var(--claret);
-  border-color: var(--claret);
+.btn--ghost { background: none; color: var(--ink); border-color: var(--hair-2); }
+.btn--ghost:hover, .btn--ghost:focus-visible { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.btn--light { background: none; color: #fff; border-color: rgba(255,255,255,.5); }
+.btn--light:hover, .btn--light:focus-visible { background: #fff; color: var(--ink); border-color: #fff; }
+
+/* ═══ THE BAND — countdown over a full-bleed frame ════════════ */
+.band {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(78px, 18vw, 150px);
   color: #fff;
+  overflow: hidden;
 }
-.btn--primary:hover, .btn--primary:focus-visible {
-  background: var(--paper);
-  color: var(--claret);
-  border-color: var(--claret);
+.band img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+.band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10, 10, 10, .52);
+}
+.band .meta { color: rgba(255, 255, 255, .78); }
+
+.count {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(4px, 2vw, 20px);
+  max-width: 34rem;
+  margin-inline: auto;
+  margin-block: clamp(20px, 4vw, 30px) clamp(26px, 5vw, 36px);
+}
+.count div { display: flex; flex-direction: column; gap: 4px; }
+.count .n {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 8vw, 2.75rem);
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.count .u {
+  font-size: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .72);
+  margin-inline-start: 0.22em;
 }
 
-/* ═══ 05 · THE CLOSE ══════════════════════════════════════════ */
+/* ═══ CLOSE ═══════════════════════════════════════════════════ */
 .verse {
   font-family: var(--display);
   font-weight: 400;
   font-style: italic;
-  font-size: clamp(1.25rem, 5.2vw, 1.625rem);
-  line-height: 1.55;
-  color: var(--ink);
+  font-size: clamp(1.1875rem, 5vw, 1.5rem);
+  line-height: 1.6;
   max-width: 26rem;
   margin-inline: auto;
 }
-.cite {
-  font-size: 0.625rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-inline-start: 0.28em;
-}
-.amen { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.amen .ml { font-size: clamp(1.75rem, 8vw, 2.25rem); line-height: 1.5; }
-.amen .en {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: 1.125rem;
-  color: var(--ink-2);
-}
+.amen { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.amen .ml { font-size: clamp(1.625rem, 7.5vw, 2.125rem); line-height: 1.6; }
+.amen .en { font-family: var(--display); font-style: italic; font-size: 1.0625rem; color: var(--ink-2); }
 
-/* ═══ SOUND ═══════════════════════════════════════════════════ */
-.sound {
-  position: fixed;
-  right: var(--gutter);
-  bottom: calc(var(--gutter) + env(safe-area-inset-bottom, 0px));
-  z-index: 20;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--hair-strong);
-  background: rgba(255, 255, 255, .86);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  color: var(--ink-2);
-  font-size: 0.75rem;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: color 260ms var(--ease), border-color 260ms var(--ease);
+.rule { width: 1px; height: clamp(40px, 9vw, 66px); background: var(--hair-2); margin-inline: auto; }
+
+footer {
+  border-top: 1px solid var(--hair);
+  padding-block: 30px calc(30px + env(safe-area-inset-bottom, 0px));
+  text-align: center;
 }
-.sound[aria-pressed="true"] { color: var(--claret); border-color: var(--claret-soft); }
-.sound[hidden] { display: none !important; }
 
 /* ═══ REVEAL ══════════════════════════════════════════════════ */
-/* Visible by default: with JS off, or before the observer runs, the whole
-   invitation is readable. JS opts into the fade. */
+/* Visible by default: with JS off the whole invitation still reads. */
 .js .rise { opacity: 0; transform: translateY(14px); }
 .js .rise.in {
   opacity: 1;
@@ -377,15 +330,182 @@ figure { display: flex; flex-direction: column; gap: 14px; }
   transition: opacity 900ms var(--ease), transform 900ms var(--ease);
 }
 
-:focus-visible { outline: 1px solid var(--claret); outline-offset: 4px; }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .rise, .js .rise.in { opacity: 1; transform: none; transition: none; }
-  * { transition-duration: 120ms !important; }
 }
 
 @media print {
-  .sound { display: none; }
-  body { font-size: 11pt; }
-  section { padding-block: 18pt; break-inside: avoid; }
+  .top, .band { display: none; }
+  section { padding-block: 16pt; break-inside: avoid; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   Added after the second reference: a hero that carries the names over
+   a full-bleed photograph, a bordered invitation card, and a programme
+   of the day that can grow a row at a time.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══ FULL-BLEED HERO ═════════════════════════════════════════ */
+.cover {
+  position: relative;
+  isolation: isolate;
+  min-height: 88dvh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: clamp(60px, 14vw, 110px) var(--gutter) clamp(46px, 10vw, 80px);
+  overflow: hidden;
+  text-align: center;
+}
+.cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 32%;
+  z-index: -2;
+}
+/* Type sits in the upper third, so the scrim is weighted there. */
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom,
+    rgba(14, 14, 13, .30) 0%, rgba(14, 14, 13, .10) 34%,
+    rgba(14, 14, 13, .48) 74%, rgba(14, 14, 13, .70) 100%);
+}
+.cover-in { color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.cover .meta { color: rgba(255, 255, 255, .82); }
+
+.cover-names {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 12vw, 5rem);
+  line-height: 1.06;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-inline-start: 0.06em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-shadow: 0 1px 34px rgba(14, 14, 13, .34);
+}
+.cover-names .amp {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.42em;
+  color: rgba(255, 255, 255, .9);
+}
+
+/* ═══ THE INVITATION CARD ═════════════════════════════════════ */
+.panel { background: var(--paper-2); }
+
+.card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--hair-2);
+  max-width: 31rem;
+  margin-inline: auto;
+  padding: clamp(34px, 8vw, 56px) clamp(22px, 5vw, 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+/* The inner keyline is what makes it read as pressed stationery. */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--hair);
+  pointer-events: none;
+}
+.card > * { position: relative; }
+
+.card .greeting { color: var(--ink-2); max-width: 24rem; }
+
+.card .date {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  margin-inline-start: 0.06em;
+  font-variant-numeric: lining-nums;
+  white-space: nowrap;
+}
+.card .venue {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  margin-inline-start: 0.26em;
+}
+.card hr {
+  width: 100%;
+  max-width: 12rem;
+  height: 1px;
+  border: 0;
+  background: var(--hair);
+  margin-block: 4px;
+}
+.card .btn { margin-top: 10px; align-self: stretch; }
+
+/* ═══ PROGRAMME OF THE DAY ════════════════════════════════════ */
+.programme {
+  max-width: 30rem;
+  margin-inline: auto;
+  margin-top: clamp(30px, 7vw, 48px);
+  border-top: 1px solid var(--hair);
+  text-align: left;
+}
+.slot {
+  display: grid;
+  grid-template-columns: 5.25rem 1fr;
+  gap: 4px 18px;
+  align-items: baseline;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--hair);
+}
+.slot .t {
+  font-family: var(--display);
+  font-size: 1rem;
+  color: var(--ink);
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+.slot .w {
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.slot .sub { grid-column: 2; color: var(--ink-3); font-size: 0.8125rem; line-height: 1.6; }
+
+/* ═══ PAIRED PLATES ═══════════════════════════════════════════ */
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 2.4vw, 20px);
+  max-width: 46rem;
+  margin-inline: auto;
+}
+.pair .frame { aspect-ratio: 4 / 5; }
+
+/* ═══ SIGN-OFF ════════════════════════════════════════════════ */
+.signoff {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.375rem, 6vw, 1.875rem);
+  color: var(--ink-2);
+  line-height: 1.4;
 }

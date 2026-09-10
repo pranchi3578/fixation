@@ -8,7 +8,7 @@
   <meta name="description" content="Joel Francis Jose and Sandra Binoy invite you to their wedding. Saturday, the seventh of November 2026 — Holy Mass at Ponkunnam Church, reception at Base 11, Pala.">
 
   <meta property="og:title" content="Joel &amp; Sandra" />
-  <meta property="og:description" content="Saturday, the seventh of November 2026 · Ponkunnam Church" />
+  <meta property="og:description" content="07 &middot; 11 &middot; 2026 — Ponkunnam Church" />
   <meta property="og:image" content="https://pranchi3578.github.io/fixation/assets/photo/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="800" />
@@ -17,102 +17,114 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Joel &amp; Sandra" />
-  <meta name="twitter:description" content="Saturday, the seventh of November 2026 · Ponkunnam Church" />
+  <meta name="twitter:description" content="07 &middot; 11 &middot; 2026 — Ponkunnam Church" />
   <meta name="twitter:image" content="https://pranchi3578.github.io/fixation/assets/photo/og.jpg" />
-  <meta name="theme-color" content="#FFFFFF">
+  <meta name="theme-color" content="#FCFBF9">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&family=Noto+Serif+Malayalam:wght@400&display=swap">
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400&family=Noto+Serif+Malayalam:wght@400&display=swap">
   <link rel="stylesheet" href="wedding.css">
 </head>
 
 <body>
 
-  <button class="sound" id="sound" type="button" aria-pressed="false" aria-label="Play music" hidden>&#9834;</button>
+  <header class="top">
+    <div class="top-in">
+      <a class="brand" href="#top">Joel &amp; Sandra</a>
+      <a class="btn" id="calendarTop" href="#">Save the date</a>
+    </div>
+  </header>
 
-  <main class="sheet">
+  <main id="top">
 
-    <!-- ═══ THE NAMES ═════════════════════════════════════════ -->
-    <section class="opening">
-      <div class="col rise">
-        <p class="eyebrow">Together with their families</p>
-        <h1 class="names">
+    <!-- ═══ THE COVER ═════════════════════════════════════════ -->
+    <section class="cover">
+      <picture>
+        <source media="(min-width: 760px)" srcset="assets/photo/hero-wide.webp">
+        <img src="assets/photo/hero.webp" width="1400" height="933" fetchpriority="high"
+             alt="Joel and Sandra together beneath an arch of white roses, holding a bouquet.">
+      </picture>
+      <div class="cover-in">
+        <p class="meta">The beginning of our story</p>
+        <h1 class="cover-names">
           <span>Joel</span>
           <span class="amp">&amp;</span>
           <span>Sandra</span>
         </h1>
-        <p class="lede">invite you to celebrate their marriage</p>
+        <p class="meta">07 &middot; 11 &middot; 2026</p>
       </div>
     </section>
 
-    <!-- ═══ THE PHOTOGRAPH ════════════════════════════════════ -->
-    <section style="padding-block:0;">
-      <figure class="rise">
-        <div class="frame">
-          <img src="assets/photo/hero.webp" width="824" height="1031" fetchpriority="high"
-               alt="Joel and Sandra together beneath an arch of white roses, holding a bouquet.">
+    <!-- ═══ THE INVITATION CARD ═══════════════════════════════ -->
+    <div class="panel">
+      <section class="wrap">
+        <div class="card">
+          <p class="meta">The Invitation</p>
+          <p class="greeting">
+            Dear friends and family &mdash; together with our parents, we would be
+            glad to have you with us on the day we are married.
+          </p>
+          <hr>
+          <p class="date">07 &middot; 11 &middot; 2026</p>
+          <p class="meta">Saturday</p>
+          <hr>
+          <p class="venue">Ponkunnam Church</p>
+          <p class="meta meta--ink">Ponkunnam, Kottayam, Kerala</p>
+          <a class="btn" id="calendar" href="#">Save the date</a>
         </div>
-      </figure>
-    </section>
-
-    <!-- ═══ THE DATE ══════════════════════════════════════════ -->
-    <section>
-      <div class="col rise">
-        <div class="date">
-          <p class="k">Saturday</p>
-          <p class="day">07<sup>th</sup></p>
-          <p class="v">November 2026</p>
-          <p class="k k--last">At half past three in the afternoon</p>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- ═══ THE FAMILIES ══════════════════════════════════════ -->
-    <section>
-      <div class="rise">
-        <div class="families">
-          <div class="family">
-            <p class="who">Joel Francis Jose</p>
-            <p class="of">son of<br>T.C. Joseph &amp; Tessy Mol Mathew</p>
-          </div>
-          <div class="family">
-            <p class="who">Sandra Binoy</p>
-            <p class="of">daughter of<br>Binoy Abraham &amp; Ranju Binoy</p>
-          </div>
+    <section class="wrap">
+      <h2 class="h-section rise">The Families</h2>
+      <div class="families rise">
+        <div class="family">
+          <p class="who">Joel Francis Jose</p>
+          <p class="meta meta--ink">Son of<br>T.C. Joseph &amp; Tessy Mol Mathew</p>
+        </div>
+        <span class="amp" aria-hidden="true">&amp;</span>
+        <div class="family">
+          <p class="who">Sandra Binoy</p>
+          <p class="meta meta--ink">Daughter of<br>Binoy Abraham &amp; Ranju Binoy</p>
         </div>
       </div>
     </section>
 
-    <!-- ═══ THE ORDER OF THE DAY ══════════════════════════════ -->
-    <section>
-      <div class="col rise">
-        <div class="divider"><i></i></div>
-      </div>
-      <div class="col rise" style="margin-top:clamp(40px,9vw,64px);">
-        <div class="order">
-          <div class="event">
-            <span class="k">The Holy Mass</span>
-            <span class="where">Ponkunnam Church</span>
-            <span class="when">Half past three in the afternoon</span>
-          </div>
-          <div class="event">
-            <span class="k">The Reception</span>
-            <span class="where">Base 11, Pala</span>
-            <span class="when">To follow</span>
-          </div>
+    <!-- ═══ PROGRAMME OF THE DAY ══════════════════════════════ -->
+    <section class="wrap">
+      <h2 class="h-section rise">The Programme</h2>
+      <div class="programme rise">
+        <div class="slot">
+          <span class="t">3:30 PM</span>
+          <span class="w">The Holy Mass</span>
+          <span class="sub">Ponkunnam Church, Ponkunnam</span>
         </div>
+        <div class="slot">
+          <span class="t">To follow</span>
+          <span class="w">The Reception</span>
+          <span class="sub">Base 11, Pala</span>
+        </div>
+      </div>
+      <div class="rise" style="margin-top:clamp(26px,6vw,40px);display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn--ghost"
+           href="https://www.google.com/maps/search/?api=1&amp;query=Ponkunnam%20Church%2C%20Kottayam"
+           target="_blank" rel="noopener">Church</a>
+        <a class="btn btn--ghost"
+           href="https://www.google.com/maps/search/?api=1&amp;query=Base%2011%2C%20Pala%2C%20Kottayam"
+           target="_blank" rel="noopener">Reception</a>
       </div>
     </section>
 
     <!-- ═══ THE PLATES ════════════════════════════════════════ -->
-    <section style="padding-block:clamp(28px,6vw,44px);">
-      <div class="plates rise">
+    <section class="wrap" style="padding-block:0;">
+      <div class="pair rise">
         <figure>
           <div class="frame">
             <img src="assets/photo/plate-1.webp" width="572" height="715" loading="lazy"
-                 alt="Joel on one knee before Sandra, under strung lights and a heart of white roses.">
+                 alt="Joel on one knee before Sandra, under strung lights.">
           </div>
         </figure>
         <figure>
@@ -124,41 +136,45 @@
       </div>
     </section>
 
-    <!-- ═══ ACTIONS ═══════════════════════════════════════════ -->
-    <section>
-      <div class="col rise">
-        <div class="actions">
-          <a class="btn btn--primary" id="calendar" href="#">Save the date</a>
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ponkunnam%20Church%2C%20Kottayam"
-             target="_blank" rel="noopener">Church</a>
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Base%2011%2C%20Pala%2C%20Kottayam"
-             target="_blank" rel="noopener">Reception</a>
+    <!-- ═══ THE COUNTDOWN ═════════════════════════════════════ -->
+    <section class="band">
+      <img src="assets/photo/band.webp" width="1079" height="606" loading="lazy" alt="" aria-hidden="true">
+      <div class="wrap">
+        <p class="meta">Counting down</p>
+        <div class="count" id="count" role="timer" aria-live="off">
+          <div><span class="n" id="cd">&mdash;</span><span class="u">Days</span></div>
+          <div><span class="n" id="ch">&mdash;</span><span class="u">Hours</span></div>
+          <div><span class="n" id="cm">&mdash;</span><span class="u">Minutes</span></div>
+          <div><span class="n" id="cs">&mdash;</span><span class="u">Seconds</span></div>
         </div>
       </div>
     </section>
 
     <!-- ═══ THE CLOSE ═════════════════════════════════════════ -->
-    <section>
-      <div class="col rise">
-        <div class="divider"><i></i></div>
-      </div>
-
-      <div class="col rise" style="margin-top:clamp(44px,10vw,72px);display:flex;flex-direction:column;gap:18px;">
-        <blockquote class="verse">
+    <section class="wrap">
+      <div class="col">
+        <blockquote class="verse rise">
           &ldquo;What therefore God hath joined together,<br>let not man put asunder.&rdquo;
         </blockquote>
-        <p class="cite">Mark 10:9</p>
-      </div>
+        <p class="meta rise" style="margin-top:16px;">Mark 10:9</p>
 
-      <div class="col rise amen" style="margin-top:clamp(52px,12vw,84px);">
-        <p class="ml" lang="ml">ആമേൻ</p>
-        <p class="en">Amen.</p>
+        <div class="rule rise" style="margin-top:clamp(40px,9vw,64px);"></div>
+
+        <p class="signoff rise" style="margin-top:clamp(34px,8vw,52px);">See you there</p>
+
+        <div class="amen rise" style="margin-top:clamp(34px,8vw,54px);">
+          <p class="ml" lang="ml">ആമേൻ</p>
+          <p class="en">Amen.</p>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <audio id="track" loop preload="none"></audio>
+  <footer>
+    <p class="meta">Joel &amp; Sandra &middot; 07 &middot; 11 &middot; 2026</p>
+  </footer>
+
   <script src="wedding.js" defer></script>
 </body>
 

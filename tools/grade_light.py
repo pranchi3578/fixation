@@ -103,6 +103,11 @@ def main():
         m = clean_highlights(soften(lift(mono(s), black=26, white=250), amount=0.10))
         save(crop_to(m, 4 / 5, cx=cx, cy=0.52), out, 1000)
 
+    print("band — wide monochrome, for white type over it")
+    s = Image.open("assets/source/proposal.jpg").convert("RGB")
+    m = clean_highlights(soften(lift(mono(s), black=24, white=248), amount=0.08))
+    save(crop_to(m, 16 / 9, cx=0.54, cy=0.46), "band", 1600)
+
 
 if __name__ == "__main__":
     main()
