@@ -1,39 +1,38 @@
 # Audio
 
-`assets/audio/wedding.mp3` — 58 seconds, mono, 128 kbps, 910 KB. It loops,
+`assets/audio/wedding.mp3` — 60 seconds, mono, 128 kbps, 941 KB. It loops,
 and the control on the page only appears once this file is present.
 
 ## What is playing
 
-**An original piece, written for this page.** Not a licensed track, and not
-a cover.
+A lo-fi instrumental cover of **"I Do" — 911**, supplied by you and trimmed
+here to a loop.
 
-You asked for *All of Me* instrumental by the route that costs nothing, and
-that route does not exist for that song. Two separate rights sit on it: the
-**master** (a specific recording) and the **composition** (the song itself).
-A cover clears the master but not the composition — putting it on a public
-page still needs a sync licence for the writing. That licence is precisely
-what the paid services sell, which is why the free instrumental covers
-circulating online are, almost without exception, unlicensed.
+`tools/trim_track.py` did the trimming, and it is worth knowing what it does
+rather than a plain cut. A page loop is not a fade-out: it comes round every
+minute and any seam gets noticed on the third pass. So the script reads the
+tempo off the onset envelope (95.7 BPM here, a 2.51-second bar), waits for
+the track to settle rather than starting in the intro, cuts a whole number
+of bars, and then folds the tail back over the head with equal-power curves.
+The join is a continuous mix rather than a cut, which is why there is no
+audible seam and no fade.
 
-So this was written from scratch instead. It owes nothing to anyone: a
-I–vi–IV–V movement in F, which is the common property of most of Western
-music, under a rocking eighth-note arpeggio at 66 bpm. There is deliberately
-no melody over it — a tune competes with reading, an arpeggio sits
-underneath it.
+What shipped: enters at 50.2s of the source, 24 bars, 60.2 seconds, mono at
+128 kbps, 941 KB. The first pass came out at 33 bars and 1.3 MB, which is a
+lot to ask of a guest on mobile data for background music, so it was pulled
+back to a minute.
 
-`tools/compose.py` renders it and is worth reading if you want to change it.
-The piano is additive: twelve partials per note, the higher ones decaying
-faster, with a little inharmonicity so the overtones run slightly sharp of
-true. That last imperfection is most of what separates a piano from an
-organ. The room is a convolution reverb built from decaying noise.
+**Nobody here has heard it.** Levels, tempo, loop seam and playback were all
+verified by measurement. Play it before you keep it.
 
-The loop is seamless because the reverb tail from the final bar is folded
-back over the opening.
+## Re-trimming
 
-**Nobody has heard it.** It was written and rendered without anyone
-listening — the levels, the harmony and the timing were verified by
-measurement, not by ear. Play it before you keep it.
+```
+python3 tools/trim_track.py <source.mp3> [seconds]
+```
+
+The original composed piece is still reproducible with `tools/compose.py`
+if you ever want to go back to something with no rights attached.
 
 ## Changing it
 
