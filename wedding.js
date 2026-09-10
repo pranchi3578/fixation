@@ -19,6 +19,19 @@
     location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 
+  /* ─────────────────────────────────────────────────────────────
+     THE MUSIC.
+
+     Drop the file into assets/audio/ and point `src` at it — the README
+     there names the track and how to trim it. The control stays hidden
+     until the file is confirmed present, so a guest never taps a button
+     with nothing behind it, and the page is silent until asked.
+     ───────────────────────────────────────────────────────────── */
+  var TRACK = {
+    src: 'assets/audio/wedding.mp3',
+    volume: 0.45
+  };
+
   /* `people` fills the "Ask Us" section. Leave it empty and that whole
      section removes itself rather than sitting there blank. */
   var CONTACT = {
@@ -104,6 +117,66 @@
       // Nothing to show yet — take the section away rather than leave a hole.
       var panel = contacts.closest('.panel');
       if (panel) panel.remove();
+    }
+  }
+
+  /* ═══ SOUND ════════════════════════════════════════════════ */
+  /* Off by default. It cannot autoplay and it should not try. */
+  var sound = $('sound');
+  var track = $('track');
+
+  if (sound && track) {
+    var fade = null;
+
+    // Ramping the gain rather than cutting it in — an abrupt start on a
+    // quiet page is startling.
+    function ramp(to, done) {
+      window.clearInterval(fade);
+      var step = (to - track.volume) / 18;
+      fade = window.setInterval(function () {
+        var next = track.volume + step;
+        if ((step > 0 && next >= to) || (step < 0 && next <= to)) {
+          track.volume = to;
+          window.clearInterval(fade);
+          if (done) done();
+          return;
+        }
+        track.volume = Math.max(0, Math.min(1, next));
+      }, 45);
+    }
+
+    function mark(on) {
+      sound.setAttribute('aria-pressed', on ? 'true' : 'false');
+      sound.setAttribute('aria-label', on ? 'Mute music' : 'Play music');
+    }
+
+    sound.addEventListener('click', function () {
+      if (sound.getAttribute('aria-pressed') === 'true') {
+        ramp(0, function () { track.pause(); });
+        mark(false);
+        return;
+      }
+      track.volume = 0;
+      var started = track.play();
+      if (started && started.then) {
+        started.then(function () { mark(true); ramp(TRACK.volume); },
+                     function () { sound.hidden = true; });
+      } else {
+        mark(true);
+        ramp(TRACK.volume);
+      }
+    });
+
+    // Confirm the file is there before offering the control at all.
+    if (window.fetch) {
+      window.fetch(TRACK.src, { method: 'HEAD' }).then(function (r) {
+        if (!r.ok) return;
+        track.src = TRACK.src;
+        sound.hidden = false;
+      }, function () { /* missing or offline — leave it hidden */ });
+    } else {
+      track.src = TRACK.src;
+      sound.hidden = false;
     }
   }
 

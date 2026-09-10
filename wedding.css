@@ -611,3 +611,36 @@ footer {
 }
 .contacts a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
 .contacts a:hover { border-bottom-color: var(--ink); }
+
+/* ═══ SOUND ═══════════════════════════════════════════════════ */
+/* Hidden until the track is known to exist, so nobody taps a control
+   that has nothing behind it. */
+.sound {
+  position: fixed;
+  right: var(--gutter);
+  bottom: calc(var(--gutter) + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--hair-2);
+  background: rgba(252, 251, 249, .88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: background-color 300ms var(--ease), color 300ms var(--ease),
+              border-color 300ms var(--ease);
+}
+.sound:hover { border-color: var(--ink-3); }
+.sound[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.sound[hidden] { display: none !important; }
