@@ -33,7 +33,7 @@
   <header class="top">
     <div class="top-in">
       <a class="brand" href="#top">Joel &amp; Sandra</a>
-      <a class="btn" id="calendarTop" href="#">Save the date</a>
+      <a class="btn" href="#rsvp">R.S.V.P.</a>
     </div>
   </header>
 
@@ -149,6 +149,212 @@
         </div>
       </div>
     </section>
+
+
+    <!-- ═══ R.S.V.P. ══════════════════════════════════════════ -->
+    <section class="wrap" id="rsvp">
+      <h2 class="h-section rise">R.S.V.P.</h2>
+      <p class="lede-note rise">
+        Kindly reply by <strong id="rsvpBy">the tenth of October</strong> so that we can
+        keep a seat for you at the table.
+      </p>
+
+      <form class="form rise" id="rsvpForm" novalidate>
+        <div class="field">
+          <label for="gName">Your name</label>
+          <input class="input" id="gName" name="name" type="text" autocomplete="name" required>
+          <p class="error" id="errName" hidden>Please tell us your name.</p>
+        </div>
+
+        <div class="field">
+          <label for="gPhone">Phone or WhatsApp</label>
+          <input class="input" id="gPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+        </div>
+
+        <fieldset class="field">
+          <legend>Will you join us?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="attending" value="Joyfully accepts"> Joyfully accepts</label>
+            <label class="choice"><input type="radio" name="attending" value="Regretfully declines"> Regretfully declines</label>
+          </div>
+          <p class="error" id="errAttend" hidden>Please let us know either way.</p>
+        </fieldset>
+
+        <div class="field" data-coming>
+          <label for="gParty">How many of you</label>
+          <select class="input" id="gParty" name="party">
+            <option>1</option><option>2</option><option>3</option>
+            <option>4</option><option>5</option><option>6</option>
+            <option>More than six</option>
+          </select>
+        </div>
+
+        <fieldset class="field" data-coming>
+          <legend>Which will you be at</legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="events" value="the Holy Mass" checked> The Holy Mass</label>
+            <label class="choice"><input type="checkbox" name="events" value="the Reception" checked> The Reception</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="field" data-coming>
+          <legend>At the table</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="meal" value="Vegetarian"> Vegetarian</label>
+            <label class="choice"><input type="radio" name="meal" value="Non-vegetarian"> Non-vegetarian</label>
+            <label class="choice"><input type="radio" name="meal" value="No preference" checked> No preference</label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="gNote">A note for us</label>
+          <textarea class="input" id="gNote" name="note" rows="3"
+                    placeholder="A blessing, a song you would like to hear, anything at all"></textarea>
+        </div>
+
+        <button class="btn" type="submit" id="rsvpSend">Send our reply</button>
+        <p class="form-note" id="rsvpNote"></p>
+      </form>
+
+      <div class="sent" id="rsvpSent" hidden>
+        <p class="mark">&#10003;</p>
+        <p class="meta">Thank you</p>
+        <p class="lede-note" id="sentText"></p>
+        <button class="btn btn--ghost" type="button" id="rsvpAgain">Send another reply</button>
+      </div>
+    </section>
+
+    <!-- ═══ DRESS CODE ════════════════════════════════════════ -->
+    <div class="panel">
+      <section class="wrap">
+        <h2 class="h-section rise">What to Wear</h2>
+        <p class="lede-note rise">Formal &mdash; and a little more covered for the church.</p>
+
+        <div class="dress rise">
+          <div class="dress-col">
+            <span class="h">In the church</span>
+            <p>
+              Shoulders and knees covered for the Mass, please. A saree, a salwar
+              kameez with a dupatta, an anarkali or a long dress all sit right; a
+              light stole is an easy way to cover up for the service and take off
+              afterwards. For men, full-length trousers with a collared shirt, or
+              a kurta.
+            </p>
+          </div>
+          <div class="dress-col">
+            <span class="h">At the reception</span>
+            <p>
+              The same, a little less formal if you like. A blazer is welcome in
+              the evening but never required. Base 11 is indoors, so heels are
+              perfectly safe.
+            </p>
+          </div>
+        </div>
+
+        <div class="swatches rise" role="img"
+             aria-label="Suggested colours: olive, dusty rose, slate blue, warm sand, claret and charcoal.">
+          <span style="background:#6E7357"></span>
+          <span style="background:#B98D84"></span>
+          <span style="background:#5C6B78"></span>
+          <span style="background:#C9B79C"></span>
+          <span style="background:#7E3E33"></span>
+          <span style="background:#3A3A3C"></span>
+        </div>
+        <p class="meta rise" style="margin-top:16px;">
+          Soft, muted tones &middot; we ask you to leave white to the bride
+        </p>
+      </section>
+    </div>
+
+    <!-- ═══ GETTING THERE ═════════════════════════════════════ -->
+    <section class="wrap">
+      <h2 class="h-section rise">Getting There</h2>
+      <div class="travel rise">
+        <div class="leg">
+          <span class="p">Cochin International Airport (COK)</span>
+          <span class="d">approx. 100 km</span>
+        </div>
+        <div class="leg">
+          <span class="p">Kottayam Railway Station</span>
+          <span class="d">approx. 35 km</span>
+        </div>
+        <div class="leg">
+          <span class="p">Ponkunnam Church to Base 11, Pala</span>
+          <span class="d">approx. 25 km</span>
+        </div>
+      </div>
+      <p class="lede-note rise">
+        If you are travelling in and need a room, tell us in your reply or call
+        the number below &mdash; we will help you find somewhere close by.
+      </p>
+      <div class="rise" style="margin-top:clamp(24px,5vw,36px);display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn--ghost"
+           href="https://www.google.com/maps/search/?api=1&amp;query=Ponkunnam%20Church%2C%20Kottayam"
+           target="_blank" rel="noopener">Church</a>
+        <a class="btn btn--ghost"
+           href="https://www.google.com/maps/search/?api=1&amp;query=Base%2011%2C%20Pala%2C%20Kottayam"
+           target="_blank" rel="noopener">Reception</a>
+      </div>
+    </section>
+
+    <!-- ═══ QUESTIONS ═════════════════════════════════════════ -->
+    <section class="wrap">
+      <h2 class="h-section rise">Questions</h2>
+      <div class="faq rise">
+        <details>
+          <summary>What time should I arrive?</summary>
+          <p class="a">By ten past three, please. The Mass begins at half past three and
+          the doors are best left settled before the bride comes in.</p>
+        </details>
+        <details>
+          <summary>How long does the Mass run?</summary>
+          <p class="a">Between an hour and an hour and a half. The reception follows
+          at Base 11 in Pala, about half an hour away by road.</p>
+        </details>
+        <details>
+          <summary>Is there parking at the church?</summary>
+          <p class="a">Yes, and there is more within a short walk in Ponkunnam town.
+          Come a little early if you are driving in on the day.</p>
+        </details>
+        <details>
+          <summary>Are children welcome?</summary>
+          <p class="a">Very. Please count them in the number when you reply so we can
+          seat you together.</p>
+        </details>
+        <details>
+          <summary>May I take photographs?</summary>
+          <p class="a">During the Mass, please leave the aisle to our photographers
+          and take what you like from where you are seated. Afterwards, everything
+          is fair game.</p>
+        </details>
+        <details>
+          <summary>May I bring someone with me?</summary>
+          <p class="a">If your invitation is for more than one, yes. If you are not
+          sure, put the number in your reply and we will make it work.</p>
+        </details>
+        <details>
+          <summary>What about gifts?</summary>
+          <p class="a">Your presence is the whole of it. If you would still like to
+          give something, please speak to either of us on the day.</p>
+        </details>
+        <details>
+          <summary>My plans have changed. What now?</summary>
+          <p class="a">Send a second reply through the form above, or call us. There
+          is no such thing as too late to tell us.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ═══ ASK US ════════════════════════════════════════════ -->
+    <div class="panel">
+      <section class="wrap">
+        <h2 class="h-section rise">Ask Us</h2>
+        <p class="lede-note rise">
+          Anything at all &mdash; the road, a room, the time, what to wear.
+        </p>
+        <div class="contacts rise" id="contacts"></div>
+      </section>
+    </div>
 
     <!-- ═══ THE CLOSE ═════════════════════════════════════════ -->
     <section class="wrap">
