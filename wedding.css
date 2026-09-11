@@ -655,9 +655,11 @@ footer {
 .orn--rule  { width: min(100%, 17rem); }
 
 /* ═══ THE ENVELOPE ════════════════════════════════════════════
-   Covers the invitation until it is opened. Present only when
-   JavaScript is: without it there is no envelope and no scroll lock,
-   and the invitation is simply there.
+   Built the way an envelope is closed, so that it can open the way one
+   opens. The card is inside — behind the back panel — and is drawn out
+   through the mouth once the flap is down. Present only when JavaScript
+   is: without it there is no envelope and no scroll lock, and the
+   invitation is simply there.
    ═══════════════════════════════════════════════════════════════ */
 .envelope { display: none; }
 html.js .envelope {
@@ -668,75 +670,133 @@ html.js .envelope {
   z-index: 90;
   background: var(--paper);
   padding: var(--gutter);
-  perspective: 1500px;
   cursor: pointer;
-  transition: opacity 780ms var(--ease), transform 780ms var(--ease), visibility 780ms;
+  transition: opacity 620ms var(--ease), visibility 620ms;
 }
 html.js body.sealed { overflow: hidden; height: 100dvh; }
 
 .env-sheet {
   position: relative;
-  /* Sized from the height, and sitting a little below centre: the flap
-     swings its full height up past the top edge, and that has to have
-     somewhere to go. */
-  height: min(56dvh, 120vw);
+  /* Sized from the height and sitting below centre, because everything
+     this animation does happens above the envelope: the flap swings up
+     past the top edge, and the card comes out after it. */
+  height: min(44dvh, 96vw);
   aspect-ratio: 5 / 7;
-  max-width: 86vw;
-  transform: translateY(10%);
-  transform-style: preserve-3d;
+  max-width: 78vw;
+  transform: translateY(16%);
+  /* The vanishing point sits a little above the sheet, roughly where a
+     reader's eye would be for something held in the hand. */
+  perspective: 1200px;
+  perspective-origin: 50% 22%;
+}
+
+/* ── the card inside ────────────────────────────────────────── */
+.env-card {
+  position: absolute;
+  left: 7%;
+  top: 3%;
+  width: 86%;                    /* a card sits inside its envelope, not
+                                    against its edges — and the gold lining
+                                    stays in view as the card comes past */
+  height: 94%;
+  z-index: 1;                    /* under the back panel: it is inside */
+  background: linear-gradient(176deg, #FEFDFB 0%, #FBF9F4 58%, #F8F5EE 100%);
+  box-shadow: 0 1px 2px rgba(70, 58, 36, .10);
+  container-type: size;
+  text-align: center;
+}
+.env-card::after {               /* the printed border of the card */
+  content: "";
+  position: absolute;
+  inset: 5.5%;
+  border: 1px solid var(--gold);
+  opacity: .5;
+  pointer-events: none;
+}
+.env-card-in {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3cqh;
+  /* Lifted off centre: while the card is still half in the envelope this
+     is the middle of what can be seen. */
+  padding: 0 11% 30%;
+  color: var(--ink);
+}
+.env-card-eyebrow {
+  font-family: var(--sans);
+  font-size: 3.1cqh;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-inline-start: 0.34em;
+}
+.env-card .orn--sprig { width: 34cqw; color: var(--gold); }
+.env-card-names {
+  font-family: var(--display);
+  font-size: 9cqh;
+  line-height: 1.16;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-inline-start: 0.05em;
+}
+.env-card-names .amp {
+  display: block;
+  font-size: 0.58em;
+  line-height: 1.6;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--gold);
+}
+.env-card-date {
+  font-family: var(--sans);
+  font-size: 2.9cqh;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-inline-start: 0.2em;
+}
+
+/* ── the back of the envelope ───────────────────────────────── */
+.env-back {
+  position: absolute;
+  inset: 0;
+  z-index: 2;                    /* over the card, under the flap */
   background: linear-gradient(178deg, #F4F1E9 0%, #F1EDE4 52%, #EFEAE0 100%);
   box-shadow: 0 26px 64px -30px rgba(70, 58, 36, .40),
               0 2px 5px -2px rgba(70, 58, 36, .10);
-}
-/* The gold edge, on the paper's cut line rather than printed inside it. */
-.env-sheet::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  border: 1px solid var(--gold);
-  opacity: .38;
-  pointer-events: none;
-}
-
-/* the body of the envelope */
-.env-body {
-  position: absolute;
-  inset: 0;
   /* Two rows, the first as tall as the folds that meet in the middle: the
      writing then sits on the bottom fold, clear of the seal. */
   display: grid;
   grid-template-rows: 44% 1fr;
-  padding: clamp(20px, 4.5vw, 34px);
+  padding: clamp(16px, 4vw, 30px);
   /* A size container, so the writing scales with the envelope rather than
      with the window — the sheet is sized off the viewport height, and a
      short screen makes a small envelope. */
   container-type: size;
   text-align: center;
 }
-.env-copy {
-  grid-row: 2;
-  /* The folds are positioned, so they would otherwise paint over the
-     writing, which is not. */
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  gap: 2.6cqh;
-  padding-top: 30px;            /* clear of the seal at the fold's point */
-  padding-top: 6.5cqh;
-  min-height: 0;
+/* The gold edge, on the paper's cut line rather than printed inside it. */
+.env-back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 1px solid var(--gold);
+  opacity: .38;
+  pointer-events: none;
 }
+
 /* ── the folds on the back ──────────────────────────────────────
    The two side flaps fold in first, the bottom flap over them, the top
    flap over that — the order a real envelope is closed in, and the reason
    the seams meet as an X a little above the middle. Each panel is a
-   clipped rectangle; the drop-shadow follows the clip, so the fold gets
-   its gold seam and its shade without a second element to keep in
-   register.
+   clipped rectangle; the drop-shadow follows the clip, so a fold gets its
+   gold seam and its shade without a second element to keep in register.
    ─────────────────────────────────────────────────────────────── */
 .env-fold {
   position: absolute;
@@ -755,15 +815,29 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
 .env-fold--bottom {
   clip-path: polygon(0 100%, 50% 44%, 100% 100%);
   background: linear-gradient(184deg, #EFEAE0 0%, #F3F0E7 38%, #F2EEE5 100%);
-  filter: drop-shadow(0 -1px 1.4px rgba(70, 58, 36, .10))
+  filter: drop-shadow(0 -1px 1.6px rgba(70, 58, 36, .12))
           drop-shadow(0 0 .6px rgba(168, 137, 79, .5));
 }
 
+.env-copy {
+  grid-row: 2;
+  /* The folds are positioned, so they would otherwise paint over the
+     writing, which is not. */
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.6cqh;
+  padding-top: 6cqh;             /* clear of the seal at the fold's point */
+  min-height: 0;
+}
 .env-names {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(1.35rem, 7vw, 2.1rem);
-  font-size: clamp(1.2rem, 6.5cqh, 2.15rem);
+  font-size: clamp(1.1rem, 6vw, 1.8rem);
+  font-size: clamp(1rem, 6.4cqh, 1.9rem);
   line-height: 1.2;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -790,7 +864,7 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   margin-inline-start: 0.3em;
   background: none;
   border: 0;
-  padding: 10px 4px 0;
+  padding: 8px 4px 0;
   cursor: pointer;
   animation: cue 3.4s ease-in-out 1.2s infinite;
 }
@@ -803,81 +877,137 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   right: 0;
   top: 0;
   height: 40%;
+  z-index: 3;                    /* folded over the back, so: in front */
   transform-origin: 50% 0;
   transform-style: preserve-3d;
-  transition: transform 1000ms cubic-bezier(.62, .02, .24, 1);
-  z-index: 2;
 }
-.env-flap span {
+.env-flap .face,
+.env-flap .lining {
   position: absolute;
   inset: 0;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   backface-visibility: hidden;
-  /* drop-shadow follows the clipped outline, so the triangle gets its gold
-     edge and the shadow under the fold without a second element to keep in
-     register. */
-  filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .85))
-          drop-shadow(0 5px 9px rgba(70, 58, 36, .13));
 }
-/* A shade deeper than the body: the fold has to be visible before it moves. */
 .env-flap .face {
   background: linear-gradient(180deg, #F1EDE4 0%, #EDE8DC 62%, #E9E3D5 100%);
+  filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .85))
+          drop-shadow(0 5px 9px rgba(70, 58, 36, .13));
 }
 .env-flap .lining {
   transform: rotateX(180deg);
   background: linear-gradient(158deg, #D6BC86 0%, #B4935A 42%, #9A7C45 100%);
+  filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .85)) brightness(.78);
 }
 
-/* the seal, at the point of the flap */
+/* the seal, on the point of the flap, and riding with it */
 .env-seal {
   position: absolute;
   left: 50%;
-  top: 40%;
-  z-index: 3;
-  /* Sized off the viewport height, as the sheet is, so the seal keeps its
-     proportion on a short screen. */
-  --d: clamp(30px, 6dvh, 54px);
+  bottom: 0;
+  z-index: 1;
+  --d: clamp(26px, 5.2dvh, 48px);
   width: var(--d);
   height: var(--d);
-  margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2);
+  margin: 0 0 calc(var(--d) / -2) calc(var(--d) / -2);
   border-radius: 50%;
   border: 1px solid var(--gold);
-  background: var(--envelope);
+  background: radial-gradient(circle at 38% 32%, #F7F3E9 0%, #F0EBDD 62%, #E8E1CE 100%);
   color: var(--gold);
   font-family: var(--display);
   font-style: italic;
   font-size: calc(var(--d) * 0.46);
   display: grid;
   place-items: center;
-  transition: transform 320ms var(--ease), opacity 320ms var(--ease);
+  backface-visibility: hidden;   /* turns away with the flap */
+  box-shadow: 0 1px 2px rgba(70, 58, 36, .18);
 }
 
-/* ── opening ────────────────────────────────────────────────── */
-.envelope.is-open .env-seal { transform: scale(.4); opacity: 0; }
-.envelope.is-open .env-flap { transform: rotateX(-180deg); transition-delay: 140ms; }
- /* Only the writing goes; the paper stays solid so the invitation is not
-    seen through it. The whole envelope leaves together, below. */
-.envelope.is-open .env-copy { transition: opacity 560ms var(--ease) 260ms; opacity: 0; }
+/* ── opening ────────────────────────────────────────────────────
+   Three movements, overlapping: the flap unsticks and falls back, the
+   card is drawn out of the mouth behind it, and the envelope is set
+   down as the card comes forward.
+   ─────────────────────────────────────────────────────────────── */
+@keyframes env-flap-open {
+  /* Paper creased shut resists, then gives. */
+  0%   { transform: rotateX(0deg);    z-index: 3; animation-timing-function: cubic-bezier(.65, 0, .92, .32); }
+  12%  { transform: rotateX(-7deg);   z-index: 3; animation-timing-function: cubic-bezier(.32, 0, .34, 1); }
+  49%  { z-index: 3; }
+  51%  { z-index: 0; }              /* past upright: now behind the card */
+  62%  { transform: rotateX(-150deg); animation-timing-function: cubic-bezier(.22, .58, .42, 1); }
+  80%  { transform: rotateX(-177deg); animation-timing-function: ease-out; }
+  90%  { transform: rotateX(-166deg); animation-timing-function: ease-in-out; }
+  100% { transform: rotateX(-171deg); z-index: 0; }   /* a crease never lies flat */
+}
+/* The lining turns into the light as it comes over. */
+@keyframes env-lining-light {
+  0%, 38% { filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .85)) brightness(.78); }
+  100%    { filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .85)) brightness(1.04); }
+}
+/* Drawn out of the mouth: a short hesitation, then steady, then slowing
+   as it comes free. The shadow deepens as it leaves the paper. */
+@keyframes env-card-out {
+  /* The half-degree of tilt is the whole difference between a card being
+     drawn out and a rectangle being translated. */
+  0%   { transform: translateY(0) rotate(0deg);
+         box-shadow: 0 1px 2px rgba(70, 58, 36, .10); }
+  55%  { transform: translateY(-42%) rotate(-.55deg); }
+  100% { transform: translateY(-76%) rotate(-.35deg);
+         box-shadow: 0 20px 38px -20px rgba(70, 58, 36, .52); }
+}
 
+.envelope.is-open .env-flap {
+  animation: env-flap-open 980ms cubic-bezier(.4, 0, .3, 1) forwards;
+}
+.envelope.is-open .env-flap .lining {
+  animation: env-lining-light 980ms ease-out forwards;
+}
+.envelope.is-open .env-card {
+  animation: env-card-out 940ms cubic-bezier(.32, .04, .16, 1) 620ms forwards;
+}
+.envelope.is-open .env-copy {
+  transition: opacity 520ms var(--ease) 640ms;
+  opacity: 0;
+}
+
+/* The envelope is set down, and the card comes forward on its own. */
+.envelope.is-lifting .env-back,
+.envelope.is-lifting .env-flap {
+  opacity: 0;
+  transform: translateY(7%);
+  transition: opacity 520ms var(--ease), transform 620ms var(--ease);
+}
+.envelope.is-lifting .env-card {
+  transform: translateY(-62%) rotate(0deg) scale(1.16);
+  transition: transform 760ms cubic-bezier(.24, .6, .24, 1);
+}
+/* The writing was set high on the card so it would clear the envelope's
+   edge on the way out; free of it, the block settles to the middle. */
+.envelope.is-lifting .env-card-in {
+  transform: translateY(9%);
+  transition: transform 760ms cubic-bezier(.24, .6, .24, 1);
+}
 .envelope.is-gone {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px) scale(1.04);
   pointer-events: none;
 }
 
-/* the invitation rises as the envelope leaves */
+/* the invitation, waiting underneath */
 html.js body.sealed main,
-html.js body.sealed .top { opacity: 0; transform: scale(.985); }
+html.js body.sealed .top { opacity: 0; transform: scale(.99); }
 html.js main, html.js .top {
-  /* Held until the flap is all the way back: the invitation arrives as the
-     envelope leaves, not underneath it. */
-  transition: opacity 900ms var(--ease) 640ms, transform 900ms var(--ease) 640ms;
+  /* Held until the card is out and coming forward: the page arrives as
+     the card fades into it, not underneath it. */
+  transition: opacity 760ms var(--ease) 1820ms, transform 760ms var(--ease) 1820ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .env-cue { animation: none; }
-  .env-flap, .env-seal, .envelope, .envelope .env-copy,
-  html.js main, html.js .top { transition-duration: 160ms !important; transition-delay: 0ms !important; }
+  .envelope.is-open .env-flap,
+  .envelope.is-open .env-flap .lining,
+  .envelope.is-open .env-card { animation-duration: 240ms; animation-delay: 0ms; }
+  .envelope, .envelope .env-copy, .envelope.is-lifting .env-back,
+  .envelope.is-lifting .env-flap, .envelope.is-lifting .env-card,
+  html.js main, html.js .top { transition-duration: 200ms !important; transition-delay: 0ms !important; }
   html.js body.sealed main, html.js body.sealed .top { transform: none; }
 }

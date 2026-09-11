@@ -205,7 +205,11 @@
     }
   }
 
-  /* ═══ THE ENVELOPE ═════════════════════════════════════════ */
+  /* ═══ THE ENVELOPE ═════════════════════════════════════════
+     The movements are in the stylesheet; these are the cues. The flap
+     takes a second to fall back, the card is drawn out behind it, and
+     only then is the envelope set down and the page brought up.
+     ═══════════════════════════════════════════════════════════ */
   var envelope = $('envelope');
 
   if (envelope) {
@@ -219,17 +223,17 @@
       document.body.classList.remove('sealed');
       startMusic();
 
-      // The envelope begins leaving before the flap finishes, so the two
-      // read as one movement rather than two in sequence.
-      window.setTimeout(function () {
-        envelope.classList.add('is-gone');
-      }, reduced ? 0 : 900);
+      var lift = reduced ? 260 : 1620;   // the card is out; set the envelope down
+      var goes = reduced ? 400 : 2280;   // the card fades into the page
+      var ends = reduced ? 600 : 2900;   // nothing of it left
 
+      window.setTimeout(function () { envelope.classList.add('is-lifting'); }, lift);
+      window.setTimeout(function () { envelope.classList.add('is-gone'); }, goes);
       window.setTimeout(function () {
         envelope.remove();
         var first = document.querySelector('main');
         if (first) { first.setAttribute('tabindex', '-1'); first.focus({ preventScroll: true }); }
-      }, reduced ? 220 : 2000);
+      }, ends);
     }
 
     envelope.addEventListener('click', openEnvelope);
