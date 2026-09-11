@@ -746,10 +746,12 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
 .env-card-eyebrow {
   font-family: var(--sans);
   font-size: 3.1cqh;
-  letter-spacing: 0.34em;
+  line-height: 1.7;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin-inline-start: 0.34em;
+  margin-inline-start: 0.24em;
+  text-wrap: balance;
 }
 .env-card .orn--sprig { width: 34cqw; color: var(--gold); }
 .env-card-names {
@@ -785,7 +787,7 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   z-index: 3;
   /* The mouth. Both top corners fall to the middle, which is where the
      flap's point lands and where the seal goes. */
-  clip-path: polygon(0 0, 50% 46%, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 50% 43%, 100% 0, 100% 100%, 0 100%);
   background: linear-gradient(178deg, #F4F1E9 0%, #F1EDE4 52%, #EFEAE0 100%);
   /* The drop-shadow follows the clip, so the mouth gets its gold edge and
      throws its shade up onto the card behind it. */
@@ -794,7 +796,7 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
           drop-shadow(0 24px 56px rgba(70, 58, 36, .16));
   /* Two rows, the first as deep as the mouth: the writing sits below it. */
   display: grid;
-  grid-template-rows: 46% 1fr;
+  grid-template-rows: 43% 1fr;
   padding: clamp(16px, 4vw, 30px);
   /* A size container, so the writing scales with the envelope rather than
      with the window — the sheet is sized off the viewport height, and a
@@ -809,15 +811,15 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.6cqh;
-  padding-top: 6cqh;             /* clear of the seal at the mouth's point */
+  gap: 2.2cqh;
+  padding-top: 4.4cqh;             /* clear of the seal at the mouth's point */
   min-height: 0;
 }
 .env-names {
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(1.1rem, 6vw, 1.8rem);
-  font-size: clamp(1rem, 6.4cqh, 1.9rem);
+  font-size: clamp(.82rem, 5.8cqh, 1.8rem);
   line-height: 1.2;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -834,10 +836,21 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   color: var(--gold);
   padding-inline: 0.1em;
 }
+/* The note on the cover: said quietly, in the hand rather than in print. */
+.env-note {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(9px, 3.7cqh, 15px);
+  line-height: 1.3;
+  color: var(--ink-2);
+  text-wrap: balance;
+}
+.env-copy .meta { font-size: clamp(7.5px, 2.9cqh, 11px); }
 .env-cue {
   font-family: var(--sans);
   font-weight: 400;
   font-size: 0.625rem;
+  font-size: clamp(7.5px, 2.7cqh, 10px);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -856,7 +869,7 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   left: 0;
   right: 0;
   top: 0;
-  height: 46%;                   /* down to the point of the mouth */
+  height: 43%;                   /* down to the point of the mouth */
   z-index: 4;                    /* folded over the front, so: in front */
   transform-origin: 50% 0;
   transform-style: preserve-3d;
@@ -1004,6 +1017,12 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   transform: translateY(-42%) rotate(0deg) scale(1.18);
   transition: transform 820ms cubic-bezier(.24, .6, .24, 1);
 }
+/* The writing was set high on the card so it would clear the mouth on the
+   way out; free of the envelope, the block settles to the middle. */
+.envelope.is-lifting .env-card-in {
+  transform: translateY(5.5%);
+  transition: transform 820ms cubic-bezier(.24, .6, .24, 1);
+}
 .envelope.is-gone {
   opacity: 0;
   visibility: hidden;
@@ -1022,7 +1041,7 @@ html.js body.sealed .top { opacity: 0; transform: scale(.99); }
 html.js main, html.js .top {
   /* Held until the card has been read and is coming forward: the page
      arrives as the card fades into it, not underneath it. */
-  transition: opacity 720ms var(--ease) 3060ms, transform 720ms var(--ease) 3060ms;
+  transition: opacity 720ms var(--ease) 4700ms, transform 720ms var(--ease) 4700ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1034,7 +1053,8 @@ html.js main, html.js .top {
   .envelope.is-open .env-card { animation-duration: 240ms; animation-delay: 0ms; }
   .envelope, .envelope .env-copy, .envelope.is-lifting .env-inside,
   .envelope.is-lifting .env-front, .envelope.is-lifting .env-flap,
-  .envelope.is-lifting .env-card, .envelope.is-gone .env-card,
+  .envelope.is-lifting .env-card, .envelope.is-lifting .env-card-in,
+  .envelope.is-gone .env-card,
   html.js main, html.js .top { transition-duration: 200ms !important; transition-delay: 0ms !important; }
   html.js body.sealed main, html.js body.sealed .top { transform: none; }
 }
