@@ -15,7 +15,7 @@
     receptionTime: '18:00',
     endTime: '21:30',
     title: 'Joel & Sandra — Wedding',
-    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base 11, Pala, at six.',
+    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at six.',
     location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 

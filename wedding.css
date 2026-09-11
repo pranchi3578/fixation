@@ -528,20 +528,6 @@ footer {
   margin-top: 14px;
 }
 
-/* ── dress code ─────────────────────────────────────────────── */
-.swatches {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: clamp(26px, 6vw, 38px);
-}
-.swatches span {
-  width: 40px;
-  height: 52px;
-  border: 1px solid rgba(14, 14, 13, .12);
-}
-
 /* ── travel ─────────────────────────────────────────────────── */
 .travel {
   max-width: 32rem;
