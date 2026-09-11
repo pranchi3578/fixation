@@ -223,9 +223,9 @@
       document.body.classList.remove('sealed');
       startMusic();
 
-      var lift = reduced ? 260 : 1700;   // the card is out; set the envelope down
-      var goes = reduced ? 400 : 2240;   // the card fades into the page
-      var ends = reduced ? 600 : 2820;   // nothing of it left
+      var lift = reduced ? 260 : 2620;   // the card is out and has been read   // the card is out; set the envelope down
+      var goes = reduced ? 400 : 3560;   // the card fades into the page
+      var ends = reduced ? 600 : 4180;   // nothing of it left
 
       window.setTimeout(function () { envelope.classList.add('is-lifting'); }, lift);
       window.setTimeout(function () { envelope.classList.add('is-gone'); }, goes);

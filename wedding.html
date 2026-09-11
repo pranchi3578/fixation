@@ -47,8 +47,11 @@
        aria-label="Open the invitation">
     <div class="env-sheet">
 
-      <!-- The card, inside the envelope: behind the back panel until it is
-           drawn out through the mouth at the top. -->
+      <!-- The inside of the envelope, seen through the mouth once the
+           flap is down. -->
+      <div class="env-inside" aria-hidden="true"></div>
+
+      <!-- The card, standing in the pocket. -->
       <div class="env-card" aria-hidden="true">
         <div class="env-card-in">
           <p class="env-card-eyebrow">You are invited</p>
@@ -58,12 +61,10 @@
         </div>
       </div>
 
-      <!-- The back of the envelope: two side flaps folded in, the bottom
-           flap over them, and the writing on top of that. -->
-      <div class="env-back">
-        <span class="env-fold env-fold--left" aria-hidden="true"></span>
-        <span class="env-fold env-fold--right" aria-hidden="true"></span>
-        <span class="env-fold env-fold--bottom" aria-hidden="true"></span>
+      <!-- The front of the envelope: a pocket whose top edge falls away to
+           the middle. That V is the mouth, and the closed flap covers it
+           exactly. -->
+      <div class="env-front">
         <div class="env-copy">
           <p class="env-names">Joel<span class="amp">&amp;</span>Sandra</p>
           <p class="meta">07 &middot; 11 &middot; 2026</p>
@@ -71,7 +72,7 @@
         </div>
       </div>
 
-      <!-- The top flap, and the seal that rides on its point. -->
+      <!-- The flap, and the seal that rides on its point. -->
       <div class="env-flap" aria-hidden="true">
         <span class="face"></span>
         <span class="lining"></span>
