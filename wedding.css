@@ -257,6 +257,27 @@ section { padding-block: clamp(58px, 13vw, 116px); text-align: center; }
 .btn--ghost { background: none; color: var(--ink); border-color: var(--hair-2); }
 .btn--ghost:hover, .btn--ghost:focus-visible { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
+/* The map buttons name a place but not that they lead anywhere: a hairline
+   arrow says so, and leans a little further out on hover. */
+.btn--map {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;                    /* the label's tracking supplies the rest */
+}
+.btn--map .dir {
+  width: 0.72em;
+  flex: none;
+  transition: transform 280ms var(--ease);
+}
+.btn--map .dir svg { display: block; width: 100%; height: auto; }
+.btn--map:hover .dir,
+.btn--map:focus-visible .dir { transform: translate(0.12em, -0.12em); }
+@media (prefers-reduced-motion: reduce) {
+  .btn--map .dir { transition: none; }
+  .btn--map:hover .dir, .btn--map:focus-visible .dir { transform: none; }
+}
+
 .btn--light { background: none; color: #fff; border-color: rgba(255,255,255,.5); }
 .btn--light:hover, .btn--light:focus-visible { background: #fff; color: var(--ink); border-color: #fff; }
 
