@@ -9,13 +9,18 @@
 (function () {
   'use strict';
 
+  /* Whose name comes first is set on the body, so the mirrored invitation
+     can carry the other order without a second copy of this file. */
+  var COUPLE = (document.body.getAttribute('data-couple') || 'Joel & Sandra')
+                 .replace(/&amp;/g, '&');
+
   var WEDDING = {
     date: '2026-11-07',
     massTime: '16:00',
-    receptionTime: '18:00',
+    receptionTime: '18:30',
     endTime: '21:30',
-    title: 'Joel & Sandra — Wedding',
-    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at six.',
+    title: COUPLE + ' — Wedding',
+    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at half past six.',
     location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 

@@ -703,6 +703,17 @@ footer {
 }
 .wish .meta { line-height: 1.4; }
 
+.wishes-also {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(.95rem, 3.4vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 26rem;
+  margin: clamp(24px, 5vw, 34px) auto 0;
+  text-wrap: pretty;
+}
+
 /* ═══ THE ENVELOPE ════════════════════════════════════════════
    Four layers, in the order they lie in the hand: the inside of the
    envelope, the card standing in it, the front pocket, and the flap.
