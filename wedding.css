@@ -654,6 +654,55 @@ footer {
 .orn--sprig { width: clamp(74px, 18vw, 96px); margin-bottom: 2px; }
 .orn--rule  { width: min(100%, 17rem); }
 
+/* ═══ WISHES ══════════════════════════════════════════════════
+   Ruled cells rather than cards: the page has one panel already, and a
+   second set of boxes would flatten the hierarchy.
+   ═══════════════════════════════════════════════════════════════ */
+.wishes {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 54rem;
+  margin-inline: auto;
+  margin-top: clamp(30px, 7vw, 48px);
+  border-top: 1px solid var(--hair);
+  list-style: none;
+  padding: 0;                    /* the list's own indent would pull the
+                                    cells in from their rules */
+}
+@media (min-width: 700px) { .wishes { grid-template-columns: 1fr 1fr; } }
+
+.wish {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: clamp(26px, 6vw, 38px) clamp(8px, 3vw, 28px);
+  border-bottom: 1px solid var(--hair);
+}
+@media (min-width: 700px) {
+  .wish:nth-child(odd):not(:last-child) { border-right: 1px solid var(--hair); }
+  /* An odd one out takes the full width rather than sitting in half a row. */
+  .wish:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+.said {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.02rem, 3.6vw, 1.18rem);
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 23rem;
+  text-wrap: pretty;
+}
+.wish .from {
+  font-family: var(--display);
+  font-size: clamp(.92rem, 3.2vw, 1rem);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-inline-start: 0.09em;
+  margin-top: 4px;
+}
+.wish .meta { line-height: 1.4; }
+
 /* ═══ THE ENVELOPE ════════════════════════════════════════════
    Four layers, in the order they lie in the hand: the inside of the
    envelope, the card standing in it, the front pocket, and the flap.
