@@ -677,52 +677,86 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
 .env-sheet {
   position: relative;
   /* Sized from the height, and sitting a little below centre: the flap
-     swings a full 46% of the sheet up past the top edge, and that has to
-     have somewhere to go. */
+     swings its full height up past the top edge, and that has to have
+     somewhere to go. */
   height: min(56dvh, 120vw);
   aspect-ratio: 5 / 7;
   max-width: 86vw;
   transform: translateY(10%);
   transform-style: preserve-3d;
+  background: linear-gradient(178deg, #F4F1E9 0%, #F1EDE4 52%, #EFEAE0 100%);
+  box-shadow: 0 26px 64px -30px rgba(70, 58, 36, .40),
+              0 2px 5px -2px rgba(70, 58, 36, .10);
+}
+/* The gold edge, on the paper's cut line rather than printed inside it. */
+.env-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border: 1px solid var(--gold);
+  opacity: .38;
+  pointer-events: none;
 }
 
 /* the body of the envelope */
 .env-body {
   position: absolute;
   inset: 0;
-  background: var(--envelope);
-  /* Two rows, the first exactly as tall as the flap: the writing then sits
-     in the lower half where the seal cannot land on it. */
+  /* Two rows, the first as tall as the folds that meet in the middle: the
+     writing then sits on the bottom fold, clear of the seal. */
   display: grid;
-  grid-template-rows: 43% 1fr;
+  grid-template-rows: 44% 1fr;
   padding: clamp(20px, 4.5vw, 34px);
   /* A size container, so the writing scales with the envelope rather than
      with the window — the sheet is sized off the viewport height, and a
      short screen makes a small envelope. */
   container-type: size;
   text-align: center;
-  box-shadow: 0 24px 60px -28px rgba(70, 58, 36, .38);
 }
 .env-copy {
   grid-row: 2;
+  /* The folds are positioned, so they would otherwise paint over the
+     writing, which is not. */
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 12px;
   gap: 2.6cqh;
-  padding-top: 30px;            /* clear of the seal, which hangs below 43% */
+  padding-top: 30px;            /* clear of the seal at the fold's point */
   padding-top: 6.5cqh;
   min-height: 0;
 }
-/* the gold hairline, held off the edge like a printed border */
-.env-body::before {
-  content: "";
+/* ── the folds on the back ──────────────────────────────────────
+   The two side flaps fold in first, the bottom flap over them, the top
+   flap over that — the order a real envelope is closed in, and the reason
+   the seams meet as an X a little above the middle. Each panel is a
+   clipped rectangle; the drop-shadow follows the clip, so the fold gets
+   its gold seam and its shade without a second element to keep in
+   register.
+   ─────────────────────────────────────────────────────────────── */
+.env-fold {
   position: absolute;
-  inset: clamp(10px, 2.6vw, 15px);
-  border: 1px solid var(--gold);
-  opacity: .45;
+  inset: 0;
   pointer-events: none;
+  filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .55));
+}
+.env-fold--left {
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  background: linear-gradient(96deg, #F6F3EC 0%, #EFEADF 100%);
+}
+.env-fold--right {
+  clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+  background: linear-gradient(264deg, #F6F3EC 0%, #EFEADF 100%);
+}
+.env-fold--bottom {
+  clip-path: polygon(0 100%, 50% 44%, 100% 100%);
+  background: linear-gradient(184deg, #EFEAE0 0%, #F3F0E7 38%, #F2EEE5 100%);
+  filter: drop-shadow(0 -1px 1.4px rgba(70, 58, 36, .10))
+          drop-shadow(0 0 .6px rgba(168, 137, 79, .5));
 }
 
 .env-names {
@@ -768,7 +802,7 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
   left: 0;
   right: 0;
   top: 0;
-  height: 43%;
+  height: 40%;
   transform-origin: 50% 0;
   transform-style: preserve-3d;
   transition: transform 1000ms cubic-bezier(.62, .02, .24, 1);
@@ -798,11 +832,11 @@ html.js body.sealed { overflow: hidden; height: 100dvh; }
 .env-seal {
   position: absolute;
   left: 50%;
-  top: 43%;
+  top: 40%;
   z-index: 3;
   /* Sized off the viewport height, as the sheet is, so the seal keeps its
      proportion on a short screen. */
-  --d: clamp(26px, 5dvh, 48px);
+  --d: clamp(30px, 6dvh, 54px);
   width: var(--d);
   height: var(--d);
   margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2);
