@@ -22,6 +22,10 @@
   --hair:    #E2DFD8;
   --hair-2:  #C8C4BA;
 
+  /* The one addition to the monochrome: a matte gold, used only for the
+     line ornaments. Never for text — it is 3.6:1 on paper. */
+  --gold:    #A8894F;
+
   --display: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, serif;
   --sans: 'Jost', 'Futura', 'Avenir Next', -apple-system, sans-serif;
   --ml: 'Noto Serif Malayalam', Georgia, serif;
@@ -644,3 +648,18 @@ footer {
   color: var(--paper);
 }
 .sound[hidden] { display: none !important; }
+
+/* ═══ ORNAMENT ════════════════════════════════════════════════ */
+/* Line drawings in a matte gold — antique rather than bright, so it reads
+   as ink on paper and not as a highlight. Decorative only: every one is
+   aria-hidden, and the page says the same thing with them removed. */
+.orn {
+  display: block;
+  margin-inline: auto;
+  color: var(--gold);
+}
+.orn svg { width: 100%; height: auto; display: block; }
+
+.orn--lamb  { width: clamp(62px, 15vw, 80px); }
+.orn--sprig { width: clamp(74px, 18vw, 96px); margin-bottom: 2px; }
+.orn--rule  { width: min(100%, 17rem); }
