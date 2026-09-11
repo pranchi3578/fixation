@@ -40,6 +40,8 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.documentElement.classList.add('js');
+  // Tells the failsafe in the head that this file arrived; see wedding.html.
+  window.__invitationReady = true;
 
   function $(id) { return document.getElementById(id); }
 
@@ -124,6 +126,7 @@
   /* Off by default. It cannot autoplay and it should not try. */
   var sound = $('sound');
   var track = $('track');
+  var startMusic = function () {};   // replaced below once the file is known
 
   if (sound && track) {
     var fade = null;
@@ -167,17 +170,74 @@
       }
     });
 
+    /* Opening the envelope is a user gesture, so the browser will let the
+       track start here. If the file is not ready yet the flag is set and
+       the music begins the moment the HEAD check lands. */
+    var ready = false, wanted = false;
+
+    startMusic = function () {
+      wanted = true;
+      if (!ready) return;
+      track.volume = 0;
+      var started = track.play();
+      if (started && started.then) {
+        started.then(function () { mark(true); ramp(TRACK.volume); }, function () {});
+      } else {
+        mark(true);
+        ramp(TRACK.volume);
+      }
+    };
+
+    function haveFile() {
+      ready = true;
+      track.src = TRACK.src;
+      sound.hidden = false;
+      if (wanted) startMusic();
+    }
+
     // Confirm the file is there before offering the control at all.
     if (window.fetch) {
       window.fetch(TRACK.src, { method: 'HEAD' }).then(function (r) {
-        if (!r.ok) return;
-        track.src = TRACK.src;
-        sound.hidden = false;
+        if (r.ok) haveFile();
       }, function () { /* missing or offline — leave it hidden */ });
     } else {
-      track.src = TRACK.src;
-      sound.hidden = false;
+      haveFile();
     }
+  }
+
+  /* ═══ THE ENVELOPE ═════════════════════════════════════════ */
+  var envelope = $('envelope');
+
+  if (envelope) {
+    var opened = false;
+
+    function openEnvelope() {
+      if (opened) return;
+      opened = true;
+
+      envelope.classList.add('is-open');
+      document.body.classList.remove('sealed');
+      startMusic();
+
+      // The envelope begins leaving before the flap finishes, so the two
+      // read as one movement rather than two in sequence.
+      window.setTimeout(function () {
+        envelope.classList.add('is-gone');
+      }, reduced ? 0 : 900);
+
+      window.setTimeout(function () {
+        envelope.remove();
+        var first = document.querySelector('main');
+        if (first) { first.setAttribute('tabindex', '-1'); first.focus({ preventScroll: true }); }
+      }, reduced ? 220 : 2000);
+    }
+
+    envelope.addEventListener('click', openEnvelope);
+    envelope.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnvelope(); }
+    });
+  } else {
+    document.body.classList.remove('sealed');
   }
 
   /* ═══ THE FADE ═════════════════════════════════════════════ */

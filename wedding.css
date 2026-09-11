@@ -26,6 +26,10 @@
      line ornaments. Never for text — it is 3.6:1 on paper. */
   --gold:    #A8894F;
 
+  /* the envelope: warmer and a shade deeper than the page, so it reads
+     as a separate object laid on top rather than the same sheet */
+  --envelope: #F2EFE7;
+
   --display: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, serif;
   --sans: 'Jost', 'Futura', 'Avenir Next', -apple-system, sans-serif;
   --ml: 'Noto Serif Malayalam', Georgia, serif;
@@ -649,3 +653,197 @@ footer {
 .orn--lamb  { width: clamp(62px, 15vw, 80px); }
 .orn--sprig { width: clamp(74px, 18vw, 96px); margin-bottom: 2px; }
 .orn--rule  { width: min(100%, 17rem); }
+
+/* ═══ THE ENVELOPE ════════════════════════════════════════════
+   Covers the invitation until it is opened. Present only when
+   JavaScript is: without it there is no envelope and no scroll lock,
+   and the invitation is simply there.
+   ═══════════════════════════════════════════════════════════════ */
+.envelope { display: none; }
+html.js .envelope {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--paper);
+  padding: var(--gutter);
+  perspective: 1500px;
+  cursor: pointer;
+  transition: opacity 780ms var(--ease), transform 780ms var(--ease), visibility 780ms;
+}
+html.js body.sealed { overflow: hidden; height: 100dvh; }
+
+.env-sheet {
+  position: relative;
+  /* Sized from the height, and sitting a little below centre: the flap
+     swings a full 46% of the sheet up past the top edge, and that has to
+     have somewhere to go. */
+  height: min(56dvh, 120vw);
+  aspect-ratio: 5 / 7;
+  max-width: 86vw;
+  transform: translateY(10%);
+  transform-style: preserve-3d;
+}
+
+/* the body of the envelope */
+.env-body {
+  position: absolute;
+  inset: 0;
+  background: var(--envelope);
+  /* Two rows, the first exactly as tall as the flap: the writing then sits
+     in the lower half where the seal cannot land on it. */
+  display: grid;
+  grid-template-rows: 43% 1fr;
+  padding: clamp(20px, 4.5vw, 34px);
+  /* A size container, so the writing scales with the envelope rather than
+     with the window — the sheet is sized off the viewport height, and a
+     short screen makes a small envelope. */
+  container-type: size;
+  text-align: center;
+  box-shadow: 0 24px 60px -28px rgba(70, 58, 36, .38);
+}
+.env-copy {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  gap: 2.6cqh;
+  padding-top: 30px;            /* clear of the seal, which hangs below 43% */
+  padding-top: 6.5cqh;
+  min-height: 0;
+}
+/* the gold hairline, held off the edge like a printed border */
+.env-body::before {
+  content: "";
+  position: absolute;
+  inset: clamp(10px, 2.6vw, 15px);
+  border: 1px solid var(--gold);
+  opacity: .45;
+  pointer-events: none;
+}
+
+.env-names {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 7vw, 2.1rem);
+  font-size: clamp(1.2rem, 6.5cqh, 2.15rem);
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-inline-start: 0.06em;
+  color: var(--ink);
+}
+.env-names .amp {
+  display: block;                /* stacked, as on the cover */
+  font-size: 0.6em;
+  line-height: 1.7;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--gold);
+  padding-inline: 0.1em;
+}
+.env-cue {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-inline-start: 0.3em;
+  background: none;
+  border: 0;
+  padding: 10px 4px 0;
+  cursor: pointer;
+  animation: cue 3.4s ease-in-out 1.2s infinite;
+}
+@keyframes cue { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+
+/* ── the flap ───────────────────────────────────────────────── */
+.env-flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 43%;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  transition: transform 1000ms cubic-bezier(.62, .02, .24, 1);
+  z-index: 2;
+}
+.env-flap span {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  backface-visibility: hidden;
+  /* drop-shadow follows the clipped outline, so the triangle gets its gold
+     edge and the shadow under the fold without a second element to keep in
+     register. */
+  filter: drop-shadow(0 0 .6px rgba(168, 137, 79, .85))
+          drop-shadow(0 5px 9px rgba(70, 58, 36, .13));
+}
+/* A shade deeper than the body: the fold has to be visible before it moves. */
+.env-flap .face {
+  background: linear-gradient(180deg, #F1EDE4 0%, #EDE8DC 62%, #E9E3D5 100%);
+}
+.env-flap .lining {
+  transform: rotateX(180deg);
+  background: linear-gradient(158deg, #D6BC86 0%, #B4935A 42%, #9A7C45 100%);
+}
+
+/* the seal, at the point of the flap */
+.env-seal {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  z-index: 3;
+  /* Sized off the viewport height, as the sheet is, so the seal keeps its
+     proportion on a short screen. */
+  --d: clamp(26px, 5dvh, 48px);
+  width: var(--d);
+  height: var(--d);
+  margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2);
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: var(--envelope);
+  color: var(--gold);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: calc(var(--d) * 0.46);
+  display: grid;
+  place-items: center;
+  transition: transform 320ms var(--ease), opacity 320ms var(--ease);
+}
+
+/* ── opening ────────────────────────────────────────────────── */
+.envelope.is-open .env-seal { transform: scale(.4); opacity: 0; }
+.envelope.is-open .env-flap { transform: rotateX(-180deg); transition-delay: 140ms; }
+ /* Only the writing goes; the paper stays solid so the invitation is not
+    seen through it. The whole envelope leaves together, below. */
+.envelope.is-open .env-copy { transition: opacity 560ms var(--ease) 260ms; opacity: 0; }
+
+.envelope.is-gone {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(1.04);
+  pointer-events: none;
+}
+
+/* the invitation rises as the envelope leaves */
+html.js body.sealed main,
+html.js body.sealed .top { opacity: 0; transform: scale(.985); }
+html.js main, html.js .top {
+  /* Held until the flap is all the way back: the invitation arrives as the
+     envelope leaves, not underneath it. */
+  transition: opacity 900ms var(--ease) 640ms, transform 900ms var(--ease) 640ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .env-cue { animation: none; }
+  .env-flap, .env-seal, .envelope, .envelope .env-copy,
+  html.js main, html.js .top { transition-duration: 160ms !important; transition-delay: 0ms !important; }
+  html.js body.sealed main, html.js body.sealed .top { transform: none; }
+}

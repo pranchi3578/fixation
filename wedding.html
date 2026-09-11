@@ -26,9 +26,40 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400&family=Noto+Serif+Malayalam:wght@400&display=swap">
   <link rel="stylesheet" href="wedding.css">
+  <!-- Set before paint: the envelope and the scroll lock both hang off
+       .js, so without this the invitation shows for a frame first. -->
+  <script>
+    document.documentElement.className += ' js';
+    // If the script never arrives, the envelope must not be left sealed over
+    // the invitation: dropping the class takes the cover and the scroll lock
+    // away together and the page is simply there.
+    window.setTimeout(function () {
+      if (window.__invitationReady) return;
+      var r = document.documentElement;
+      r.className = r.className.replace(/\bjs\b/, '');
+    }, 6000);
+  </script>
 </head>
 
-<body>
+<body class="sealed">
+
+  <div class="envelope" id="envelope" role="button" tabindex="0"
+       aria-label="Open the invitation">
+    <div class="env-sheet">
+      <div class="env-body">
+        <div class="env-copy">
+          <p class="env-names">Joel<span class="amp">&amp;</span>Sandra</p>
+          <p class="meta">07 &middot; 11 &middot; 2026</p>
+          <button class="env-cue" id="envOpen" type="button">Tap to open</button>
+        </div>
+      </div>
+      <div class="env-flap" aria-hidden="true">
+        <span class="face"></span>
+        <span class="lining"></span>
+      </div>
+      <span class="env-seal" aria-hidden="true">&amp;</span>
+    </div>
+  </div>
 
   <header class="top">
     <div class="top-in">
