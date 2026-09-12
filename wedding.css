@@ -412,6 +412,48 @@ footer {
     rgba(14, 14, 13, .48) 74%, rgba(14, 14, 13, .70) 100%);
 }
 .cover-in { color: #fff; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+/* ── the nudge ──────────────────────────────────────────────────
+   The cover fills the screen, which is exactly the risk: it can read as
+   the whole of the invitation. One hairline with a light running down it
+   says otherwise. It is also a link, so heeding it needs no scrolling.
+   ─────────────────────────────────────────────────────────────── */
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 3vw, 26px);
+  transform: translateX(-50%);
+  padding: 10px 20px;            /* a 44px target around a 1px line */
+  display: block;
+  transition: opacity 520ms var(--ease);
+}
+.cue-line {
+  display: block;
+  width: 1px;
+  height: clamp(34px, 7vw, 46px);
+  background: rgba(255, 255, 255, .32);
+  overflow: hidden;
+}
+.cue-line i {
+  display: block;
+  width: 100%;
+  height: 36%;
+  background: rgba(255, 255, 255, .95);
+  animation: cue-fall 2.8s cubic-bezier(.5, 0, .5, 1) 1.4s infinite;
+}
+@keyframes cue-fall {
+  0%        { transform: translateY(-110%); opacity: 0; }
+  16%, 74%  { opacity: 1; }
+  100%      { transform: translateY(300%); opacity: 0; }
+}
+.scroll-cue:hover .cue-line,
+.scroll-cue:focus-visible .cue-line { background: rgba(255, 255, 255, .5); }
+/* Heeded, and therefore no longer needed. */
+html.moved .scroll-cue { opacity: 0; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cue-line i { animation: none; transform: translateY(180%); }
+}
 .cover .meta { color: rgba(255, 255, 255, .82); }
 
 .cover-names {

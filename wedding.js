@@ -249,6 +249,20 @@
     document.body.classList.remove('sealed');
   }
 
+  /* ═══ THE NUDGE ════════════════════════════════════════════ */
+  /* The cue on the cover goes away the moment it is heeded, and never
+     comes back: a second showing would be nagging. */
+  var cue = document.querySelector('.scroll-cue');
+  if (cue) {
+    var heeded = function () {
+      if (window.scrollY < 40) return;
+      document.documentElement.classList.add('moved');
+      window.removeEventListener('scroll', heeded);
+    };
+    window.addEventListener('scroll', heeded, { passive: true });
+    heeded();                      // a restored scroll position counts
+  }
+
   /* ═══ THE FADE ═════════════════════════════════════════════ */
   var blocks = document.querySelectorAll('.rise');
   function reveal(el) { el.classList.add('in'); }
