@@ -16,11 +16,11 @@
 
   var WEDDING = {
     date: '2026-11-07',
-    massTime: '16:00',
+    massTime: '15:30',
     receptionTime: '18:30',
     endTime: '21:30',
     title: COUPLE + ' — Wedding',
-    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at four in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at half past six.',
+    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at half past three in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at half past six.',
     location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 
@@ -53,7 +53,7 @@
   /* ═══ TIME ═════════════════════════════════════════════════ */
   /* Kerala is IST, UTC+5:30. Building the instant in UTC means the
      countdown is the same number everywhere — a guest in London sees the
-     time left until the Mass, not until four o'clock where they are. */
+     time left until the Mass, not until half past three where they are. */
   function istInstant(iso, hhmm) {
     var t = hhmm.split(':');
     return Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10),
@@ -228,8 +228,8 @@
       document.body.classList.remove('sealed');
       startMusic();
 
-      var lift = reduced ? 260 : 2620;   // the card is out and has been read   // the card is out; set the envelope down
-      var goes = reduced ? 400 : 5400;   // three seconds out of the envelope   // the card fades into the page
+      var lift = reduced ? 260 : 2620;   // the card is out; set the envelope down
+      var goes = reduced ? 400 : 5400;   // three seconds to read it, then away
       var ends = reduced ? 600 : 6020;   // nothing of it left
 
       window.setTimeout(function () { envelope.classList.add('is-lifting'); }, lift);
