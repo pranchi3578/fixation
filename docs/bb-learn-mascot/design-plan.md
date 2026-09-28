@@ -4,6 +4,8 @@
 Status: **plan, for review.** Nothing final is drawn yet. `concepts.svg` / `concepts.png`
 are rough sketches for choosing a direction (regenerate with `python3 concepts.py`).
 
+> **Round 3, the owl, is in [`owl-design-plan.md`](owl-design-plan.md)** (sheet: `owl.png`), and it is the current direction. The Unmute mic is parked.
+>
 > **Round 2 is in [`concepts-round-2.md`](concepts-round-2.md)** (sheet: `concepts_v2.png`).
 > It has fourteen concepts from five angles, scored side by side. The recommendation
 > there moves from the Bubble (§2–3 below) to **Patti, the slate**, with Basta and
