@@ -27,7 +27,7 @@ def pupil_eye(r, c, bg="3"):
 REST_EYE = pupil_eye(1, 1)
 
 
-def cube(variant="tufted", eyes=None, right=None, tufts="2", meter="44422",
+def cube(variant="bolts", eyes=None, right=None, tufts="2", meter="44422",
          wings=(5, 5), extra=None):
     g = [["."] * W for _ in range(H)]
     for r in range(2, 13):                         # the box, cols 1-13
@@ -64,8 +64,8 @@ def cube(variant="tufted", eyes=None, right=None, tufts="2", meter="44422",
 
 
 VARIANTS = [
-    ("Bolts", "round 4's cube: tufts as two bolts", cube("bolts")),
-    ("Tufted (recommended)", "the corners grow ear tufts; wing flaps", cube("tufted")),
+    ("Bolts (chosen)", "round 4's cube: the ear tufts become two bolts", cube("bolts")),
+    ("Tufted", "the corners grow ear tufts; wing flaps", cube("tufted")),
     ("Soft", "rounded corners, tufts as soft bumps", cube("soft")),
 ]
 
@@ -75,15 +75,15 @@ HALF = ["2222", "2222", "34o3", "3oo3"]
 
 STATES = {
     "rest":      ("Resting", "pupils centred, meter shows progress", cube()),
-    "hello":     ("Hello", "happy eyes, one wing waves", cube(eyes=HAPPY, wings=(3, 5))),
-    "listen":    ("Listening", "tufts light up, pupils up: it stops the moment you speak", cube(eyes=pupil_eye(0, 1), tufts="4")),
+    "hello":     ("Hello", "happy eyes, the bolts glow on", cube(eyes=HAPPY, tufts="3")),
+    "listen":    ("Listening", "bolts light up, pupils up: it stops the moment you speak", cube(eyes=pupil_eye(0, 1), tufts="4")),
     "talk":      ("Talking", "the meter becomes its voice", cube(meter="34243")),
     "work":      ("Your work", "eyes on the lesson, not on you", cube(eyes=pupil_eye(2, 0))),
     "hmm":       ("Hmm", "one shutter half down: curious, never disappointed", cube(right=HALF)),
-    "happy":     ("Happy", "for effort; wings up, meter jumps", cube(eyes=HAPPY, wings=(3, 3), meter="44442")),
+    "happy":     ("Happy", "for effort: a hop, bolts lit, meter jumps", cube(eyes=HAPPY, tufts="4", meter="44442")),
     "oops":      ("Oops", "crossed eyes; a meter cell drops out", cube(eyes=pupil_eye(1, 2), right=pupil_eye(1, 0), meter="4442.", extra={(11, 9): "4"})),
     "think":     ("Thinking", "pupils up and aside, meter pulses", cube(eyes=pupil_eye(0, 2), meter="24222")),
-    "sleepy":    ("Sleepy", "shutters half down, tufts dim: go to bed", cube(eyes=HALF, tufts="1")),
+    "sleepy":    ("Sleepy", "shutters half down, bolts dim: go to bed", cube(eyes=HALF, tufts="1")),
     "blink":     ("Blink", "random 2-6 s gaps", cube(eyes=SHUT)),
 }
 for _, _, g in list(STATES.values()) + VARIANTS:
@@ -91,7 +91,7 @@ for _, _, g in list(STATES.values()) + VARIANTS:
 
 # a hand-cut 9x9 for 16px, where the full grid turns to mush
 SMALL = [
-    "2.......2",
+    "..2...2..",
     "222222222",
     "211111112",
     "233313332",
@@ -139,7 +139,7 @@ def sheet():
         note(x, y + 24 + 17 * 19 + 34, name, txt, 50)
 
     y += 24 + 17 * 19 + 100
-    p.append(f'<text class="a" x="40" y="{y}">2 · States (tufted)</text>')
+    p.append(f'<text class="a" x="40" y="{y}">2 · States (bolts)</text>')
     for i, key in enumerate(STATES):
         name, txt, g = STATES[key]
         x = 40 + (i % 6) * 222
@@ -207,7 +207,7 @@ HTML = r"""<!doctype html>
   <div class="stage"><canvas id="c" width="440" height="440" aria-label="The BB Learn Cube, animated"></canvas></div>
   <div class="states" id="states"></div>
   <div id="why"></div>
-  <footer>Stepped at 10 fps, whole cells only. Blinks at random 2–6 s gaps, the box breathes, the pupils glance, the tufts twinkle. States return to rest after a few seconds.</footer>
+  <footer>Stepped at 10 fps, whole cells only. Blinks at random 2–6 s gaps, the box breathes, the pupils glance, the bolts twinkle. States return to rest after a few seconds.</footer>
 </main>
 <script>
 const DATA = __DATA__;
