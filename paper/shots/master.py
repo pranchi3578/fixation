@@ -71,10 +71,13 @@ def main():
 
     film = f"paper/out/unmute_master_{tag}.mp4"
     wav = f"paper/out/unmute_master_{tag}.wav"
+    # 4K: same quality target, capped so the file stays under GitHub's
+    # 100 MB per-file limit (12 Mb/s x 55 s ~ 83 MB, plus audio)
+    cap = ["-maxrate", "12M", "-bufsize", "24M"] if tag == "4k" else []
     run(args + ["-filter_complex", ";".join(graph),
                 "-map", "[vout]", "-map", "[aout]",
                 "-c:v", "libx264", "-crf", "12", "-preset", "slow",
-                "-tune", "animation", "-profile:v", "high",
+                "-tune", "animation", "-profile:v", "high", *cap,
                 "-c:a", "aac", "-b:a", "320k", "-movflags", "+faststart",
                 film])
     run(["-i", film, "-vn", "-c:a", "pcm_s24le", wav])

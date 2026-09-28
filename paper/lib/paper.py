@@ -106,16 +106,24 @@ def _torn_edge_alpha(h, w, rng, side="left", depth_px=10):
     return a
 
 
+def _atomic_save(img, path):
+    """Write beside the target, then rename: parallel renders regenerate
+    the same stocks, and must never read a half-written file."""
+    tmp = f"{path}.{os.getpid()}.tmp.png"
+    img.save(tmp)
+    os.replace(tmp, path)
+
+
 def _save(name, rgb, height, alpha=None):
     os.makedirs(OUT, exist_ok=True)
     a = np.ones(rgb.shape[:2], np.float32) if alpha is None else alpha
     rgba = np.dstack([rgb, a])
-    Image.fromarray((rgba * 255).astype(np.uint8), "RGBA").save(
-        os.path.join(OUT, f"{name}_col.png"))
+    _atomic_save(Image.fromarray((rgba * 255).astype(np.uint8), "RGBA"),
+                 os.path.join(OUT, f"{name}_col.png"))
     hmin, hmax = height.min(), height.max()
     hn = (height - hmin) / max(1e-6, hmax - hmin)
-    Image.fromarray((hn * 255).astype(np.uint8), "L").save(
-        os.path.join(OUT, f"{name}_hgt.png"))
+    _atomic_save(Image.fromarray((hn * 255).astype(np.uint8), "L"),
+                 os.path.join(OUT, f"{name}_hgt.png"))
     return os.path.join(OUT, f"{name}_col.png")
 
 
