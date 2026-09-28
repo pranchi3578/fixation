@@ -4,6 +4,12 @@
 Status: **plan, for review.** Nothing final is drawn yet. `concepts.svg` / `concepts.png`
 are rough sketches for choosing a direction (regenerate with `python3 concepts.py`).
 
+> **Round 2 is in [`concepts-round-2.md`](concepts-round-2.md)** (sheet: `concepts_v2.png`).
+> It has fourteen concepts from five angles, scored side by side. The recommendation
+> there moves from the Bubble (§2–3 below) to **Patti, the slate**, with Basta and
+> Bubble as runners-up. §4–§6 (colour, open assets, deliverables) apply to
+> whichever character wins; §3 will be redrawn for the winner.
+
 ---
 
 ## 0. The idea in one line
@@ -164,8 +170,8 @@ bb-learn-mascot/
 1. **Brand rule:** `logo-usage.md` says "wordmark only, no icon". Is a *product*
    character for BB Learn allowed, as long as the BRAINBACK wordmark is untouched?
 2. **Colour:** pure monochrome (recommended to start), or one Learn accent?
-3. **Direction:** B (bubble) as the logo, with A/C as supporting sprites? Or would you rather it *be* the Doubtling?
-4. **Name:** Bit, Boli, Sabak, or unnamed?
+3. **Direction:** from round 2's shortlist: Patti (slate), Basta (bag), or Bubble? Or something from outside the shortlist?
+4. **Name:** follows the direction (Patti, Basta, Bit, …), or unnamed?
 5. **Where this lives:** this plan sits in `fixation/docs/` because that's this
    session's branch. The real work should go in `brainback-ad` or
    `design_guidelines`. Which one?
