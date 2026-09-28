@@ -87,6 +87,32 @@ class Mix:
         env = np.sin(np.pi * np.linspace(0, 1, n) ** 0.6) ** 2
         self.add(at, out / (np.abs(out).max() + 1e-9) * env, gain)
 
+    def peel(self, at, dur, gain=0.4):
+        """Tape leaving paper: a dense, rising crackle, sticky rather than
+        crisp."""
+        n = int(dur * SR)
+        clicks = np.zeros(n)
+        rate = np.linspace(400, 1400, n) / SR
+        k = np.nonzero(self.rng.random(n) < rate)[0]
+        clicks[k] = self.rng.normal(0, 1, len(k))
+        x = _band(clicks, 1500, 10000)
+        x += 0.3 * _band(self.rng.normal(0, 1, n), 300, 1200)
+        env = np.minimum(1, np.arange(n) / (0.05 * SR)) * \
+            np.minimum(1, (n - np.arange(n)) / (0.03 * SR))
+        self.add(at, x / (np.abs(x).max() + 1e-9) * env, gain)
+
+    def voice(self, at, path, gain=0.8):
+        """A recorded or scratch line, resampled to SR."""
+        from math import gcd
+
+        from scipy.signal import resample_poly
+        with wave.open(path) as w:
+            sr = w.getframerate()
+            x = np.frombuffer(w.readframes(w.getnframes()),
+                              np.int16).astype(float) / 32768
+        g = gcd(SR, sr)
+        self.add(at, resample_poly(x, SR // g, sr // g), gain)
+
     # ----------------------------------------------------------- music --
     def pluck(self, at, midi, dur=1.6, gain=0.25):
         """A soft kalimba-ish pluck: few partials, fast-decaying top."""

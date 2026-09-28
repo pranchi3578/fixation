@@ -271,3 +271,74 @@ def doubtling(seed=11, eye="open"):
 def night_stocks():
     """Walls and skies for the night scenes."""
     sugar(seed=5, tint=(0.13, 0.15, 0.24), name="sugar_night")
+
+
+# --------------------------------------------------------------- unmute ----
+
+def _circle_alpha(h, w, rng, rough=1.5):
+    """A hand-cut circle: scissors never quite follow the line."""
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    cx, cy, r = w / 2, h / 2, min(w, h) / 2 - 3
+    ang = np.arctan2(yy - cy, xx - cx)
+    wob = np.zeros_like(ang)
+    for k in (3, 5, 9):
+        wob += rng.normal(0, rough / k) * np.sin(k * ang + rng.random() * 6)
+    return np.clip(r + wob - np.hypot(xx - cx, yy - cy), 0, 1)
+
+
+def mic_badge(seed=21):
+    """The mute button: a hand-cut white card disc with an inked mic."""
+    from PIL import ImageDraw
+    rng = np.random.default_rng(seed)
+    n = int(5 * PX_PER_CM)
+    rgb, height = _base(n, n, rng, (0.93, 0.92, 0.88), fibre_density=1.5)
+    S = 4
+    ink = Image.new("L", (n * S, n * S), 0)
+    d = ImageDraw.Draw(ink)
+    c, u = n * S / 2, n * S / 100
+    d.rounded_rectangle((c - 9 * u, c - 26 * u, c + 9 * u, c + 6 * u),
+                        radius=9 * u, fill=255)                 # capsule
+    d.arc((c - 16 * u, c - 14 * u, c + 16 * u, c + 16 * u), 0, 180,
+          fill=255, width=int(3.5 * u))                         # cradle
+    d.line((c, c + 16 * u, c, c + 25 * u), fill=255, width=int(3.5 * u))
+    d.line((c - 10 * u, c + 25 * u, c + 10 * u, c + 25 * u), fill=255,
+           width=int(3.5 * u))
+    ink = np.asarray(ink.resize((n, n), Image.LANCZOS), np.float32) / 255
+    rgb = _ink(rgb, ink, (0.12, 0.13, 0.2), 0.95)
+    return _save("badge", rgb, height, _circle_alpha(n, n, rng))
+
+
+def red_tape(seed=22):
+    """Red paper tape: slightly glossy stock, torn ends."""
+    rng = np.random.default_rng(seed)
+    h, w = int(1.3 * PX_PER_CM), int(6 * PX_PER_CM)
+    rgb, height = _base(h, w, rng, (0.78, 0.1, 0.09), fibre_density=0.6)
+    a = _torn_edge_alpha(h, w, rng, "left", depth_px=6)
+    a = a * _torn_edge_alpha(h, w, rng, "left", depth_px=6)[:, ::-1]
+    return _save("tape", rgb, height, a)
+
+
+def frame_card(seed=23, w_cm=32, h_cm=32, hole=0.1):
+    """The tile's border: dark card with a rounded window cut out."""
+    from PIL import ImageDraw
+    rng = np.random.default_rng(seed)
+    h, w = int(h_cm * PX_PER_CM / 4), int(w_cm * PX_PER_CM / 4)
+    rgb, height = _base(h, w, rng, (0.1, 0.11, 0.14), fibre_density=2)
+    m = Image.new("L", (w, h), 255)
+    ImageDraw.Draw(m).rounded_rectangle(
+        (w * hole, h * hole, w * (1 - hole), h * (1 - hole)),
+        radius=w * 0.05, fill=0)
+    a = np.asarray(m.filter(ImageFilter.GaussianBlur(1)), np.float32) / 255
+    return _save("frame", rgb, height, a)
+
+
+def meera_stocks():
+    sugar(seed=31, tint=(0.56, 0.36, 0.25), name="skin")
+    sugar(seed=32, tint=(0.62, 0.74, 0.88), name="shirt")
+    sugar(seed=33, tint=(0.05, 0.05, 0.06), name="hair")
+    sugar(seed=34, tint=(0.95, 0.94, 0.9), name="white")
+    sugar(seed=35, tint=(0.96, 0.93, 0.84), name="lantern")
+    sugar(seed=36, tint=(0.75, 0.18, 0.2), name="ribbon")
+    mic_badge()
+    red_tape()
+    frame_card()
