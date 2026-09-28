@@ -214,3 +214,66 @@ def muted_badge(pg, key):
     pg.fill(c, f"{key}mbf", (250, 250, 250), 0.85, grain=0)
     pg.stroke(rrect(0.855, 0.82, 0.885, 0.895, 0.015), f"{key}mbg", 2.0)
     pg.stroke([(0.82, 0.82), (0.92, 0.92)], f"{key}mbs", 2.6, dd.RED)
+
+
+def tutor_face(pg, cx, cy, r, key, glow=0.4, wide=0.0, talking=False, t=0.0,
+               blink=False):
+    """The Brainback tutor: a round, patient face in its own light."""
+    halo = ellipse(cx, cy, r * (1.35 + 0.15 * wide), r * (1.35 + 0.15 * wide))
+    pg.fill(halo, key + "halo", dd.TEAL, min(0.95, glow))
+    body = ellipse(cx, cy, r, r * 0.95)
+    pg.stroke(body, key + "b", 2.6)
+    for s in (-1, 1):
+        ex = cx + s * r * 0.36
+        if blink:
+            pg.stroke([(ex - r * 0.15, cy - r * 0.1), (ex + r * 0.15,
+                                                       cy - r * 0.1)],
+                      f"{key}e{s}", 2.4, dd.DARK)
+        else:
+            er = r * (0.13 + 0.07 * wide)
+            pg.fill(ellipse(ex, cy - r * 0.1, er, er * 1.2, overshoot=0),
+                    f"{key}e{s}", dd.DARK, 0.95, boil=0.3, grain=0)
+    if talking and int(t * 10) % 2 == 0:
+        pg.fill(ellipse(cx, cy + r * 0.38, r * 0.2, r * 0.16, overshoot=0),
+                key + "mo", dd.DARK, 0.9, grain=0)
+    else:
+        w = r * (0.33 + 0.18 * wide)
+        pg.stroke(smooth([(cx - w, cy + r * 0.3),
+                          (cx, cy + r * (0.48 + 0.15 * wide)),
+                          (cx + w, cy + r * 0.3)]), key + "m", 2.4)
+
+
+def toolbar(pg, muted=True):
+    bar = rrect(0.33, 0.835, 0.67, 0.915, 0.035)
+    pg.fill(bar, "barf", (250, 248, 240), 0.85, grain=0)
+    pg.stroke(bar, "bar", 2.0)
+    for x, key in ((0.40, "mic"), (0.50, "vid"), (0.60, "end")):
+        c = ellipse(x, 0.875, 0.032, 0.032)
+        if key == "end":
+            pg.fill(c, "endf", dd.RED, 0.7)
+        if key == "mic" and not muted:
+            pg.fill(c, "micon", dd.TEAL, 0.65)
+        pg.stroke(c, key)
+    pg.stroke(rrect(0.392, 0.852, 0.408, 0.882, 0.008), "micg", 2.2)
+    pg.stroke(ellipse(0.40, 0.874, 0.016, 0.016, 10, 170, 12, 0), "micc", 2.0)
+    pg.stroke([(0.40, 0.89), (0.40, 0.897)], "mics", 2.0)
+    pg.stroke(rrect(0.485, 0.865, 0.508, 0.885, 0.004), "vidg", 2.0)
+    pg.stroke([(0.508, 0.875), (0.518, 0.867), (0.518, 0.883),
+               (0.508, 0.875)], "vidl", 2.0)
+    pg.stroke(smooth([(0.585, 0.88), (0.60, 0.872), (0.615, 0.88)]),
+              "endg", 2.6, (255, 255, 255))
+    if muted:
+        pg.stroke([(0.378, 0.852), (0.422, 0.898)], "slash", 4.2, dd.RED)
+
+
+def paper_plane(pg, key, x, y, size, heading, alpha=235):
+    """A doodled dart, nose along heading (radians, screen coords)."""
+    c, s = math.cos(heading), math.sin(heading)
+
+    def P(u, v):
+        return (x + size * (u * c - v * s), y + size * (u * s + v * c))
+    outline = [P(1, 0), P(-0.7, -0.55), P(-0.45, 0), P(-0.7, 0.55), P(1, 0)]
+    pg.fill(outline, key + "f", (250, 250, 245), 0.9, grain=0)
+    pg.cover(outline, key + "c", (250, 250, 245), 0.95)
+    pg.stroke(outline, key, 2.2, alpha=alpha)
+    pg.stroke([P(1, 0), P(-0.45, 0)], key + "k", 1.6, alpha=alpha)
