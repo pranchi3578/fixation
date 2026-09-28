@@ -342,3 +342,36 @@ rented GPU machine; "People" needs a human on set or at a desk.
 - After Gate 2: the shoot (25–26) and generation (27) run together.
 - Blocking steps: 7, 19, 23, 37. Nothing past step 19 starts if the unfold
   test fails.
+
+---
+
+## 9. The no-GPU route
+
+Yes — and it is closer to how Varma works anyway. The ZooZoos were people in
+suits, shot for real; the planes over the school ground can be real paper
+too. Only four steps actually needed a GPU, and each has a CPU or practical
+replacement.
+
+What this container has: 4 CPU cores, 15 GB RAM, ~30 GB free disk, Python,
+FFmpeg (via `imageio_ffmpeg`). No Blender yet; it installs as a portable
+download and renders on CPU.
+
+| Step | Was (GPU) | Now (no GPU) | Cost |
+|---|---|---|---|
+| 3 Set up | Rented GPU, model downloads | Nothing to rent. Install Blender (CPU), Natron, Kdenlive on an editor's laptop | Saves the GPU bill |
+| 12 Boards | FLUX.1 [schnell] | Hand-drawn boards photographed, or Blender Grease Pencil; I can lay out simple SVG boards here in Python | Slower to iterate, but boards stay rough on purpose |
+| 20 Blender double | GPU Cycles | Blender **Eevee** or Cycles on CPU. A 20-second shot at 1080p is an overnight render, not a week | Overnight renders |
+| 21 Theme | ACE-Step | Compose it directly — `tools/compose.py` already writes original music in pure Python, no rights attached. Or a session musician: four notes on a flute or a whistle is the most Varma option | None |
+| 27 Plane flocks, sky | Wan 2.2 | **Real planes.** Fold 300–500, throw them from a rooftop over the school ground with twenty kids; shoot at high frame rate; multiply in comp (5–10 offset layers). Sky: real monsoon plates or Pexels/Pixabay video | One extra shoot half-day; better result |
+| 28 Roto | SAM 2 on GPU | Shoot Doubtling passes on green card so they key, not roto. Blender tracker is CPU. SAM 2's small model runs on CPU for the odd shot | Plan the shoot for keying |
+| 29, 32 Comp, grade | — | Already CPU (Natron, Kdenlive, FFmpeg) | — |
+| 33–35 Localise | — | IndicTrans2 (distilled) and Whisper (small/medium) run on CPU in minutes for one line and 60 seconds of audio | — |
+| 34 VO | Indic Parler-TTS on GPU | Runs on CPU — slow, but it is one line per language. Better: a native speaker per language on a phone mic in a quiet room | — |
+
+**What we lose:** generated set extensions and fast board iteration. **What we
+gain:** no model licences to audit for the video, no generated imagery of
+children or places, and a campaign that is visibly handmade — which is the
+point of the §1 rules.
+
+Revised blocking steps: 7, 19, 23, 37, plus the plane-throw half-day, which
+now carries the hero film's last shot.
