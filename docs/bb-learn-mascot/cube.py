@@ -203,9 +203,10 @@ HTML = r"""<!doctype html>
 <body>
 <main>
   <h1>BB Learn Cube</h1>
-  <p class="sub">A live sketch of the idle loop and every state, on the PixelBoard. Tap the Cube to say hello.</p>
+  <p class="sub">A live sketch of the idle loop and every state, on the PixelBoard. Tap the Cube to say hello. Switch between blue and mono below.</p>
   <div class="stage"><canvas id="c" width="440" height="440" aria-label="The BB Learn Cube, animated"></canvas></div>
   <div class="states" id="states"></div>
+  <div class="states" id="palette"><button data-p="blue" aria-pressed="true">Blue</button><button data-p="mono" aria-pressed="false">Mono</button></div>
   <div id="why"></div>
   <footer>Stepped at 10 fps, whole cells only. Blinks at random 2–6 s gaps, the box breathes, the pupils glance, the bolts twinkle. States return to rest after a few seconds.</footer>
 </main>
@@ -216,7 +217,13 @@ const COLS = 17, ROWS = 17, BASE = 0.07;
 const cv = document.getElementById("c"), ctx = cv.getContext("2d");
 const step = cv.width / COLS, cell = step * 0.84;
 
-let state = "rest", until = 0, t = 0;
+let state = "rest", until = 0, t = 0, palette = "blue";
+
+function rgb(hex, add) {                       // lighten a palette colour by add (0..1)
+  const n = parseInt(hex.slice(1), 16), k = add * 255;
+  const ch = s => Math.min(255, Math.round(((n >> s) & 255) + k));
+  return `rgb(${ch(16)},${ch(8)},${ch(0)})`;
+}
 let nextBlink = 2 + Math.random() * 4, blinkEnd = -1;
 let glance = null, glanceEnd = -1, hop = 0;
 
@@ -249,13 +256,16 @@ function draw() {
     const h = hash(r * COLS + c);
     if (h < 0.1) v = 0.1 + 0.12 * Math.pow(Math.max(0, Math.sin(t * (0.6 + h * 20) + h * 50)), 3);
     const ch = g[gr] && g[gr][gc];
+    let fill = null;
     if (ch && LEVEL[ch] !== undefined) {
-      v = LEVEL[ch];
-      if (ch === "1") v += breath;
+      let add = 0;
+      if (ch === "1") add = breath;
       if (ch === "2" && (gr <= 1) && state !== "listen" && state !== "sleepy")
-        v += 0.25 * Math.pow(Math.max(0, Math.sin(t * 2.3 + gc)), 8);   // tufts twinkle
+        add = 0.25 * Math.pow(Math.max(0, Math.sin(t * 2.3 + gc)), 8);   // bolts twinkle
+      v = LEVEL[ch] + add;
+      if (palette === "blue") fill = rgb(DATA.blue[ch], add);
     }
-    ctx.fillStyle = `rgba(255,255,255,${v.toFixed(3)})`;
+    ctx.fillStyle = fill || `rgba(255,255,255,${v.toFixed(3)})`;
     const x = c * step + (step - cell) / 2, y = r * step + (step - cell) / 2;
     ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, cell, cell, cell * 0.1) : ctx.rect(x, y, cell, cell); ctx.fill();
   }
@@ -292,6 +302,10 @@ for (const [k, v] of Object.entries(DATA.states)) {
   b.textContent = v.name; b.dataset.s = k; b.setAttribute("aria-pressed", k === "rest");
   b.onclick = () => setState(k); box.appendChild(b);
 }
+document.querySelectorAll("#palette button").forEach(b => b.onclick = () => {
+  palette = b.dataset.p;
+  document.querySelectorAll("#palette button").forEach(x => x.setAttribute("aria-pressed", x === b));
+});
 cv.onclick = () => setState("hello", 2);
 setState("hello", 2);
 setInterval(tick, 100);
@@ -302,7 +316,9 @@ setInterval(tick, 100);
 
 
 def prototype():
+    from cube_blue import DARK
     data = {
+        "blue": DARK,
         "states": {k: {"name": n, "why": w, "grid": g} for k, (n, w, g) in STATES.items()},
         "glances": [cube(eyes=pupil_eye(r, c)) for r, c in ((1, 0), (1, 2), (2, 1), (0, 1))],
     }

@@ -356,3 +356,50 @@ Blink. Each is one grid edit, and the motion is stepped at 10 fps.
 2. Motion polish inside the real `PixelBoard.tsx`: hop with squash, flap timing, meter voice driven by real audio levels.
 3. The distinctness check against WALL-E/EVE, Duo, and cube-robot mascots, plus a trademark search.
 4. Kid testing (§11.5): Bolts, with Tufted as the comparison. The key question: do kids see an owl, or just a robot?
+
+---
+
+## Round 6: the Cube in blue
+
+Sheet: `cube_blue_sheet.png` (from `python3 cube_blue.py`). The prototype
+`cube.html` now opens in **Blue**, with a switch to Mono.
+
+### The palette: one hue, four lightness steps
+The PixelBoard's rule is that everything is light and shade. The blue version
+keeps that rule: it uses **one hue, the logo's own blue (≈208°)**, at the same four
+steps the mono version uses. So it's the brand's blue, not a new colour.
+
+| Step | Part | Dark board | On white |
+|---|---|---|---|
+| 1 | box | `#195589` (the logo navy, exactly) | `#195589` |
+| 2 | edge, bolts | `#2f7fc4` | `#0f3d66` (a darker outline) |
+| 3 | lens ring, trim, treads | `#6cb8f2` | `#9fd0f7` (pale, so the pupils read) |
+| 4 | lit cells, glint | `#e3f3ff` | `#eaf6ff` |
+| pupils | | unlit (the board shows through) | `#0b2238` |
+
+### Why blue is pleasing for students (the psychology)
+
+| Finding | What it means for the Cube |
+|---|---|
+| **Blue is the most-liked colour worldwide, for boys and girls alike** (Hurlbert & Ling 2007; Palmer & Schloss 2010: people like colours of things they like, such as clear sky and clean water) | The safest choice for "any student would befriend it". It doesn't read as a "boys'" or "girls'" character |
+| **Blue is calming: pleasant and low-arousal** (Valdez & Mehrabian 1994) | A patient tutor should lower anxiety, not raise excitement. Blue says *calm*, which fits the owl that doesn't nag (§8) |
+| **Blue supports open, exploratory thinking; red pushes caution and avoidance** (Mehta & Zhu 2009) | Learning needs a child willing to try. Blue is the right mood for asking questions |
+| **Red before a test lowers performance** (Elliot et al. 2007) | Confirms §4's rule: **never red for mistakes**. *Hmm* and *Oops* stay blue; only the shape changes |
+| **Blue suggests trust and dependability** | Parents and schools read it as safe, and it's already the colour of many Indian school uniforms, notebooks and textbooks |
+| **Colour blindness** (≈8% of boys have red-green deficiency) | Blue is seen clearly by nearly everyone. Nothing in the Cube relies on telling colours apart; states are carried by shape and brightness |
+| **Children like bright, clear colours; adults read dark blues as corporate** | The lit parts go bright sky-blue (steps 3–4), and the navy stays in the box. It's friendly on top and grounded underneath |
+| **Big, dark pupils with a white catchlight read as young and alive** (baby schema, §4) | The pupils stay unlit, and the one glint cell stays near-white. It's what keeps the eyes lively in blue |
+
+### Rules for the blue
+- **Hue never changes with mood.** No red, no green and no yellow for any state. Emotion
+  comes from shape and brightness, as in mono.
+- **The "BB LEARN" wordmark stays white** on the board. Only the character is blue.
+- **At bedtime** (*Sleepy*), the whole Cube dims one step. A calm, low-light presence
+  suits the "go to sleep" message.
+- **Mono stays available** for contexts that need the strict monochrome brand
+  (the company website, documents).
+
+### What this settles
+§7 and §12's colour question: **blue, on the logo's hue.** The owl borrows the
+logo's blue, which reinforces the link to the brain/B mark. That link still assumes
+the brain/B logo is the current one (§12, Q1).
