@@ -206,3 +206,68 @@ if __name__ == "__main__":
     card()
     swatch_sheet(os.path.join(OUT, "..", "swatches.jpg"))
     print("ok")
+
+
+# ------------------------------------------------------------ doubtling ----
+
+# Where the Doubtling's parts sit on its sheet, in cm. puppets.py uses the
+# same numbers for its UVs, so ink drawn here lands on the right fold.
+DOUBT_L, DOUBT_W, DOUBT_K = 8.0, 3.2, 2.4       # length, wing half-span, keel
+DOUBT_SHEET = (10.5, 14.8)
+DOUBT_EYE = (0.74, 0.5, 0.21)                     # u along spine, across, r
+
+
+def doubt_wing_cm(u, a, side):
+    """Sheet position of a wing point: u along spine 0 tail..1 nose,
+    a across 0 spine..1 tip, side -1 left / +1 right."""
+    return (DOUBT_SHEET[0] / 2 + side * a * DOUBT_W * (1 - u),
+            0.4 + (1 - u) * DOUBT_L)
+
+
+def doubt_keel_cm(u, s):
+    return (1.25 + u * DOUBT_L, 9.6 + s * DOUBT_K)
+
+
+def doubtling(seed=11, eye="open"):
+    """A ruled page with the one inked eye drawn on each wing, by hand."""
+    from PIL import ImageDraw
+    src = Image.open(ruled(seed=seed, torn=False))
+    hgt = Image.open(os.path.join(OUT, f"ruled_{seed}_hgt.png"))
+    rng = np.random.default_rng(seed + 100)
+    S = 4                                     # draw big, then shrink: soft ink
+    ink = Image.new("L", (src.width * S, src.height * S), 0)
+    d = ImageDraw.Draw(ink)
+    u, a, r = DOUBT_EYE
+    for side in (-1, 1):
+        cx, cy = doubt_wing_cm(u, a, side)
+        cx, cy, rp = cx * PX_PER_CM * S, cy * PX_PER_CM * S, r * PX_PER_CM * S
+        if eye == "open":
+            # a ballpoint circle drawn in one go: it doesn't quite close
+            pts = []
+            start = rng.random() * 6.28
+            for t in np.linspace(0, 6.28 * 1.06, 60):
+                wob = 1 + 0.06 * np.sin(3 * t + start) + rng.normal(0, 0.01)
+                pts.append((cx + rp * wob * np.cos(t + start),
+                            cy + rp * 1.1 * wob * np.sin(t + start)))
+            d.line(pts, fill=255, width=int(0.035 * PX_PER_CM * S),
+                   joint="curve")
+            pr = rp * 0.42
+            ox, oy = side * rp * 0.2, rp * 0.1   # both look toward the nose
+            d.ellipse((cx + ox - pr, cy + oy - pr, cx + ox + pr,
+                       cy + oy + pr * 1.1), fill=255)
+        else:
+            pts = [(cx + rp * np.cos(t), cy + rp * 0.35 * np.sin(t))
+                   for t in np.linspace(0.15, 3.0, 30)]
+            d.line(pts, fill=255, width=int(0.04 * PX_PER_CM * S),
+                   joint="curve")
+    ink = np.asarray(ink.resize(src.size, Image.LANCZOS),
+                     np.float32) / 255
+    col = np.asarray(src.convert("RGBA"), np.float32) / 255
+    rgb = _ink(col[..., :3], ink, (0.12, 0.14, 0.32), 0.95)
+    return _save(f"doubt_{eye}", rgb, np.asarray(hgt, np.float32) / 255,
+                 col[..., 3])
+
+
+def night_stocks():
+    """Walls and skies for the night scenes."""
+    sugar(seed=5, tint=(0.13, 0.15, 0.24), name="sugar_night")
