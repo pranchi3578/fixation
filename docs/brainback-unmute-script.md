@@ -1,6 +1,15 @@
 # Brainback Learn — "Unmute"
 ### 60s hero · cut-downs 30s / 15s · paper world · how Brainback reimagines learning
 
+## Look (revised)
+
+**Doodles, not paper cut-outs.** Everything is drawn in ballpoint and marker
+on a ruled notebook page, and redrawn every frame so the lines boil. And it
+is literal: a laptop screen, a real video-call toolbar, a mic button with a
+red slash, a cursor that hesitates, the Brainback tutor in its own tile,
+and "Why?" in a speech bubble. The red tape and lantern below are replaced
+by the slashed mic button and the tutor tile.
+
 ## The idea
 
 In a class of sixty, a question costs courage. With a tutor that's happy to
