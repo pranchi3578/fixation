@@ -68,6 +68,9 @@ def rrect(x0, y0, x1, y1, r, n=6):
 class Page:
     def __init__(self, paper_png, size=1080, ss=2, frame=0):
         self.size, self.ss, self.S = size, ss, size * ss
+        # pen widths, wobble and blur were designed at 1080 output; scale them
+        # with the output so a 4K render is the same drawing, only sharper
+        self.u = ss * size / 1080
         bg = Image.open(paper_png).convert("RGB")
         side = min(bg.size)
         bg = bg.crop((0, 0, side, side)).resize((self.S, self.S),
@@ -134,7 +137,7 @@ class Page:
         total = d[-1]
         if total < 1:
             return
-        step = 3.0 * self.ss
+        step = 3.0 * self.u
         s = np.linspace(0, total, max(2, int(total / step)))
         s = s[s <= total * reveal]
         if len(s) < 2:
@@ -143,7 +146,7 @@ class Page:
         y = np.interp(s, d, seg[:, 1])
         rng = np.random.default_rng(_seed(key, self.frame))
         k = min(1.6, max(0.35, self.scale))
-        amp = boil * 1.1 * self.ss * k
+        amp = boil * 1.1 * self.u * k
         f1, f2 = rng.uniform(1.5, 3.5, 2)
         ph = rng.uniform(0, 6.28, 4)
         u = s / max(total, 1)
@@ -153,7 +156,7 @@ class Page:
                        + 0.4 * np.cos(6.28 * 6 * u + ph[3]))
         taper = np.minimum(1, np.minimum(u, 1 - u) / 0.06) ** 0.5
         press = 0.8 + 0.2 * np.sin(6.28 * rng.uniform(1, 3) * u + ph[1])
-        w = width * self.ss * min(1.6, max(0.4, self.scale)) * press * \
+        w = width * self.u * min(1.6, max(0.4, self.scale)) * press * \
             (0.45 + 0.55 * taper)
         c = (*color, alpha)
         for i in range(len(x) - 1):
@@ -169,11 +172,11 @@ class Page:
             return
         rng = np.random.default_rng(_seed(key, self.frame, "fill"))
         k = min(1.6, max(0.35, self.scale))
-        j = boil * 2.0 * self.ss * k
+        j = boil * 2.0 * self.u * k
         off = rng.normal(0, j, 2)
         P = np.array([self.px(p) for p in pts], np.float32)
         P += off + rng.normal(0, j * 0.4, P.shape)
-        pad = int(6 * self.ss)
+        pad = int(6 * self.u)
         x0, y0 = np.floor(P.min(0)).astype(int) - pad
         x1, y1 = np.ceil(P.max(0)).astype(int) + pad
         cx0, cy0, cx1, cy1 = self.clip or (0, 0, self.S, self.S)
@@ -183,7 +186,7 @@ class Page:
             return
         m = Image.new("L", (x1 - x0, y1 - y0), 0)
         ImageDraw.Draw(m).polygon([(x - x0, y - y0) for x, y in P], fill=255)
-        m = np.asarray(m.filter(ImageFilter.GaussianBlur(1.2 * self.ss * k)),
+        m = np.asarray(m.filter(ImageFilter.GaussianBlur(1.2 * self.u * k)),
                        np.float32) / 255
         if grain:
             h, w = m.shape
@@ -199,7 +202,7 @@ class Page:
     def cover(self, pts, key, color, alpha=0.92):
         """Opaque marker over everything drawn so far (lines included)."""
         rng = np.random.default_rng(_seed(key, self.frame, "cover"))
-        j = 1.5 * self.ss
+        j = 1.5 * self.u
         P = [(x + rng.normal(0, j), y + rng.normal(0, j))
              for x, y in (self.px(p) for p in pts)]
         layer = Image.new("RGBA", (self.S, self.S), (0, 0, 0, 0))
@@ -223,8 +226,8 @@ class Page:
             px_size)
         rng = np.random.default_rng(_seed(key, self.frame, "text"))
         x, y = self.px(at)
-        x += rng.normal(0, 0.8 * self.ss)
-        y += rng.normal(0, 0.8 * self.ss)
+        x += rng.normal(0, 0.8 * self.u)
+        y += rng.normal(0, 0.8 * self.u)
         l, t, r, b = font.getbbox(s, anchor="mm")
         pad = int(px_size * 0.4)
         W, H = int(r - l) + 2 * pad, int(b - t) + 2 * pad
