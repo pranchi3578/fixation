@@ -1,6 +1,9 @@
 # Brainback Learn — Ad Campaign Plan
 ### "Give it back." · An end-to-end AI tutor, made the way Prakash Varma makes films
 
+> **Superseded for production:** nothing can be filmed, so §3–§9 are replaced by
+> `brainback-learn-paper-world-plan.md`. §1 and §2 still apply.
+
 ---
 
 ## 0. What we know about the product, and what we don't
