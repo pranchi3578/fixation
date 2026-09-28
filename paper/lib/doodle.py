@@ -246,10 +246,16 @@ class Page:
             piece = layer.crop((ix0 - px0, iy0 - py0, ix1 - px0, iy1 - py0))
             self.ink.alpha_composite(piece, (ix0, iy0))
 
-    def render(self, path):
+    def render(self, path, post=None):
+        """post(rgb float array HxWx3 in 0..1) -> same, applied to the whole
+        drawing: lighting passes such as night and lamplight."""
         img = Image.fromarray((np.clip(self.base, 0, 1) * 255)
                               .astype(np.uint8)).convert("RGBA")
         img.alpha_composite(self.ink)
+        if post is not None:
+            a = np.asarray(img.convert("RGB"), np.float32) / 255
+            a = np.clip(post(a), 0, 1)
+            img = Image.fromarray((a * 255).astype(np.uint8)).convert("RGBA")
         img = img.convert("RGB").resize((self.size, self.size),
                                         Image.LANCZOS)
         img.save(path)

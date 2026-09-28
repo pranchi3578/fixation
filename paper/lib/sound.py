@@ -149,6 +149,32 @@ class Mix:
             out *= env(np.arange(n) / SR + at)
         self.add(at, out, gain)
 
+    def crickets(self, gain=0.02):
+        """An Indian night: two crickets, not quite in step."""
+        n = len(self.buf)
+        t = np.arange(n) / SR
+        out = np.zeros(n)
+        for f, period, off in ((4400, 0.71, 0.0), (5100, 0.93, 0.31)):
+            env = np.zeros(n)
+            start = off
+            while start < n / SR:
+                for p in range(3):
+                    a = int((start + p * 0.045) * SR)
+                    b = min(n, a + int(0.025 * SR))
+                    if a < n:
+                        env[a:b] += np.hanning(max(2, b - a))[: b - a]
+                start += period * self.rng.uniform(0.9, 1.1)
+            out += np.sin(2 * np.pi * f * t) * env
+        self.add(0, out, gain)
+
+    def clink(self, at, gain=0.25, f=900):
+        """Tin: a few inharmonic partials that die fast."""
+        t = _t(0.5)
+        x = sum(a * np.sin(2 * np.pi * f * m * t) * np.exp(-t / d)
+                for m, a, d in ((1, 1, 0.12), (2.76, 0.6, 0.07),
+                                (5.4, 0.4, 0.04), (8.9, 0.25, 0.02)))
+        self.add(at, x * np.minimum(1, t / 0.002), gain)
+
     def thud(self, at, gain=0.3):
         n = int(0.12 * SR)
         x = self.rng.normal(0, 1, n) * np.exp(-np.arange(n) / (0.02 * SR))
