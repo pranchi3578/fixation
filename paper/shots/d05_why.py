@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 import numpy as np  # noqa: E402
 
 import doodle as dd  # noqa: E402
+from doodle_cast import meera  # noqa: E402
 import paper  # noqa: E402
 from doodle import ellipse, rrect, smooth  # noqa: E402
 
@@ -55,87 +56,6 @@ def laptop(pg):
     pg.stroke(rrect(0.03, 0.03, 0.97, 0.97, 0.04), "bezel", 3.2)
     pg.stroke(rrect(0.06, 0.08, 0.94, 0.95, 0.02), "screen", 2.4)
     pg.stroke(ellipse(0.5, 0.055, 0.007, 0.007, overshoot=40), "cam", 2.0)
-
-
-def meera(pg, t, face):
-    gx, gy = face["gaze"]
-    # shoulders and shirt
-    body = smooth([(0.12, 0.95), (0.16, 0.75), (0.26, 0.67), (0.36, 0.64)]) \
-        + smooth([(0.44, 0.64), (0.54, 0.67), (0.64, 0.75), (0.68, 0.95)])
-    pg.fill(body + [(0.12, 0.95)], "shirt", dd.SHIRT, 0.55)
-    pg.stroke(smooth([(0.12, 0.95), (0.16, 0.75), (0.26, 0.67),
-                      (0.36, 0.64)]), "shL")
-    pg.stroke(smooth([(0.44, 0.64), (0.54, 0.67), (0.64, 0.75),
-                      (0.68, 0.95)]), "shR")
-    pg.stroke([(0.34, 0.64), (0.40, 0.72), (0.46, 0.64)], "collarV")
-    pg.stroke([(0.34, 0.64), (0.31, 0.70), (0.38, 0.70)], "collarL", 2.0)
-    pg.stroke([(0.46, 0.64), (0.49, 0.70), (0.42, 0.70)], "collarR", 2.0)
-    # neck
-    pg.fill([(0.37, 0.57), (0.43, 0.57), (0.43, 0.65), (0.37, 0.65)],
-            "neckf", dd.SKIN, 0.5)
-    pg.stroke([(0.37, 0.575), (0.37, 0.645)], "neckL", 2.2)
-    pg.stroke([(0.43, 0.575), (0.43, 0.645)], "neckR", 2.2)
-    # plaits behind the shoulders, ribbons at the ends
-    for side, x0 in ((-1, 0.285), (1, 0.515)):
-        for k in range(5):
-            cx = x0 + side * 0.006 * k
-            cy = 0.50 + 0.043 * k
-            loop = ellipse(cx, cy, 0.022, 0.026, overshoot=20)
-            pg.fill(loop, f"plf{side}{k}", dd.DARK, 0.8)
-            pg.stroke(loop, f"pl{side}{k}", 2.0, dd.DARK)
-        bx, by = x0 + side * 0.026, 0.708
-        for s in (-1, 1):
-            bow = [(bx, by), (bx + s * 0.035, by - 0.02),
-                   (bx + s * 0.035, by + 0.02), (bx, by)]
-            pg.fill(bow, f"bow{side}{s}", dd.RED, 0.75)
-            pg.stroke(bow, f"bowl{side}{s}", 2.0)
-    # face
-    head = ellipse(0.40, 0.44, 0.125, 0.145)
-    pg.fill(head, "skin", dd.SKIN, 0.68)
-    pg.stroke(head, "head", 2.8)
-    pg.stroke(ellipse(0.273, 0.46, 0.014, 0.025, 90, 270, 12, 0), "earL")
-    pg.stroke(ellipse(0.527, 0.46, 0.014, 0.025, -90, 90, 12, 0), "earR")
-    # hair: a cap over the top, a fringe with a side parting
-    cap = ellipse(0.40, 0.43, 0.14, 0.165, 185, 355, 30, 0)
-    fringe = smooth([(0.54, 0.41), (0.47, 0.37), (0.41, 0.35),
-                     (0.36, 0.39), (0.30, 0.40), (0.26, 0.42)])
-    pg.fill(cap + fringe, "hairf", dd.DARK, 0.85)
-    pg.stroke(cap, "hair", 2.8, dd.DARK)
-    pg.stroke(fringe, "fringe", 2.4, dd.DARK)
-    # brows
-    tilt = {"worried": 0.012, "up": -0.004, "brave": -0.002}[face["brows"]]
-    lift = {"worried": 0.0, "up": -0.012, "brave": -0.006}[face["brows"]]
-    for s, ex in ((-1, 0.355), (1, 0.445)):
-        inner = (ex - s * 0.022, 0.415 + lift - tilt)
-        outer = (ex + s * 0.022, 0.418 + lift + tilt * 0.3)
-        pg.stroke([outer, ((inner[0] + outer[0]) / 2,
-                           (inner[1] + outer[1]) / 2 - 0.004), inner],
-                  f"brow{s}", 2.6, dd.DARK)
-    # eyes: two dots, and they move
-    for s, ex in ((-1, 0.355), (1, 0.445)):
-        e = ellipse(ex + gx, 0.45 + gy, 0.011, 0.013, overshoot=0)
-        pg.fill(e, f"eye{s}", dd.DARK, 0.95, boil=0.3, grain=0)
-    # nose
-    pg.stroke(smooth([(0.402, 0.47), (0.41, 0.50), (0.398, 0.505)]),
-              "nose", 2.0)
-    # mouth
-    m = face["mouth"]
-    if m == "line":
-        pg.stroke(smooth([(0.375, 0.535), (0.40, 0.538), (0.425, 0.533)]),
-                  "mouth", 2.4)
-    elif m == "bite":
-        pg.stroke(smooth([(0.378, 0.536), (0.39, 0.532), (0.40, 0.538),
-                          (0.41, 0.532), (0.422, 0.536)]), "mouth", 2.4)
-    elif m == "o":
-        o = ellipse(0.40, 0.54, 0.016, 0.022, overshoot=0)
-        pg.fill(o, "mo", dd.DARK, 0.9, grain=0)
-        pg.stroke(o, "mouth", 2.2)
-    else:
-        pg.stroke(smooth([(0.365, 0.528), (0.40, 0.548), (0.435, 0.528)]),
-                  "mouth", 2.6)
-        for s, cx in ((-1, 0.33), (1, 0.47)):
-            pg.fill(ellipse(cx, 0.505, 0.022, 0.014), f"blush{s}", dd.PINK,
-                    0.35)
 
 
 def toolbar(pg, t):

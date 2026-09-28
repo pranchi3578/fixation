@@ -113,6 +113,47 @@ class Mix:
         g = gcd(SR, sr)
         self.add(at, resample_poly(x, SR // g, sr // g), gain)
 
+    def gibberish(self, at, dur, gain=0.3, rate=6.5, pitch=140,
+                  rise_end=False, env=None):
+        """Talking without words: a buzzy source through moving vowel
+        formants, one syllable at a time. Muted trombone, not a person."""
+        n = int(dur * SR)
+        out = np.zeros(n)
+        pos = 0
+        k = 0
+        while pos < n:
+            syl = int(SR * self.rng.uniform(0.7, 1.3) / rate)
+            if self.rng.random() < 0.12:            # breath between phrases
+                pos += syl
+                continue
+            m = min(syl, n - pos)
+            t = np.arange(m) / SR
+            last = rise_end and pos + syl >= n
+            f0 = pitch * self.rng.uniform(0.85, 1.2)
+            glide = np.linspace(1, 1.45 if last else self.rng.uniform(0.9, 1.1),
+                                m)
+            ph = 2 * np.pi * np.cumsum(f0 * glide) / SR
+            src = sum(np.sin(h * ph) / h for h in range(1, 14))
+            f1 = self.rng.uniform(350, 800)
+            f2 = self.rng.uniform(900, 2100)
+            x = _band(src, f1 * 0.7, f1 * 1.3) + 0.5 * _band(src, f2 * 0.8,
+                                                             f2 * 1.2)
+            e = np.minimum(1, t / 0.02) * np.minimum(1, (m - np.arange(m))
+                                                      / (0.04 * SR))
+            out[pos:pos + m] += x * e
+            pos += syl
+            k += 1
+        out = _lp(out, 2600)
+        out /= np.abs(out).max() + 1e-9
+        if env is not None:
+            out *= env(np.arange(n) / SR + at)
+        self.add(at, out, gain)
+
+    def thud(self, at, gain=0.3):
+        n = int(0.12 * SR)
+        x = self.rng.normal(0, 1, n) * np.exp(-np.arange(n) / (0.02 * SR))
+        self.add(at, _lp(x, 400) * 4, gain)
+
     # ----------------------------------------------------------- music --
     def pluck(self, at, midi, dur=1.6, gain=0.25):
         """A soft kalimba-ish pluck: few partials, fast-decaying top."""
