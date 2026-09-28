@@ -95,7 +95,7 @@ def meera(pg, t, face):
                     0.35)
 
 
-def teacher(pg, t, talking=True, bubble=None):
+def teacher(pg, t, talking=True, bubble=None, mood="plain"):
     """Sir: bald on top, side hair, glasses, a moustache, and a lot to say."""
     cx, cy = 0.5, 0.46
     pg.fill(smooth([(0.1, 0.95), (0.18, 0.72), (0.5, 0.66), (0.82, 0.72),
@@ -119,7 +119,17 @@ def teacher(pg, t, talking=True, bubble=None):
                     (cx + 0.08, cy + 0.08), (cx, cy + 0.1)]), "tmo",
             dd.DARK, 0.85)
     open_ = talking and (int(t * 12) % 2 == 0)
-    if open_:
+    if mood in ("surprised", "smile"):
+        for s in (-1, 1):                         # eyebrows over the glasses
+            lift = 0.05 if mood == "surprised" else 0.02
+            pg.stroke(smooth([(cx + s * 0.05, cy - 0.07 - lift),
+                              (cx + s * 0.085, cy - 0.085 - lift),
+                              (cx + s * 0.12, cy - 0.07 - lift)]),
+                      f"tbr{s}", 2.4, dd.DARK)
+    if mood == "smile" and not open_:
+        pg.stroke(smooth([(cx - 0.06, cy + 0.13), (cx, cy + 0.17),
+                          (cx + 0.06, cy + 0.13)]), "tmth", 2.6)
+    elif open_:
         pg.fill(ellipse(cx, cy + 0.14, 0.035, 0.03, overshoot=0), "tmth",
                 dd.DARK, 0.9, grain=0)
     else:
@@ -277,3 +287,10 @@ def paper_plane(pg, key, x, y, size, heading, alpha=235):
     pg.cover(outline, key + "c", (250, 250, 245), 0.95)
     pg.stroke(outline, key, 2.2, alpha=alpha)
     pg.stroke([P(1, 0), P(-0.45, 0)], key + "k", 1.6, alpha=alpha)
+
+
+def unmuted_badge(pg, key):
+    """A tile's mic, live."""
+    c = ellipse(0.87, 0.87, 0.08, 0.08)
+    pg.fill(c, f"{key}ubf", dd.TEAL, 0.8, grain=0)
+    pg.stroke(rrect(0.855, 0.82, 0.885, 0.895, 0.015), f"{key}ubg", 2.0)
