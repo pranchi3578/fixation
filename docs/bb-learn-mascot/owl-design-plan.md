@@ -274,3 +274,45 @@ in `ledger.csv`.
 3. **Species:** spotted owlet (recommended), or would you prefer a different owl?
 4. **Name:** Hoo as the default, with the child renaming it? Or one fixed brand name?
 5. **Age range:** what grades does BB Learn serve? That sets how far the "grows up" stages need to go.
+
+---
+
+## Round 4: back to the cuter owlet, plus a robot owl
+
+Sheet: `owl_round4.png` (from `python3 owl_round4.py`).
+
+### The owlet (preferred over §5's version)
+The first drawing was cuter than §5's "fixed" one, and the reasons are useful
+for the final drawing:
+- **Soft over crisp.** No dark eye rims and no white brows. The eyes glow out
+  of a bright, low-contrast face instead of being framed. Framing made it look
+  alert, where softness looks young.
+- **Small, tall pupils** (1×2 cells) in big eyes. 2×2 pupils made it look like
+  it was staring.
+- **Narrower (13 cells).** Compact reads as small.
+
+The refined version keeps all three and changes only the eyes: **4×3 with
+rounded corners**, pupils **low and turned slightly inward**. That's the
+"looking up at you" look of a very young animal, and it fixes round 3's
+first draft, where the eyes merged into the face. It has six states (resting,
+listening, your work, happy, blink, sleepy), and it reads at 32px and on white.
+
+### The robot owl: square, pixelled, WALL-E-like
+Each owl trait becomes a machine part: **ear tufts → antennae** (they light up
+when it listens), **chest feathers → a chevron grille**, **wings → side flaps**,
+**feet → treads**.
+- **A · Hoo-bot:** two binocular eye barrels on a neck, with dark lenses and a
+  bright glint (big dark pupils are baby schema too), a boxy body, and treads.
+  It has the **head tilt** (one barrel rides a row higher) as its curious state.
+- **B · Cube:** the whole owl is one box, with a lid seam and a **learning meter**
+  that fills as the lesson goes. It's the sturdiest silhouette at 16px.
+
+**Where it fits:** the robot owl is more honest about being a machine (§8: it never
+pretends to be human), and teens may find it less babyish than the owlet. The owlet
+is warmer for younger kids. One option is for both to be the same character: the
+owlet for grades 1–4, the robot as its "grown-up" look (§6.3).
+
+**IP caution:** WALL-E belongs to Disney/Pixar. We borrow *traits* (binocular eyes,
+treads, a boxy body, the head tilt), never its exact eye shape, its yellow body,
+its trash-compactor story or its name. Put it through the same distinctness check
+as Duo (§11.3), side by side with WALL-E and EVE.
