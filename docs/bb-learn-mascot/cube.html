@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BB Learn Cube</title>
+<style>
+  :root { --bg:#fff; --fg:#000; --muted:#696969; --line:#e8e8e8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0b0b; --fg:#fff; --muted:#9a9a9a; --line:#222; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.5 "Geist Sans", Inter, system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px; }
+  p.sub { color: var(--muted); margin: 0 0 24px; }
+  .stage { background:#050505; border-radius: 14px; padding: 14px; display:flex; justify-content:center; }
+  canvas { width: 100%; max-width: 440px; height: auto; image-rendering: pixelated; cursor: pointer; }
+  .states { display:flex; flex-wrap:wrap; gap:8px; margin: 18px 0 8px; }
+  button { font: inherit; font-size: 14px; padding: 7px 12px; border-radius: 999px;
+           border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+  button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  #why { color: var(--muted); min-height: 1.5em; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>BB Learn Cube</h1>
+  <p class="sub">A live sketch of the idle loop and every state, on the PixelBoard. Tap the Cube to say hello.</p>
+  <div class="stage"><canvas id="c" width="440" height="440" aria-label="The BB Learn Cube, animated"></canvas></div>
+  <div class="states" id="states"></div>
+  <div id="why"></div>
+  <footer>Stepped at 10 fps, whole cells only. Blinks at random 2–6 s gaps, the box breathes, the pupils glance, the tufts twinkle. States return to rest after a few seconds.</footer>
+</main>
+<script>
+const DATA = {"states": {"rest": {"name": "Resting", "why": "pupils centred, meter shows progress", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "12134o3134o3121", "1213oo313oo3121", "121333313333121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "hello": {"name": "Hello", "why": "happy eyes, one wing waves", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", "12111111111112.", "12111111111112.", "121144111441121", "121411414114121", ".21111111111121", ".21111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "listen": {"name": "Listening", "why": "tufts light up, pupils up: it stops the moment you speak", "grid": [".4...........4.", ".44.........44.", ".2222222222222.", ".2111111111112.", ".2134o3134o312.", "1213oo313oo3121", "121333313333121", "121333313333121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "talk": {"name": "Talking", "why": "the meter becomes its voice", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "12134o3134o3121", "1213oo313oo3121", "121333313333121", "121111131111121", ".2222222222222.", ".2111342431112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "work": {"name": "Your work", "why": "eyes on the lesson, not on you", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "121333313333121", "1214o3314o33121", "121oo331oo33121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "hmm": {"name": "Hmm", "why": "one shutter half down: curious, never disappointed", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331222212.", "12134o312222121", "1213oo3134o3121", "121333313oo3121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "happy": {"name": "Happy", "why": "for effort; wings up, meter jumps", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", "121111111111121", "121111111111121", "121144111441121", "121411414114121", ".2111111111112.", ".2111113111112.", ".2222222222222.", ".2111444421112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "oops": {"name": "Oops", "why": "crossed eyes; a meter cell drops out", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "121334o14o33121", "12133oo1oo33121", "121333313333121", "121111131111121", ".2222222222222.", ".21114442.1112.", ".2111111141112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "think": {"name": "Thinking", "why": "pupils up and aside, meter pulses", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".21334o1334o12.", "12133oo133oo121", "121333313333121", "121333313333121", "121111131111121", ".2222222222222.", ".2111242221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "sleepy": {"name": "Sleepy", "why": "shutters half down, tufts dim: go to bed", "grid": [".1...........1.", ".11.........11.", ".2222222222222.", ".2111111111112.", ".2122221222212.", "121222212222121", "12134o3134o3121", "1213oo313oo3121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}, "blink": {"name": "Blink", "why": "random 2-6 s gaps", "grid": [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "121333313333121", "121444414444121", "121333313333121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]}}, "glances": [[".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "1214o3314o33121", "121oo331oo33121", "121333313333121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."], [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "121334o1334o121", "12133oo133oo121", "121333313333121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."], [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2133331333312.", "121333313333121", "12134o3134o3121", "1213oo313oo3121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."], [".2...........2.", ".22.........22.", ".2222222222222.", ".2111111111112.", ".2134o3134o312.", "1213oo313oo3121", "121333313333121", "121333313333121", "121111131111121", ".2222222222222.", ".2111444221112.", ".2111111111112.", ".2222222222222.", "..3333...3333..", "..2323...2323.."]]};
+const LEVEL = {"1":0.26,"2":0.5,"3":0.78,"4":1};
+const COLS = 17, ROWS = 17, BASE = 0.07;
+const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+const step = cv.width / COLS, cell = step * 0.84;
+
+let state = "rest", until = 0, t = 0;
+let nextBlink = 2 + Math.random() * 4, blinkEnd = -1;
+let glance = null, glanceEnd = -1, hop = 0;
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function hash(i) { const r = Math.abs(Math.sin(i * 127.1 + 3.7) * 43758.5); return r - Math.floor(r); }
+
+function frame() {
+  let g = DATA.states[state].grid.map(r => r.split(""));
+  if (state === "rest" && t < blinkEnd) g = DATA.states.blink.grid.map(r => r.split(""));
+  if (state === "rest" && glance && t < glanceEnd) g = glance.map(r => r.split(""));
+  if (state === "talk") {                       // the meter is its voice
+    for (let i = 0; i < 5; i++) g[10][5 + i] = "234"[Math.floor(Math.random() * 3)];
+  }
+  if (state === "think") {                      // the meter pulses, one cell at a time
+    const k = Math.floor(t * 4) % 5;
+    for (let i = 0; i < 5; i++) g[10][5 + i] = i === k ? "4" : "2";
+  }
+  return g;
+}
+
+function draw() {
+  const g = frame();
+  const breath = reduce ? 0 : 0.05 * (Math.sin(t * 1.6) + 1) / 2;
+  const dy = hop > 0 ? -1 : 0;
+  ctx.fillStyle = "#050505"; ctx.fillRect(0, 0, cv.width, cv.height);
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const gr = r - 1 - dy, gc = c - 1;
+    let v = BASE;
+    const h = hash(r * COLS + c);
+    if (h < 0.1) v = 0.1 + 0.12 * Math.pow(Math.max(0, Math.sin(t * (0.6 + h * 20) + h * 50)), 3);
+    const ch = g[gr] && g[gr][gc];
+    if (ch && LEVEL[ch] !== undefined) {
+      v = LEVEL[ch];
+      if (ch === "1") v += breath;
+      if (ch === "2" && (gr <= 1) && state !== "listen" && state !== "sleepy")
+        v += 0.25 * Math.pow(Math.max(0, Math.sin(t * 2.3 + gc)), 8);   // tufts twinkle
+    }
+    ctx.fillStyle = `rgba(255,255,255,${v.toFixed(3)})`;
+    const x = c * step + (step - cell) / 2, y = r * step + (step - cell) / 2;
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, cell, cell, cell * 0.1) : ctx.rect(x, y, cell, cell); ctx.fill();
+  }
+}
+
+function tick() {
+  t += 0.1;
+  if (hop > 0) hop--;
+  if (state !== "rest" && t > until) setState("rest");
+  if (state === "rest" && !reduce) {
+    if (t > nextBlink) {
+      blinkEnd = t + 0.15 + (Math.random() < 0.2 ? 0.3 : 0);   // sometimes a double
+      nextBlink = t + 2 + Math.random() * 4;
+    }
+    if (t > glanceEnd && Math.random() < 0.012) {
+      glance = DATA.glances[Math.floor(Math.random() * DATA.glances.length)];
+      glanceEnd = t + 0.8 + Math.random();
+    }
+  }
+  draw();
+}
+
+function setState(s, hold) {
+  state = s; until = t + (hold || 3.2);
+  document.querySelectorAll("#states button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === s));
+  document.getElementById("why").textContent = s === "rest" ? "" : DATA.states[s].why;
+  if (s === "hello" || s === "happy") hop = 3;
+}
+
+const box = document.getElementById("states");
+for (const [k, v] of Object.entries(DATA.states)) {
+  if (k === "blink") continue;
+  const b = document.createElement("button");
+  b.textContent = v.name; b.dataset.s = k; b.setAttribute("aria-pressed", k === "rest");
+  b.onclick = () => setState(k); box.appendChild(b);
+}
+cv.onclick = () => setState("hello", 2);
+setState("hello", 2);
+setInterval(tick, 100);
+</script>
+</body>
+</html>

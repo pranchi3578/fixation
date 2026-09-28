@@ -316,3 +316,44 @@ owlet for grades 1–4, the robot as its "grown-up" look (§6.3).
 treads, a boxy body, the head tilt), never its exact eye shape, its yellow body,
 its trash-compactor story or its name. Put it through the same distinctness check
 as Duo (§11.3), side by side with WALL-E and EVE.
+
+---
+
+## Round 5: decision, the Cube
+
+**Chosen: B · Cube**, the robot owl that is one box. Sheet: `cube_sheet.png`. Live
+prototype: `cube.html` (open it in a browser; tap the Cube, or pick a state).
+Both come from `python3 cube.py`. §4 (psychology), §6's behaviour rules and §8
+(what it never does) all carry over unchanged.
+
+### Master variants
+| Variant | Silhouette | Verdict |
+|---|---|---|
+| Bolts | a box with two bolts on top | reads as a robot, barely as an owl |
+| **Tufted** | the box's top corners grow **ear tufts**, and **wing flaps** on the sides | **Recommended.** The tufts make the owl outline obvious at 16px |
+| Soft | rounded corners, tufts as bumps | friendlier, but it drifts toward "cat" |
+
+### Anatomy (tufted, 15 × 15 cells)
+- **Box (26%) with a 50% edge:** the body and head in one. It breathes: the fill brightness swells slightly.
+- **Ear tufts:** they twinkle at rest and **light up fully when it listens**. This is the owl's ears and the Unmute idea in one part.
+- **Two 4×4 lenses:** a lit ring, a 2×2 pupil and a glint. The pupil moves anywhere inside the lens, so it can look at the lesson.
+- **Beak sensor:** one cell on the midline.
+- **Lid seam:** a line across the box, like a lid.
+- **Learning meter** (5 cells): progress at rest, **its voice when it talks**, and a moving pulse when it thinks.
+- **Wing flaps:** they wave to say hello and go up when it's happy.
+- **Treads:** the owl's feet.
+
+### States (11, on the sheet and in the prototype)
+Resting, Hello, Listening, Talking, Your work, Hmm, Happy, Oops, Thinking, Sleepy,
+Blink. Each is one grid edit, and the motion is stepped at 10 fps.
+
+### Sizes
+- The full grid holds down to **24px**.
+- At **16px** a **hand-cut 9×9** takes over (box, tufts, two eyes, meter, treads). This is the favicon.
+- On white, the brightness levels invert to ink, and the pupils stay dark.
+
+### Next
+1. Your sign-off on *Tufted*, and on §12's open questions (logo, colour, name, grades).
+2. Motion polish inside the real `PixelBoard.tsx`: hop with squash, flap timing, meter voice driven by real audio levels.
+3. The distinctness check against WALL-E/EVE, Duo, and cube-robot mascots, plus a trademark search.
+4. Kid testing (§11.5) with Tufted and Soft side by side.
