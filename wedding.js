@@ -20,7 +20,7 @@
     receptionTime: '18:30',
     endTime: '21:30',
     title: COUPLE + ' — Wedding',
-    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at half past three in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at half past six.',
+    details: 'Holy Mass at Holy Family Forane Church, Ponkunnam at half past three in the afternoon, followed by the reception at Base Eleven Convention Centre, Pala, at 6:30 PM.',
     location: 'Holy Family Forane Church, Ponkunnam, Kottayam, Kerala'
   };
 
