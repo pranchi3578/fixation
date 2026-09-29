@@ -1,0 +1,352 @@
+/* ═══════════════════════════════════════════════════════════════
+   Joel & Sandra — the invitation letter
+
+   One sheet, A4, drawn in millimetres so that what prints is what was
+   drawn. The form is the printed card: a double rule framing the sheet,
+   a monogram at the head, the connective lines in tracked capitals, and
+   the date broken into three cells by two hairlines.
+
+   The two faces ship with the page rather than coming from a font host:
+   a letter that is going to be printed cannot depend on a network fetch,
+   and a PDF made from it has to carry the real faces.
+   ═══════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Bodoni Moda";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/bodonimoda-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/bodonimoda-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Jost";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/jost-300-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Jost";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/jost-400-normal.woff2") format("woff2");
+}
+
+:root {
+  /* Warm ivory, not white: on a card it is the ground that says paper. */
+  --paper:  #F8F5EE;
+  --ground: #E7E2D6;
+  --ink:    #1A1713;
+  --ink-3:  #7C7568;
+  --hair:   #C9C1AE;
+  --gold:   #A8894F;
+
+  --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --sans: "Jost", "Futura", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  padding: clamp(14px, 4vw, 40px) clamp(10px, 3vw, 28px) clamp(40px, 8vw, 72px);
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+p, h1, figure, blockquote { margin: 0; }
+
+/* ── the sheet ──────────────────────────────────────────────────
+   A4 is 210 × 297mm. The sheet is drawn at that width and scales down
+   on a narrow screen; on paper it is exactly itself.
+   ─────────────────────────────────────────────────────────────── */
+.sheet {
+  width: 210mm;
+  height: 297mm;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 9mm;
+  background: var(--paper);
+  box-shadow: 0 26px 64px -34px rgba(70, 58, 36, .5),
+              0 2px 6px -3px rgba(70, 58, 36, .16);
+}
+
+/* The double rule. A border and an offset outline do the work of an
+   engraved frame without a second element to keep in register. */
+.frame {
+  height: 100%;
+  border: 1px solid var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 1.6mm;
+  padding: 12mm 16mm 10mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ── the head ───────────────────────────────────────────────── */
+.monogram {
+  font-family: var(--display);
+  font-size: 21pt;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  margin-inline-start: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 3.4mm;
+}
+.monogram .bar {
+  width: 1px;
+  height: 8.5mm;
+  background: var(--gold);
+}
+
+/* ── tracked capitals, the connective tissue of a printed card ── */
+.eyebrow {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 8pt;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-inline-start: 0.3em;
+  line-height: 1.9;
+}
+.eyebrow--wide {
+  font-size: 8.6pt;
+  letter-spacing: 0.24em;
+  margin-inline-start: 0.24em;
+  margin-top: 6mm;
+}
+.monogram + .eyebrow { margin-top: 4mm; }
+
+/* ── the photograph ─────────────────────────────────────────── */
+.plate {
+  width: 104mm;
+  max-width: 100%;
+  margin: 5.5mm 0;
+  background: var(--ground);
+}
+.plate img { display: block; width: 100%; height: auto; }
+
+/* ── the families ───────────────────────────────────────────── */
+.parents { margin-top: 1mm; }
+.pair {
+  font-family: var(--display);
+  font-size: 12.5pt;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+}
+.pair + .house { margin-bottom: 3.5mm; }
+.pair .amp {
+  font-style: italic;
+  color: var(--gold);
+  padding-inline: 0.1em;
+}
+.house {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 7.2pt;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-inline-start: 0.28em;
+  margin-top: 1.2mm;
+}
+
+/* ── the names ──────────────────────────────────────────────── */
+.names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 6mm;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 20pt;
+  line-height: 1.16;
+  letter-spacing: 0.11em;        /* the width is the whole effect */
+  text-transform: uppercase;
+  margin-inline-start: 0.11em;
+}
+.names .and {
+  font-size: 0.46em;
+  font-style: italic;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  margin: 1.6mm 0;
+}
+
+/* ── the date, in three cells ───────────────────────────────── */
+.when {
+  display: flex;
+  align-items: stretch;          /* both rules run the full height */
+  margin-top: 7mm;
+}
+.cell {
+  padding-inline: 6mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cell + .cell { border-left: 1px solid var(--hair); }
+.day {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 9.6pt;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-inline-start: 0.22em;
+  color: var(--ink);
+}
+.cell--date { padding-block: 1mm; }
+.mon, .yr {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 7.6pt;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-inline-start: 0.26em;
+}
+.num {
+  font-family: var(--display);
+  font-size: 19pt;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+}
+
+/* ── the places ─────────────────────────────────────────────── */
+.where { margin-top: 6mm; }
+.place {
+  font-family: var(--display);
+  font-size: 12pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-inline-start: 0.08em;
+}
+.place--small {
+  font-size: 10pt;
+  letter-spacing: 0.07em;
+  margin-inline-start: 0.07em;
+  margin-top: 1.5mm;
+}
+.follow {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11.5pt;
+  color: var(--ink-3);
+  margin-top: 5.5mm;
+}
+
+/* ── the close ──────────────────────────────────────────────── */
+.verse {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 10.5pt;
+  line-height: 1.6;
+  color: var(--ink-3);
+  max-width: 108mm;
+  margin-top: auto;              /* whatever is left goes above the verse */
+  padding-top: 6mm;
+}
+.verse cite {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 7pt;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-inline-start: 0.26em;
+  margin-top: 3mm;
+}
+
+.wishes {
+  margin-top: 6mm;
+  padding-top: 5.5mm;
+  border-top: 1px solid var(--hair);
+  width: 108mm;
+}
+.wishes .eyebrow { font-size: 7.2pt; margin-bottom: 2.5mm; }
+.wisher {
+  font-family: var(--display);
+  font-size: 10pt;
+  line-height: 1.6;
+  text-wrap: nowrap;
+}
+
+/* ── screen furniture, which never prints ───────────────────── */
+.tools {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: clamp(14px, 3vw, 24px);
+}
+.tool {
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--hair);
+  padding: 11px 18px;
+  cursor: pointer;
+  transition: background-color 240ms ease, color 240ms ease;
+}
+.tool:hover, .tool:focus-visible { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ── paper ──────────────────────────────────────────────────────
+   No browser margin, no URL in the footer, and the ivory printed as
+   drawn rather than dropped out by the "background graphics" default.
+   ─────────────────────────────────────────────────────────────── */
+@page { size: A4 portrait; margin: 0; }
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .tools { display: none; }
+  .sheet {
+    width: 210mm;
+    height: 297mm;
+    max-width: none;
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .plate { background: none; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ── a narrow screen ────────────────────────────────────────────
+   The sheet keeps its proportions down to a phone; only the frame's
+   padding and the largest lines need to come in.
+   ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sheet { height: auto; padding: 5mm; }
+  .frame { padding: 9mm 7mm 8mm; outline-offset: 1.2mm; }
+  .names { font-size: 15pt; letter-spacing: 0.08em; margin-inline-start: 0.08em; }
+  .pair { font-size: 11pt; }
+  .place { font-size: 10.5pt; }
+  .cell { padding-inline: 4mm; }
+  .verse { max-width: none; margin-top: 7mm; }
+  .wishes { width: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool { transition: none; }
+}
